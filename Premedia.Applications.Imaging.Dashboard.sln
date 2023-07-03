@@ -1,6 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premedia.Applications.Imaging.Dashboard", "Premedia.Applications.Imaging.Dashboard\Premedia.Applications.Imaging.Dashboard.csproj", "{34DF0BF1-43CC-4CDE-A2EF-6941DF06CBEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premedia.Applications.Imaging.Dashboard.Web", "Premedia.Applications.Imaging.Dashboard.Web\Premedia.Applications.Imaging.Dashboard.Web.csproj", "{34DF0BF1-43CC-4CDE-A2EF-6941DF06CBEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premedia.Applications.Imaging.Dashboard.Core", "Premedia.Applications.Imaging.Dashboard.Core\Premedia.Applications.Imaging.Dashboard.Core.csproj", "{DC708106-0CF5-44D1-9EC5-5ACDD5418AB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premedia.Applications.Imaging.Dashboard.Persistence", "Premedia.Applications.Imaging.Dashboard.Persistence\Premedia.Applications.Imaging.Dashboard.Persistence.csproj", "{AED6F139-A14A-4DBB-8C84-ACB3B9B29147}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premedia.Applications.Imaging.Dashboard.Application", "Premedia.Applications.Imaging.Dashboard.Application\Premedia.Applications.Imaging.Dashboard.Application.csproj", "{B941630E-FD8B-4C97-9854-8BC30AE18289}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premedia.Applications.Imaging.Dashboard.Test", "Premedia.Applications.Imaging.Dashboard.Test\Premedia.Applications.Imaging.Dashboard.Test.csproj", "{C3DA67E6-06B9-42DD-BCF3-245348D51C90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +20,21 @@ Global
 		{34DF0BF1-43CC-4CDE-A2EF-6941DF06CBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34DF0BF1-43CC-4CDE-A2EF-6941DF06CBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34DF0BF1-43CC-4CDE-A2EF-6941DF06CBEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC708106-0CF5-44D1-9EC5-5ACDD5418AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC708106-0CF5-44D1-9EC5-5ACDD5418AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC708106-0CF5-44D1-9EC5-5ACDD5418AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC708106-0CF5-44D1-9EC5-5ACDD5418AB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AED6F139-A14A-4DBB-8C84-ACB3B9B29147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AED6F139-A14A-4DBB-8C84-ACB3B9B29147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AED6F139-A14A-4DBB-8C84-ACB3B9B29147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AED6F139-A14A-4DBB-8C84-ACB3B9B29147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B941630E-FD8B-4C97-9854-8BC30AE18289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B941630E-FD8B-4C97-9854-8BC30AE18289}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B941630E-FD8B-4C97-9854-8BC30AE18289}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B941630E-FD8B-4C97-9854-8BC30AE18289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3DA67E6-06B9-42DD-BCF3-245348D51C90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3DA67E6-06B9-42DD-BCF3-245348D51C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3DA67E6-06B9-42DD-BCF3-245348D51C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3DA67E6-06B9-42DD-BCF3-245348D51C90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
