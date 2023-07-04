@@ -39,7 +39,7 @@ try
     });
     
     if (!builder.Environment.IsEnvironment("Local"))
-        builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
+        builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "Premedia.Applications.Imaging.Dashboard/wwwroot"; });
 
     var app = builder.Build();
 
