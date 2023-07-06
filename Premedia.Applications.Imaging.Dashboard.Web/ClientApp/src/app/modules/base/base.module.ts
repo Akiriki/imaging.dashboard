@@ -6,13 +6,17 @@ import {CounterComponent} from "./counter/counter.component";
 import {SharedModule} from "../../shared/shared.module";
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {NgClass, NgIf} from '@angular/common';
+import { ArchiveComponent } from './archive/archive.component';
+import { AdministrationComponent } from './administration/administration.component';
 
 @NgModule({
   declarations: [
     NavMenuComponent,
     HomeComponent,
     FetchDataComponent,
-    CounterComponent
+    CounterComponent,
+    ArchiveComponent,
+    AdministrationComponent
   ],
   imports: [
     SharedModule

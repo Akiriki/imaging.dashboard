@@ -11,11 +11,13 @@ import {environment} from '../environments/environment';
 import {API_BASE_URL} from './core/NSwagDataClient';
 import {FetchDataService} from './services/fetch-data.service';
 import { GridModule } from '@syncfusion/ej2-angular-grids';
+import { OverviewModule } from './modules/overview/overview.module';
+import { AllCorruptedFilesComponent } from './modules/overview/overview/all-corrupted-files/all-corrupted-files.component';
+import { OverviewService } from './services/overview.service';
 
 @NgModule({
   declarations: [
     AppComponent
-
   ],
   imports: [
     HttpClientModule,
@@ -32,6 +34,7 @@ import { GridModule } from '@syncfusion/ej2-angular-grids';
       provide: API_BASE_URL,
       useValue: environment.apiRoot
     },
+    OverviewService
   ],
   bootstrap: [AppComponent]
 })

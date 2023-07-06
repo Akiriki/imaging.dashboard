@@ -8,7 +8,7 @@ import { GridModule } from "@syncfusion/ej2-angular-grids";
 @NgModule({
   declarations: [DestroySubscriptionsComponent],
   imports: [AppRoutingModule, FormsModule, CommonModule, GridModule],
-  exports: [AppRoutingModule, FormsModule, CommonModule]
+  exports: [AppRoutingModule, FormsModule, CommonModule, GridModule]
 })
 
 export class SharedModule {}
