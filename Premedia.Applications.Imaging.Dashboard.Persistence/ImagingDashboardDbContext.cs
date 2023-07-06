@@ -9,7 +9,7 @@ public class ImagingDashboardDbContext : DbContext
     public ImagingDashboardDbContext(DbContextOptions<ImagingDashboardDbContext> options) : base(options)
     {
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
