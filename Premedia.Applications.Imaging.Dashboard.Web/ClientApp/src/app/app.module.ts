@@ -10,6 +10,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {environment} from '../environments/environment';
 import {API_BASE_URL} from './core/NSwagDataClient';
 import {FetchDataService} from './services/fetch-data.service';
+import { GridModule } from '@syncfusion/ej2-angular-grids';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {FetchDataService} from './services/fetch-data.service';
     BaseModule,
     AppRoutingModule,
     BrowserModule,
+    GridModule
   ],
   providers: [
     HttpClientModule,
