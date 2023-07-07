@@ -1,2 +1,12 @@
 <h3>Alle fehlerhaften Files</h3>
-<ejs-grid [dataSource]='allCorruptedFilesList'> </ejs-grid>
+<ejs-grid [dataSource]='allCorruptedFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+<e-columns>
+  <e-column field='id' headerText='Nr.' width="100"></e-column>
+  <e-column field='jobNumber' headerText='Job-Nummer'></e-column>
+  <e-column field='fileName' headerText='Filename'></e-column>
+  <e-column field='customer' headerText='Kunde'></e-column>
+  <e-column field='date' headerText='Fälligkeitsdatum'></e-column>
+  <e-column field='editor' headerText='Bearbeiter'></e-column>
+  <e-column field='status' headerText='Status'></e-column>
+</e-columns>
+</ejs-grid>

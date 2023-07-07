@@ -1,5 +1,6 @@
 import * as DataClient from '../core/NSwagDataClient';
 import {Injectable} from '@angular/core';
+import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import {BehaviorSubject} from 'rxjs';
 
 export type OpenJobs =  {
@@ -52,19 +53,28 @@ export type AllCorruptedFiles = {
 @Injectable()
 export class OverviewService {
   openJobs = new BehaviorSubject<OpenJobs[]>([]);
+  public pageSettings : PageSettingsModel = { pageSize : 5 };
 
   private openJobList : OpenJobs[] = [
-    {id : '1', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), numberOfFiles : 2},
-    {id : '2', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), numberOfFiles : 2},
-    {id : '3', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), numberOfFiles : 2}
+    {id : '1', title : 'Anna Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), numberOfFiles : 2},
+    {id : '2', title : 'Berta Mauder', customer: 'XXLAT', date : new Date('10.05.2022'), numberOfFiles : 2},
+    {id : '3', title : 'Claudia Mauder', customer: 'XXLAT', date : new Date('10.05.2022'), numberOfFiles : 2},
+    {id : '4', title : 'Doris Mauder', customer: 'XXLAT', date : new Date('10.05.2022'), numberOfFiles : 2},
+    {id : '5', title : 'Emilia Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), numberOfFiles : 2},
+    {id : '6', title : 'Franziska Mauder', customer: 'XXLAT', date : new Date('10.05.2022'), numberOfFiles : 2},
+    {id : '7', title : 'Gertrude Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), numberOfFiles : 2}
   ]
 
   myTasks = new BehaviorSubject<MyTasks[]>([]);
 
   private myTaskList : MyTasks[] = [
     {id : '1', jobNumber : 'A', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), status : 'offen'},
-    {id : '2', jobNumber : 'B', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), status : 'offen'},
-    {id : '3', jobNumber : 'C', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), status : 'offen'}
+    {id : '2', jobNumber : 'B', title : 'Verene Mauder', customer: 'XXLAT', date : new Date('10.05.2022'), status : 'offen'},
+    {id : '3', jobNumber : 'C', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), status : 'offen'},
+    {id : '4', jobNumber : 'D', title : 'Verene Mauder', customer: 'XXLAT', date : new Date('10.05.2022'), status : 'offen'},
+    {id : '5', jobNumber : 'E', title : 'Verene Mauder', customer: 'XXLAT', date : new Date('10.05.2022'), status : 'offen'},
+    {id : '6', jobNumber : 'F', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), status : 'offen'},
+    {id : '7', jobNumber : 'G', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), status : 'offen'},
   ]
 
   colleaguesTasks = new BehaviorSubject<ColleaguesTasks[]>([]);

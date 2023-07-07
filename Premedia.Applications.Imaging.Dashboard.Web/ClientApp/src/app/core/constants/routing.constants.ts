@@ -3,5 +3,7 @@ export const RoutingConstants = {
     HOME: '',
     COUNTER: 'counter',
     FETCH_DATA: 'fetch-data',
+    ARCHIVE : 'archive',
+    ADMINISTRATION : 'administration'
   }
 }
