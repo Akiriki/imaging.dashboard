@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
+using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
 {
-    public interface IClientApplicationService
+    public interface ITimeTrackingApplicationService
     {
-        Task<ActionResult<List<ClientReadModel>>> GetClients();
+        Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingByEditor(User editor);
     }
 }

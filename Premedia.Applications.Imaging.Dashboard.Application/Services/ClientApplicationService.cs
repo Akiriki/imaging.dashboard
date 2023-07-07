@@ -23,9 +23,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ActionResult<List<ClientReadModel>>> GetNewClients()
+        public async Task<ActionResult<List<ClientReadModel>>> GetClients()
         {
-            var client = await _unitOfWork.ClientRepository.GetMultipleAsync(x => x.Email == null);
+            var client = await _unitOfWork.ClientRepository.GetMultipleAsync();
             return _mapper.Map<List<ClientReadModel>>(client);
         }
     }

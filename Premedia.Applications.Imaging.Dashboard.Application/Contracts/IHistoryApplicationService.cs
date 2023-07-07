@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
 {
-    public interface IClientApplicationService
+    public interface IHistoryApplicationService
     {
-        Task<ActionResult<List<ClientReadModel>>> GetClients();
+        Task<ActionResult<List<HistoryReadModel>>> GetChangedHistory();
     }
 }

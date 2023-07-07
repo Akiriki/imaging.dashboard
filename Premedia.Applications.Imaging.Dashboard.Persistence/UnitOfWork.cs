@@ -12,7 +12,7 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<JobFiles> JobFileRepository { get; set; }
     public IRepository<AdditionalFile> AdditionalFileRepository { get; set; }
     public IRepository<Client> ClientRepository { get; set; }
-    public IRepository<Filepath> FilepathRepository { get; set; }
+    public IRepository<FilePath> FilePathRepository { get; set; }
     public IRepository<History> HistoryRepository{ get; set; }
     public IRepository<User> UserRepository { get; set; }
     public IRepository<TimeTracking> TimeTrackingRepository { get; set; }
@@ -24,7 +24,7 @@ public class UnitOfWork : IUnitOfWork
         JobFileRepository=new EntityObjectRepository<JobFiles>(_dbContext);
         AdditionalFileRepository=new EntityObjectRepository<AdditionalFile>(_dbContext);
         ClientRepository=new EntityObjectRepository<Client>(_dbContext);
-        FilepathRepository=new EntityObjectRepository<Filepath>(_dbContext);
+        FilePathRepository=new EntityObjectRepository<FilePath>(_dbContext);
         HistoryRepository=new EntityObjectRepository<History>(_dbContext);
         UserRepository=new EntityObjectRepository<User>(_dbContext);
         TimeTrackingRepository=new EntityObjectRepository<TimeTracking>(_dbContext);

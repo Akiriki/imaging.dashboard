@@ -13,21 +13,22 @@ using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
-    public class AdditionalFileApplicationService : BaseApplicationService, IAdditionalFileApplicationService
+    public class TimeTrackingApplicationService : BaseApplicationService, ITimeTrackingApplicationService
     {
         private readonly ImagingDashboardDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public AdditionalFileApplicationService(IUnitOfWork unitOfWork, ImagingDashboardDbContext dbContext, IMapper mapper) : base(unitOfWork)
+        public TimeTrackingApplicationService(IUnitOfWork unitOfWork, ImagingDashboardDbContext dbContext, IMapper mapper) : base(unitOfWork)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
 
-        public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAdditionalFilesById(Guid id)
+        public async Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingByEditor(User editor)
         {
-            var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetMultipleAsync(x => x.Id == id);
-            return _mapper.Map<List<AdditionalFileReadModel>>(additionalFiles);
+            //var timeTracking = await _unitOfWork.TimeTrackingRepository.GetMultipleAsync(x => x.Editor==editor);
+            //return _mapper.Map<List<TimeTrackingReadModel>>(timeTracking);
+            return null;
         }
     }
 }

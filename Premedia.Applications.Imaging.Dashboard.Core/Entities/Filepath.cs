@@ -2,7 +2,7 @@
 
 namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
-public abstract class Filepath:EntityObject
+public class FilePath:EntityObject
 {
     
     public string WindowsPath { get; set; }

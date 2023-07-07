@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
-public abstract class Job:EntityObject
+public class Job:EntityObject
 {
     
     public int ConsecutiveNumber { get;set; }
@@ -16,11 +16,11 @@ public abstract class Job:EntityObject
     public Guid SwitchJobId { get; set; }
     public string JobInfo { get; set; }
     public TimeTracking TimeTracking { get; set; }
-    public OrderType OrderType { get; set; }
+    //public OrderType OrderType { get; set; }
     public User? Editor { get; set; }
     public string Project { get; set; }
     public bool EasyJob { get; set; }
-    public BillingOption BillingOption { get; set; }
+    //public BillingOption BillingOption { get; set; }
     public History Histories { get; set; }
     public User CreatedBy { get; set; }
 

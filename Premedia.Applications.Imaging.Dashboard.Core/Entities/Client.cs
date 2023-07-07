@@ -2,7 +2,7 @@
 
 namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
-public abstract class Client:EntityObject
+public class Client:EntityObject
 {
     public string Email { get; set; }
     public string Shortcut { get; set; }

@@ -10,7 +10,7 @@ public interface IUnitOfWork
     IRepository<JobFiles> JobFileRepository { get; set; }
     IRepository<AdditionalFile> AdditionalFileRepository { get; set; }
     IRepository<Client> ClientRepository { get; set; }
-    IRepository<Filepath> FilepathRepository { get; set; }
+    IRepository<FilePath> FilePathRepository { get; set; }
     IRepository<History> HistoryRepository { get; set; }
     IRepository<User> UserRepository { get; set; }
     IRepository<TimeTracking> TimeTrackingRepository { get; set; }

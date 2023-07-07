@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Premedia.Applications.Imaging.Dashboard.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserApplicationService _userApplicationService;

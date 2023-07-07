@@ -25,8 +25,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobReadModel>>> GetNewJobs()
         {
-            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Editor == null);
-            return _mapper.Map<List<JobReadModel>>(jobs);
+            //var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Editor == null);
+            //return _mapper.Map<List<JobReadModel>>(jobs);
+            return null;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
-public abstract class TimeTracking:EntityObject
+public class TimeTracking:EntityObject
 {
     public User Editor { get; set; }
     public DateTime StartedOn { get; set; }

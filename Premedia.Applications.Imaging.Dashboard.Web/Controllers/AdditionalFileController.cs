@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Premedia.Applications.Imaging.Dashboard.Application.Contracts;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class ApplicationFilesController : ControllerBase
     {
         private readonly IAdditionalFileApplicationService _additionalFileApplicationService;
@@ -16,9 +18,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<AdditionalFileReadModel>>> GetNewAdditionalFiles()
+        public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAdditionalFilesById(Guid id)
         {
-            return await _additionalFileApplicationService.GetNewAdditionalFiles();
+            return await _additionalFileApplicationService.GetAdditionalFilesById(id);
         }
     }
 }
