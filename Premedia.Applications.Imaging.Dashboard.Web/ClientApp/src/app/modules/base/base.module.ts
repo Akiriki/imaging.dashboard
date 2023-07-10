@@ -8,6 +8,7 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 import {NgClass, NgIf} from '@angular/common';
 import { ArchiveComponent } from './archive/archive.component';
 import { AdministrationComponent } from './administration/administration.component';
+import { UserActionsComponent } from './buttons/user-actions/user-actions.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AdministrationComponent } from './administration/administration.compone
     FetchDataComponent,
     CounterComponent,
     ArchiveComponent,
-    AdministrationComponent
+    AdministrationComponent,
+    UserActionsComponent
   ],
   imports: [
     SharedModule

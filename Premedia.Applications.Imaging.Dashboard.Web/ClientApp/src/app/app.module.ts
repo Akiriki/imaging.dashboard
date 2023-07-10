@@ -12,8 +12,9 @@ import {API_BASE_URL} from './core/NSwagDataClient';
 import {FetchDataService} from './services/fetch-data.service';
 import { GridModule, PagerModule, PageService, SortService, FilterService } from '@syncfusion/ej2-angular-grids';
 import { OverviewModule } from './modules/overview/overview.module';
-import { AllCorruptedFilesComponent } from './modules/overview/overview/all-corrupted-files/all-corrupted-files.component';
 import { OverviewService } from './services/overview.service';
+/*import buttons*/
+import { DropDownButtonModule, SplitButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { OverviewService } from './services/overview.service';
     BaseModule,
     AppRoutingModule,
     BrowserModule,
-    GridModule
+    GridModule,
+    SplitButtonModule,
+    DropDownButtonModule
   ],
   providers: [
     HttpClientModule,
@@ -37,7 +40,7 @@ import { OverviewService } from './services/overview.service';
     OverviewService,
     PageService,
     SortService,
-    FilterService
+    FilterService,
   ],
   bootstrap: [AppComponent]
 })

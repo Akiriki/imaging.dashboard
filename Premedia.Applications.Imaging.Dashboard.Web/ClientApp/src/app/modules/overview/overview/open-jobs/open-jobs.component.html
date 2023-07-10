@@ -1,13 +1,13 @@
 <h3>Neue Aufträge</h3>
 <ejs-grid [dataSource]='openJobList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
 <e-columns>
-  <e-column field='id' headerText='Nr.' width="100"></e-column>
+  <e-column field='id' headerText='Nr.' width="100" [textAlign]="'center'"></e-column>
   <e-column field='title' headerText='Titel'></e-column>
   <e-column field='customer' headerText='Kunde'></e-column>
-  <e-column field='date' headerText='Fälligkeitsdatum'></e-column>
+  <e-column field='date' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
   <e-column field='numberOfFiles' headerText='Anzahl Files'></e-column>
   <e-column><ng-template #template let-data>
-    <button>Auftrag übernehmen</button>
+    <button >Auftrag übernehmen</button>
   </ng-template></e-column>
 </e-columns>
 </ejs-grid>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { OpenJobs, OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
+import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 
 @Component({
   selector: 'app-open-jobs',
