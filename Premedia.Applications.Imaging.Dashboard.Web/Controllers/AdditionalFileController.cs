@@ -22,5 +22,11 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         {
             return await _additionalFileApplicationService.GetAdditionalFilesById(id);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles()
+        {
+            return await _additionalFileApplicationService.GetAllAdditionalFiles();
+        }
     }
 }

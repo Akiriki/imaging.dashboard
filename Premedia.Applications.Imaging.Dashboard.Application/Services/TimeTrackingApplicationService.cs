@@ -30,5 +30,17 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             //return _mapper.Map<List<TimeTrackingReadModel>>(timeTracking);
             return null;
         }
+
+        public async Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingById(Guid id)
+        {
+            var timeTracking = await _unitOfWork.TimeTrackingRepository.GetMultipleAsync(x => x.Id==id);
+            return _mapper.Map<List<TimeTrackingReadModel>>(timeTracking);
+        }
+
+        public async Task<ActionResult<List<TimeTrackingReadModel>>> GetAllTimeTrackings()
+        {
+            var timeTracking = await _unitOfWork.TimeTrackingRepository.GetMultipleAsync();
+            return _mapper.Map<List<TimeTrackingReadModel>>(timeTracking);
+        }
     }
 }

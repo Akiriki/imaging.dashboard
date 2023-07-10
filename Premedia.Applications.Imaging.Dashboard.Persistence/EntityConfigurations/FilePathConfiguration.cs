@@ -14,6 +14,10 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
         public void Configure(EntityTypeBuilder<FilePath> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasOne(x => x.JobFiles)
+                .WithOne(x => x.FilePath);
+            builder.HasOne(x => x.AdditionalFile)
+                .WithOne(x => x.FilePath);
         }
     }
 }

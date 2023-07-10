@@ -14,6 +14,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasMany(x => x.Job)
+                .WithOne(x => x.CreatedBy);
+            builder.HasMany(x => x.Job)
+                .WithOne(x => x.Customer);
+            builder.HasMany(x => x.TimeTracking)
+                .WithOne(x => x.CreatedBy);
+            builder.HasMany(x => x.TimeTracking)
+                .WithOne(x => x.Editor);
+            builder.HasMany(x => x.History)
+                .WithOne(x => x.Editor);
         }
     }
 }

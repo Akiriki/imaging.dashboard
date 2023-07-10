@@ -11,5 +11,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
     public interface IJobFileApplicationService
     {
         Task<ActionResult<List<JobFileReadModel>>> GetNewJobFiles();
+        Task<ActionResult<List<JobFileReadModel>>> GetAllJobFiles();
+        Task<ActionResult<List<JobFileReadModel>>> GetJobFilesById(Guid id);
     }
 }

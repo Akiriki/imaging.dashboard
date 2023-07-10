@@ -28,6 +28,11 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var user = await _unitOfWork.UserRepository.GetMultipleAsync();
             return _mapper.Map<List<UserReadModel>>(user);
         }
+        public async Task<ActionResult<List<UserReadModel>>> GetUserById(Guid id)
+        {
+            var user = await _unitOfWork.UserRepository.GetMultipleAsync(x => x.Id==id);
+            return _mapper.Map<List<UserReadModel>>(user);
+        }
     }
 }
 

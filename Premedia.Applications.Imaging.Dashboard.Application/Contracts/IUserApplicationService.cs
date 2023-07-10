@@ -11,5 +11,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
     public interface IUserApplicationService
     {
         Task<ActionResult<List<UserReadModel>>> GetUser();
+        Task<ActionResult<List<UserReadModel>>> GetUserById(Guid id);
     }
 }

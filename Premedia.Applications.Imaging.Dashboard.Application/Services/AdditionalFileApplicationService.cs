@@ -29,5 +29,11 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetMultipleAsync(x => x.Id == id);
             return _mapper.Map<List<AdditionalFileReadModel>>(additionalFiles);
         }
+
+        public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles()
+        {
+            var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetMultipleAsync();
+            return _mapper.Map<List<AdditionalFileReadModel>>(additionalFiles);
+        }
     }
 }

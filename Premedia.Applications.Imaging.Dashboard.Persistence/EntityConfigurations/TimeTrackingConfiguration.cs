@@ -14,6 +14,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
         public void Configure(EntityTypeBuilder<TimeTracking> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasOne(x => x.Editor)
+                .WithMany(x => x.TimeTracking);
+            builder.HasOne(x => x.CreatedBy)
+                .WithMany(x => x.TimeTracking);
+            builder.HasOne(x => x.Job)
+                .WithMany(x => x.TimeTracking);
         }
     }
 }

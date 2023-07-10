@@ -9,5 +9,8 @@ public class Client:EntityObject
     public string FirstName { get; set; }
     public string LastName { get; set; }
 
+    public Guid JobId { get; set; }
+    public Job Job { get; set; } = null!;
+
 }
 

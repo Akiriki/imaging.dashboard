@@ -11,5 +11,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
     public interface IHistoryApplicationService
     {
         Task<ActionResult<List<HistoryReadModel>>> GetChangedHistory();
+        Task<ActionResult<List<HistoryReadModel>>> GetHistoryById(Guid id);
+        Task<ActionResult<List<HistoryReadModel>>> GetAllHistories();
     }
 }

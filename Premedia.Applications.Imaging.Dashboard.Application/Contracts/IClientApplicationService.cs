@@ -11,5 +11,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
     public interface IClientApplicationService
     {
         Task<ActionResult<List<ClientReadModel>>> GetClients();
+        Task<ActionResult<List<ClientReadModel>>> GetClientsById(Guid id);
     }
 }
