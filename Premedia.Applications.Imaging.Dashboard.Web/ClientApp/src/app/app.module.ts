@@ -15,6 +15,8 @@ import { OverviewModule } from './modules/overview/overview.module';
 import { OverviewService } from './services/overview.service';
 /*import buttons*/
 import { DropDownButtonModule, SplitButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
+import { ArchiveService } from './services/archive.service';
+import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { DropDownButtonModule, SplitButtonModule } from '@syncfusion/ej2-angular
     BrowserModule,
     GridModule,
     SplitButtonModule,
-    DropDownButtonModule
+    DropDownButtonModule,
+    ButtonModule
   ],
   providers: [
     HttpClientModule,
@@ -41,6 +44,7 @@ import { DropDownButtonModule, SplitButtonModule } from '@syncfusion/ej2-angular
     PageService,
     SortService,
     FilterService,
+    ArchiveService
   ],
   bootstrap: [AppComponent]
 })

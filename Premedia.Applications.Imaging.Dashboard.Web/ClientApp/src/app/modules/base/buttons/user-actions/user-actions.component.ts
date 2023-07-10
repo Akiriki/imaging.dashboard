@@ -8,7 +8,7 @@ import { ItemModel, MenuEventArgs, DropDownButtonModule } from '@syncfusion/ej2-
 })
 export class UserActionsComponent {
   constructor(@Inject('sourceFiles') private sourceFiles: any) {
-    sourceFiles.files = ['dropdown-button.css'];
+    sourceFiles.files = ['user-actions.component.scss'];
 }
 
 //DropDownButton items definition
@@ -17,10 +17,10 @@ public items: ItemModel[] = [
        text: 'Dashboard',
        iconCss: 'e-ddb-icons e-dashboard'
    },
-   {
+   /*{
        text: 'Notifications',
        iconCss: 'e-ddb-icons e-notifications',
-   },
+   }, */
    {
        text: 'User Settings',
        iconCss: 'e-ddb-icons e-settings',
