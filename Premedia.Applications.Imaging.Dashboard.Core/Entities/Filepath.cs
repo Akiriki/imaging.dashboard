@@ -11,7 +11,9 @@ public class FilePath : EntityObject
     public string EbvFileaction { get; set; }
 
     //Realtions
-    public JobFiles? JobFiles { get; set; }
+    public Guid JobFileId { get; set; }
+    public JobFiles JobFiles { get; set; }
+    public Guid AdditionalFileId { get; set; }
     public AdditionalFile AdditionalFile { get; set; }
 }
 

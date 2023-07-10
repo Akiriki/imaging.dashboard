@@ -24,13 +24,17 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
             builder.HasMany(x => x.History)
                 .WithOne(x => x.Job);
             builder.HasOne(x => x.Client)
-                .WithOne(x => x.Job);
+                .WithMany(x => x.Job)
+                .HasForeignKey(x => x.ClientId);
             builder.HasOne(x => x.Customer)
-                .WithMany(x => x.Job);
+                .WithMany(x => x.Job)
+                .HasForeignKey(x => x.CustomerId);
             builder.HasOne(x => x.CreatedBy)
-                .WithMany(x => x.Job);
+                .WithMany(x => x.Job)
+                .HasForeignKey(x => x.CreatorId);
             builder.HasOne(x => x.Editor)
-                .WithMany(x => x.Job);
+                .WithMany(x => x.Job)
+                .HasForeignKey(x =>x.EditorId);
         }
     }
 }

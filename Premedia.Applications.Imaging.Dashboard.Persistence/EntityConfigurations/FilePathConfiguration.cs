@@ -15,9 +15,11 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
         {
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.JobFiles)
-                .WithOne(x => x.FilePath);
+                .WithOne(x => x.FilePath)
+                .HasForeignKey<FilePath>(x => x.JobFileId);
             builder.HasOne(x => x.AdditionalFile)
-                .WithOne(x => x.FilePath);
+                .WithOne(x => x.FilePath)
+                .HasForeignKey<FilePath>(x => x.AdditionalFileId);
         }
     }
 }

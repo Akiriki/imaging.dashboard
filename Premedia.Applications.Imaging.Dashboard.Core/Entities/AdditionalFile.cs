@@ -13,7 +13,6 @@ public class AdditionalFile:EntityObject
     public Guid JobId { get; set; }
     public Job Job { get; set; } = null!;
 
-    public Guid FilePathId { get; set; }
     public FilePath FilePath { get; set; } = null!;
 }
 
