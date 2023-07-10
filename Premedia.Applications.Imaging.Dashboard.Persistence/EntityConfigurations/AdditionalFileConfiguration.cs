@@ -18,7 +18,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
                 .WithMany(x => x.AdditionalFile)
                 .HasForeignKey(x => x.JobId);
             builder.HasOne(x => x.FilePath)
-                .WithOne(x => x.AdditionalFile)
+                .WithOne(x => x.AdditionalFile);
                 //.HasForeignKey(x => x.FilePathId);
             builder.HasOne(x => x.Creator)
                 .WithMany(x => x.AdditionalFile)
