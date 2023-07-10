@@ -1,10 +1,13 @@
 import { Component, Inject } from '@angular/core';
-import { ItemModel, MenuEventArgs, DropDownButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
+import { ItemModel, MenuEventArgs } from '@syncfusion/ej2-angular-splitbuttons';
 
 @Component({
   selector: 'app-user-actions',
   templateUrl: './user-actions.component.html',
-  styleUrls: ['./user-actions.component.scss']
+  styleUrls: ['./user-actions.component.scss'],
+  providers: [
+    { provide: 'sourceFiles', useValue: { files: ['user-actions.component.scss'] } }
+  ]
 })
 export class UserActionsComponent {
   constructor(@Inject('sourceFiles') private sourceFiles: any) {

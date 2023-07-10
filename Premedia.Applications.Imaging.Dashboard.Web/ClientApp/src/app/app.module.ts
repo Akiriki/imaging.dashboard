@@ -30,8 +30,7 @@ import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
     BrowserModule,
     GridModule,
     SplitButtonModule,
-    DropDownButtonModule,
-    ButtonModule
+    DropDownButtonModule
   ],
   providers: [
     HttpClientModule,
