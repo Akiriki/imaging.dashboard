@@ -6,7 +6,7 @@ import {NgModule} from "@angular/core";
 import {RoutingConstants} from "./core/constants/routing.constants";
 import { OverviewComponent } from "./modules/overview/overview/overview.component";
 import { ArchiveComponent } from "./modules/base/archive/archive.component";
-import { AdministrationComponent } from "./modules/administration/administration.component";
+import { AdministrationComponent } from "./modules/base/administration/administration.component";
 
 export const routes: Routes = [
   { path: RoutingConstants.BASE.HOME, component: OverviewComponent, pathMatch: 'full' },
