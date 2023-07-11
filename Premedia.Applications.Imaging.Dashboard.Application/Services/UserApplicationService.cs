@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -32,6 +33,31 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
         {
             var user = await _unitOfWork.UserRepository.GetMultipleAsync(x => x.Id==id);
             return _mapper.Map<List<UserReadModel>>(user);
+        }
+
+        public async Task<ActionResult<UserReadModel>> CreateUser(User userEntity)
+        {
+            var user = _mapper.Map<User>(userEntity);
+            await _unitOfWork.UserRepository.AddAsync(user);
+            await _unitOfWork.SaveChangesAsync();
+
+            var createdModel = _mapper.Map<UserReadModel>(user);
+            return createdModel;
+        }
+
+        public async Task<ActionResult<UserReadModel>> UpdateUser(Guid id, User userEntity)
+        {
+            var existingUser = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (existingUser == null)
+            {
+                return null;
+            }
+
+            _mapper.Map(userEntity, existingUser);
+            await _unitOfWork.SaveChangesAsync();
+
+            var updatedModel = _mapper.Map<UserReadModel>(existingUser);
+            return updatedModel;
         }
     }
 }

@@ -9,7 +9,7 @@ public class Client:EntityObject
     public string FirstName { get; set; }
     public string LastName { get; set; }
 
-    public Guid JobId { get; set; }
+    //public Guid JobId { get; set; }
     public ICollection<Job> Job { get; set; } = new List<Job>();
 
 }

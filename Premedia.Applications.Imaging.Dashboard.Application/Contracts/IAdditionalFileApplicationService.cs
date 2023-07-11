@@ -13,5 +13,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
     {
         Task<ActionResult<List<AdditionalFileReadModel>>> GetAdditionalFilesById(Guid id);
         Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles();
+
+        Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(AdditionalFile additionalFileEntity);
+        Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, AdditionalFile additionalFileEntity);
     }
 }

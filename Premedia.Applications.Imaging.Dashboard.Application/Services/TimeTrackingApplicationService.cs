@@ -42,5 +42,30 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var timeTracking = await _unitOfWork.TimeTrackingRepository.GetMultipleAsync();
             return _mapper.Map<List<TimeTrackingReadModel>>(timeTracking);
         }
+
+        public async Task<ActionResult<TimeTrackingReadModel>> CreateTimeTracking(TimeTracking timeTrackingEntity)
+        {
+            var timeTracking = _mapper.Map<TimeTracking>(timeTrackingEntity);
+            await _unitOfWork.TimeTrackingRepository.AddAsync(timeTracking);
+            await _unitOfWork.SaveChangesAsync();
+
+            var createdModel = _mapper.Map<TimeTrackingReadModel>(timeTracking);
+            return createdModel;
+        }
+
+        public async Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(Guid id, TimeTracking timeTrackingEntity)
+        {
+            var existingTimeTracking = await _unitOfWork.TimeTrackingRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (existingTimeTracking == null)
+            {
+                return null;
+            }
+
+            _mapper.Map(timeTrackingEntity, existingTimeTracking);
+            await _unitOfWork.SaveChangesAsync();
+
+            var updatedModel = _mapper.Map<TimeTrackingReadModel>(existingTimeTracking);
+            return updatedModel;
+        }
     }
 }

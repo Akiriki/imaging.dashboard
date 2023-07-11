@@ -35,5 +35,30 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetMultipleAsync();
             return _mapper.Map<List<AdditionalFileReadModel>>(additionalFiles);
         }
+
+        public async Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(AdditionalFile additionalFileEntity)
+        {
+            var additionalFile = _mapper.Map<AdditionalFile>(additionalFileEntity);
+            await _unitOfWork.AdditionalFileRepository.AddAsync(additionalFile);
+            await _unitOfWork.SaveChangesAsync();
+
+            var createdModel = _mapper.Map<AdditionalFileReadModel>(additionalFile);
+            return createdModel;
+        }
+
+        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, AdditionalFile additionalFileEntity)
+        {
+            var existingFile = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (existingFile == null)
+            {
+                return null;
+            }
+
+            _mapper.Map(additionalFileEntity, existingFile);
+            await _unitOfWork.SaveChangesAsync();
+
+            var updatedModel = _mapper.Map<AdditionalFileReadModel>(existingFile);
+            return updatedModel;
+        }
     }
 }

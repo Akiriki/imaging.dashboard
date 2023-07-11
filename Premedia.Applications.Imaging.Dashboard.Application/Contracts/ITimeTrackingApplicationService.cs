@@ -14,5 +14,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
         Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingByEditor(User editor);
         Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingById(Guid id);
         Task<ActionResult<List<TimeTrackingReadModel>>> GetAllTimeTrackings();
+        Task<ActionResult<TimeTrackingReadModel>> CreateTimeTracking(TimeTracking timeTrackingEntity);
+        Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(Guid id, TimeTracking timeTrackingEntity);
     }
 }

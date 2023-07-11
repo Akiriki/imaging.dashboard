@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -39,6 +40,31 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
         {
             var history = await _unitOfWork.HistoryRepository.GetMultipleAsync();
             return _mapper.Map<List<HistoryReadModel>>(history);
+        }
+
+        public async Task<ActionResult<HistoryReadModel>> CreateHistory(History historyEntity)
+        {
+            var history = _mapper.Map<History>(historyEntity);
+            await _unitOfWork.HistoryRepository.AddAsync(history);
+            await _unitOfWork.SaveChangesAsync();
+
+            var createdModel = _mapper.Map<HistoryReadModel>(history);
+            return createdModel;
+        }
+
+        public async Task<ActionResult<HistoryReadModel>> UpdateHistory(Guid id, History historyEntity)
+        {
+            var existingHistory = await _unitOfWork.HistoryRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (existingHistory == null)
+            {
+                return null;
+            }
+            
+            _mapper.Map(historyEntity, existingHistory);
+            await _unitOfWork.SaveChangesAsync();
+
+            var updatedModel = _mapper.Map<HistoryReadModel>(existingHistory);
+            return updatedModel;
         }
     }
 }

@@ -22,8 +22,8 @@ public class JobFiles:EntityObject
 
 
     //Realtions
-    public Guid CreatorId { get; set; }
-    public User CreatedBy { get; set; } = null!;
+    /*public Guid CreatorId { get; set; }
+    public User CreatedBy { get; set; } = null!;*/
 
     public Guid JobId { get; set; }
     public Job Job { get; set; } = null!;

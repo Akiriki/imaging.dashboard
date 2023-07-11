@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -40,6 +41,31 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
         {
             var jobfiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Id == id);
             return _mapper.Map<List<JobFileReadModel>>(jobfiles);
+        }
+
+        public async Task<ActionResult<JobFileReadModel>> CreateJobFile(JobFiles jobFileEntity)
+        {
+            var jobFile = _mapper.Map<JobFiles>(jobFileEntity);
+            await _unitOfWork.JobFileRepository.AddAsync(jobFile);
+            await _unitOfWork.SaveChangesAsync();
+
+            var createdModel = _mapper.Map<JobFileReadModel>(jobFile);
+            return createdModel;
+        }
+
+        public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, JobFiles jobFileEntity)
+        {
+            var existingJobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (existingJobFile == null)
+            {
+                return null;
+            }
+
+            _mapper.Map(jobFileEntity, existingJobFile);
+            await _unitOfWork.SaveChangesAsync();
+
+            var updatedModel = _mapper.Map<JobFileReadModel>(existingJobFile);
+            return updatedModel;
         }
     }
 }
