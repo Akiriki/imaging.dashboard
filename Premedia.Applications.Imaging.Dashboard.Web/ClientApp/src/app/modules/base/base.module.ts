@@ -7,9 +7,9 @@ import {SharedModule} from "../../shared/shared.module";
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {NgClass, NgIf} from '@angular/common';
 import { ArchiveComponent } from './archive/archive.component';
-import { AdministrationComponent } from './administration/administration.component';
 import { UserActionsComponent } from './buttons/user-actions/user-actions.component';
 import { AcceptOrderComponent } from './buttons/accept-order/accept-order.component';
+import { AdministrationComponent } from "./administration/administration.component";
 
 @NgModule({
   declarations: [
