@@ -11,7 +11,7 @@ public class JobFiles:EntityObject
     public string EditedFilename { get; set; }
     public string FileExtension { get; set; }
     
-    //public Status Status { get; set; }
+    public Status Status { get; set; }
     public string FileProperties { get; set; }
     public string Thumbnail { get; set; }
     public string Activity { get; set; }

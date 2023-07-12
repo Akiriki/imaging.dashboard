@@ -25,14 +25,14 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _timeTrackingApplicationService.GetTimeTrackingByEditor(editor);
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetAllTimeTrackings))]
         public async Task<ActionResult<List<TimeTrackingReadModel>>> GetAllTimeTrackings()
         {
             return await _timeTrackingApplicationService.GetAllTimeTrackings();
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<TimeTrackingReadModel>>> GetTimetrackingsById(Guid id)
+        [HttpGet(nameof(GetTimeTrackingsById))]
+        public async Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingsById(Guid id)
         {
             return await _timeTrackingApplicationService.GetTimeTrackingById(id);
         }

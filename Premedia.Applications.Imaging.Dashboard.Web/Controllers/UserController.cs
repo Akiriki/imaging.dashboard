@@ -25,7 +25,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _userApplicationService.GetUser();
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetUserById))]
         public async Task<ActionResult<List<UserReadModel>>> GetUserById(Guid id)
         {
             return await _userApplicationService.GetUserById(id);

@@ -25,13 +25,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _jobFileApplicationService.GetNewJobFiles();
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetAllJobFiles))]
         public async Task<ActionResult<List<JobFileReadModel>>> GetAllJobFiles()
         {
             return await _jobFileApplicationService.GetAllJobFiles();
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetJobFilesById))]
         public async Task<ActionResult<List<JobFileReadModel>>> GetJobFilesById(Guid id)
         {
             return await _jobFileApplicationService.GetJobFilesById(id);

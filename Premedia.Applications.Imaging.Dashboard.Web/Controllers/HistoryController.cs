@@ -25,13 +25,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _historyApplicationService.GetChangedHistory();
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetHistoryById))]
         public async Task<ActionResult<List<HistoryReadModel>>> GetHistoryById(Guid id)
         {
             return await _historyApplicationService.GetHistoryById(id);
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetAllHistories))]
         public async Task<ActionResult<List<HistoryReadModel>>> GetAllHistories()
         {
             return await _historyApplicationService.GetAllHistories();

@@ -12,8 +12,8 @@ using Premedia.Applications.Imaging.Dashboard.Persistence;
 namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 {
     [DbContext(typeof(ImagingDashboardDbContext))]
-    [Migration("20230711090210_ChangedJobRelations")]
-    partial class ChangedJobRelations
+    [Migration("20230712112603_MoreUserRelations")]
+    partial class MoreUserRelations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -189,6 +189,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -200,6 +203,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 
                     b.Property<bool>("EasyJob")
                         .HasColumnType("bit");
+
+                    b.Property<Guid?>("EditorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("JobInfo")
                         .IsRequired()
@@ -223,7 +229,11 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 
                     b.HasIndex("ClientId");
 
+                    b.HasIndex("CreatorId");
+
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("EditorId");
 
                     b.ToTable("Job");
                 });
@@ -306,6 +316,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
@@ -322,6 +335,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                         .HasColumnType("time");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
 
                     b.HasIndex("EditorId");
 
@@ -417,18 +432,33 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.Client", "Client")
                         .WithMany("Job")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "CreatedBy")
+                        .WithMany("JobsAsCreator")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "Customer")
-                        .WithMany("Job")
+                        .WithMany("JobsAsCustomer")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "Editor")
+                        .WithMany("JobsAsEditor")
+                        .HasForeignKey("EditorId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Client");
 
+                    b.Navigation("CreatedBy");
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Editor");
                 });
 
             modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.JobFiles", b =>
@@ -436,7 +466,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.Job", "Job")
                         .WithMany("JobFiles")
                         .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Job");
@@ -444,10 +474,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 
             modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.TimeTracking", b =>
                 {
+                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "CreatedBy")
+                        .WithMany("TimeTrackingCreator")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "Editor")
-                        .WithMany("TimeTracking")
+                        .WithMany("TimeTrackingEditor")
                         .HasForeignKey("EditorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.Job", "Job")
@@ -455,6 +491,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                         .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Editor");
 
@@ -493,9 +531,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 {
                     b.Navigation("History");
 
-                    b.Navigation("Job");
+                    b.Navigation("JobsAsCreator");
 
-                    b.Navigation("TimeTracking");
+                    b.Navigation("JobsAsCustomer");
+
+                    b.Navigation("JobsAsEditor");
+
+                    b.Navigation("TimeTrackingCreator");
+
+                    b.Navigation("TimeTrackingEditor");
                 });
 #pragma warning restore 612, 618
         }

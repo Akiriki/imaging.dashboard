@@ -12,8 +12,8 @@ using Premedia.Applications.Imaging.Dashboard.Persistence;
 namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 {
     [DbContext(typeof(ImagingDashboardDbContext))]
-    [Migration("20230711082241_RelationCreation")]
-    partial class RelationCreation
+    [Migration("20230712094030_RelationChange")]
+    partial class RelationChange
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -417,13 +417,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.Client", "Client")
                         .WithMany("Job")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "Customer")
                         .WithMany("Job")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -436,7 +436,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.Job", "Job")
                         .WithMany("JobFiles")
                         .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Job");

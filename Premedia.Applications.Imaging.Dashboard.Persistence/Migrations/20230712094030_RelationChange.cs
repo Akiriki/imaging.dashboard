@@ -6,20 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedAttributes : Migration
+    public partial class RelationChange : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "FilePath",
+                table: "JobFiles");
+
+            migrationBuilder.DropColumn(
+                name: "Filepath",
+                table: "AdditionalFile");
+
             migrationBuilder.AddColumn<Guid>(
-                name: "CreatedById",
+                name: "EditorId",
                 table: "TimeTracking",
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<Guid>(
-                name: "EditorId",
+                name: "JobId",
                 table: "TimeTracking",
                 type: "uniqueidentifier",
                 nullable: false,
@@ -33,21 +41,21 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 defaultValue: new TimeSpan(0, 0, 0, 0, 0));
 
             migrationBuilder.AddColumn<Guid>(
-                name: "CreatedById",
+                name: "FilePathId",
                 table: "JobFiles",
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<Guid>(
-                name: "AdditionalFileId",
-                table: "Job",
+                name: "JobId",
+                table: "JobFiles",
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<Guid>(
-                name: "CreatedById",
+                name: "ClientId",
                 table: "Job",
                 type: "uniqueidentifier",
                 nullable: false,
@@ -74,26 +82,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 nullable: false,
                 defaultValue: false);
 
-            migrationBuilder.AddColumn<Guid>(
-                name: "EditorId",
-                table: "Job",
-                type: "uniqueidentifier",
-                nullable: true);
-
-            migrationBuilder.AddColumn<Guid>(
-                name: "HistoriesId",
-                table: "Job",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
-
-            migrationBuilder.AddColumn<Guid>(
-                name: "JobFilesId",
-                table: "Job",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
-
             migrationBuilder.AddColumn<string>(
                 name: "JobInfo",
                 table: "Job",
@@ -123,23 +111,39 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddColumn<Guid>(
-                name: "TimeTrackingId",
-                table: "Job",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
-
-            migrationBuilder.AddColumn<Guid>(
                 name: "EditorId",
                 table: "History",
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
-            migrationBuilder.CreateIndex(
-                name: "IX_TimeTracking_CreatedById",
-                table: "TimeTracking",
-                column: "CreatedById");
+            migrationBuilder.AddColumn<Guid>(
+                name: "JobId",
+                table: "History",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "AdditionalFileId",
+                table: "FilePath",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "JobFileId",
+                table: "FilePath",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "JobId",
+                table: "AdditionalFile",
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.CreateIndex(
                 name: "IX_TimeTracking_EditorId",
@@ -147,19 +151,19 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 column: "EditorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobFiles_CreatedById",
+                name: "IX_TimeTracking_JobId",
+                table: "TimeTracking",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobFiles_JobId",
                 table: "JobFiles",
-                column: "CreatedById");
+                column: "JobId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Job_AdditionalFileId",
+                name: "IX_Job_ClientId",
                 table: "Job",
-                column: "AdditionalFileId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Job_CreatedById",
-                table: "Job",
-                column: "CreatedById");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Job_CustomerId",
@@ -167,29 +171,63 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Job_EditorId",
-                table: "Job",
-                column: "EditorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Job_HistoriesId",
-                table: "Job",
-                column: "HistoriesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Job_JobFilesId",
-                table: "Job",
-                column: "JobFilesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Job_TimeTrackingId",
-                table: "Job",
-                column: "TimeTrackingId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_History_EditorId",
                 table: "History",
                 column: "EditorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_History_JobId",
+                table: "History",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FilePath_AdditionalFileId",
+                table: "FilePath",
+                column: "AdditionalFileId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FilePath_JobFileId",
+                table: "FilePath",
+                column: "JobFileId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AdditionalFile_JobId",
+                table: "AdditionalFile",
+                column: "JobId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AdditionalFile_Job_JobId",
+                table: "AdditionalFile",
+                column: "JobId",
+                principalTable: "Job",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_FilePath_AdditionalFile_AdditionalFileId",
+                table: "FilePath",
+                column: "AdditionalFileId",
+                principalTable: "AdditionalFile",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_FilePath_JobFiles_JobFileId",
+                table: "FilePath",
+                column: "JobFileId",
+                principalTable: "JobFiles",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_History_Job_JobId",
+                table: "History",
+                column: "JobId",
+                principalTable: "Job",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_History_User_EditorId",
@@ -200,73 +238,31 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Job_AdditionalFile_AdditionalFileId",
+                name: "FK_Job_Client_ClientId",
                 table: "Job",
-                column: "AdditionalFileId",
-                principalTable: "AdditionalFile",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Job_History_HistoriesId",
-                table: "Job",
-                column: "HistoriesId",
-                principalTable: "History",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Job_JobFiles_JobFilesId",
-                table: "Job",
-                column: "JobFilesId",
-                principalTable: "JobFiles",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Job_TimeTracking_TimeTrackingId",
-                table: "Job",
-                column: "TimeTrackingId",
-                principalTable: "TimeTracking",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Job_User_CreatedById",
-                table: "Job",
-                column: "CreatedById",
-                principalTable: "User",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "ClientId",
+                principalTable: "Client",
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Job_User_CustomerId",
                 table: "Job",
                 column: "CustomerId",
                 principalTable: "User",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Job_User_EditorId",
-                table: "Job",
-                column: "EditorId",
-                principalTable: "User",
                 principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_JobFiles_User_CreatedById",
+                name: "FK_JobFiles_Job_JobId",
                 table: "JobFiles",
-                column: "CreatedById",
-                principalTable: "User",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "JobId",
+                principalTable: "Job",
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_TimeTracking_User_CreatedById",
+                name: "FK_TimeTracking_Job_JobId",
                 table: "TimeTracking",
-                column: "CreatedById",
-                principalTable: "User",
+                column: "JobId",
+                principalTable: "Job",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
@@ -283,27 +279,27 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_AdditionalFile_Job_JobId",
+                table: "AdditionalFile");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_FilePath_AdditionalFile_AdditionalFileId",
+                table: "FilePath");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_FilePath_JobFiles_JobFileId",
+                table: "FilePath");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_History_Job_JobId",
+                table: "History");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_History_User_EditorId",
                 table: "History");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Job_AdditionalFile_AdditionalFileId",
-                table: "Job");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Job_History_HistoriesId",
-                table: "Job");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Job_JobFiles_JobFilesId",
-                table: "Job");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Job_TimeTracking_TimeTrackingId",
-                table: "Job");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Job_User_CreatedById",
+                name: "FK_Job_Client_ClientId",
                 table: "Job");
 
             migrationBuilder.DropForeignKey(
@@ -311,15 +307,11 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 table: "Job");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Job_User_EditorId",
-                table: "Job");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_JobFiles_User_CreatedById",
+                name: "FK_JobFiles_Job_JobId",
                 table: "JobFiles");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_TimeTracking_User_CreatedById",
+                name: "FK_TimeTracking_Job_JobId",
                 table: "TimeTracking");
 
             migrationBuilder.DropForeignKey(
@@ -327,23 +319,19 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 table: "TimeTracking");
 
             migrationBuilder.DropIndex(
-                name: "IX_TimeTracking_CreatedById",
-                table: "TimeTracking");
-
-            migrationBuilder.DropIndex(
                 name: "IX_TimeTracking_EditorId",
                 table: "TimeTracking");
 
             migrationBuilder.DropIndex(
-                name: "IX_JobFiles_CreatedById",
+                name: "IX_TimeTracking_JobId",
+                table: "TimeTracking");
+
+            migrationBuilder.DropIndex(
+                name: "IX_JobFiles_JobId",
                 table: "JobFiles");
 
             migrationBuilder.DropIndex(
-                name: "IX_Job_AdditionalFileId",
-                table: "Job");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Job_CreatedById",
+                name: "IX_Job_ClientId",
                 table: "Job");
 
             migrationBuilder.DropIndex(
@@ -351,31 +339,31 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 table: "Job");
 
             migrationBuilder.DropIndex(
-                name: "IX_Job_EditorId",
-                table: "Job");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Job_HistoriesId",
-                table: "Job");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Job_JobFilesId",
-                table: "Job");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Job_TimeTrackingId",
-                table: "Job");
-
-            migrationBuilder.DropIndex(
                 name: "IX_History_EditorId",
                 table: "History");
 
-            migrationBuilder.DropColumn(
-                name: "CreatedById",
-                table: "TimeTracking");
+            migrationBuilder.DropIndex(
+                name: "IX_History_JobId",
+                table: "History");
+
+            migrationBuilder.DropIndex(
+                name: "IX_FilePath_AdditionalFileId",
+                table: "FilePath");
+
+            migrationBuilder.DropIndex(
+                name: "IX_FilePath_JobFileId",
+                table: "FilePath");
+
+            migrationBuilder.DropIndex(
+                name: "IX_AdditionalFile_JobId",
+                table: "AdditionalFile");
 
             migrationBuilder.DropColumn(
                 name: "EditorId",
+                table: "TimeTracking");
+
+            migrationBuilder.DropColumn(
+                name: "JobId",
                 table: "TimeTracking");
 
             migrationBuilder.DropColumn(
@@ -383,15 +371,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 table: "TimeTracking");
 
             migrationBuilder.DropColumn(
-                name: "CreatedById",
+                name: "FilePathId",
                 table: "JobFiles");
 
             migrationBuilder.DropColumn(
-                name: "AdditionalFileId",
-                table: "Job");
+                name: "JobId",
+                table: "JobFiles");
 
             migrationBuilder.DropColumn(
-                name: "CreatedById",
+                name: "ClientId",
                 table: "Job");
 
             migrationBuilder.DropColumn(
@@ -404,18 +392,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 
             migrationBuilder.DropColumn(
                 name: "EasyJob",
-                table: "Job");
-
-            migrationBuilder.DropColumn(
-                name: "EditorId",
-                table: "Job");
-
-            migrationBuilder.DropColumn(
-                name: "HistoriesId",
-                table: "Job");
-
-            migrationBuilder.DropColumn(
-                name: "JobFilesId",
                 table: "Job");
 
             migrationBuilder.DropColumn(
@@ -435,12 +411,38 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                 table: "Job");
 
             migrationBuilder.DropColumn(
-                name: "TimeTrackingId",
-                table: "Job");
-
-            migrationBuilder.DropColumn(
                 name: "EditorId",
                 table: "History");
+
+            migrationBuilder.DropColumn(
+                name: "JobId",
+                table: "History");
+
+            migrationBuilder.DropColumn(
+                name: "AdditionalFileId",
+                table: "FilePath");
+
+            migrationBuilder.DropColumn(
+                name: "JobFileId",
+                table: "FilePath");
+
+            migrationBuilder.DropColumn(
+                name: "JobId",
+                table: "AdditionalFile");
+
+            migrationBuilder.AddColumn<string>(
+                name: "FilePath",
+                table: "JobFiles",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Filepath",
+                table: "AdditionalFile",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
         }
     }
 }

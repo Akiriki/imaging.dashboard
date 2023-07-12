@@ -11,10 +11,14 @@ public class User:EntityObject
 
     //Realtions
     public ICollection<History> History { get; set; }=new List<History>();
-    public ICollection<TimeTracking> TimeTracking { get; set; } = new List<TimeTracking>();
-    public ICollection<Job> Job { get; set; } = new List<Job>();
+    public ICollection<TimeTracking> TimeTrackingCreator { get; set; } = new List<TimeTracking>();
+    public ICollection<TimeTracking> TimeTrackingEditor { get; set; } = new List<TimeTracking>();
+    public ICollection<Job> JobsAsEditor { get; set; } = new List<Job>();
+    public ICollection<Job> JobsAsCreator { get; set; } = new List<Job>();
+    public ICollection<Job> JobsAsCustomer { get; set; } = new List<Job>();
+
     //public ICollection<JobFiles> JobFiles { get; set; } = new List<JobFiles>();
-   // public ICollection<AdditionalFile> AdditionalFile { get; set; } = new List<AdditionalFile>();
+    // public ICollection<AdditionalFile> AdditionalFile { get; set; } = new List<AdditionalFile>();
 
 }
 

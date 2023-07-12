@@ -25,19 +25,19 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _jobApplicationService.GetNewJobs();
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetAllJobs))]
         public async Task<ActionResult<List<JobReadModel>>> GetAllJobs()
         {
             return await _jobApplicationService.GetAllJobs();
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetJobsById))]
         public async Task<ActionResult<List<JobReadModel>>> GetJobsById(Guid id)
         {
             return await _jobApplicationService.GetJobsById(id);
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetJobsByEditor))]
         public async Task<ActionResult<List<JobReadModel>>> GetJobsByEditor(User editor)
         {
             return await _jobApplicationService.GetJobsByEditor(editor);

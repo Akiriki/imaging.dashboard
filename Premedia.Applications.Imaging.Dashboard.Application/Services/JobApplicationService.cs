@@ -74,5 +74,24 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var updatedModel = _mapper.Map<JobReadModel>(existingJob);
             return updatedModel;
         }
+
+        public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, User editor)
+        {
+            /*var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (existingJob == null)
+            {
+                return null;
+            }
+
+            var newJob=existingJob;
+            existingJob.Editor = editor;
+
+            _mapper.Map(new Job, existingJob);
+            await _unitOfWork.SaveChangesAsync();
+
+            var updatedModel = _mapper.Map<JobReadModel>(existingJob);
+            return updatedModel;*/
+            return null;
+        }
     }
 }

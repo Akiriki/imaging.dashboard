@@ -14,11 +14,11 @@ public class Job:EntityObject
     public Guid SwitchJobId { get; set; }
     public string JobInfo { get; set; }
     
-    //public OrderType OrderType { get; set; }
+    public OrderType OrderType { get; set; }
     
     public string Project { get; set; }
     public bool EasyJob { get; set; }
-    //public BillingOption BillingOption { get; set; }
+    public BillingOption BillingOption { get; set; }
     
 
 
@@ -32,11 +32,11 @@ public class Job:EntityObject
     public Guid CustomerId { get; set; }
     public User Customer { get; set; } = null!;
 
-   /* public Guid CreatorId { get; set; }
+    public Guid CreatorId { get; set; }
     public User CreatedBy { get; set; } = null!;
 
     public Guid? EditorId { get; set; }
-    public User? Editor { get; set; }*/
+    public User? Editor { get; set; }
 
     public Guid ClientId { get; set; }
     public Client Client { get; set; } = null!;
