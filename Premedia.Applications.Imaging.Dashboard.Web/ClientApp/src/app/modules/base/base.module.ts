@@ -10,6 +10,8 @@ import { ArchiveComponent } from './archive/archive.component';
 import { UserActionsComponent } from './buttons/user-actions/user-actions.component';
 import { AcceptOrderComponent } from './buttons/accept-order/accept-order.component';
 import { AdministrationComponent } from "./administration/administration.component";
+import { ActivitiesComponent } from './administration/activities/activities.component';
+import { CustomerMappingComponent } from './administration/customer-mapping/customer-mapping.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { AdministrationComponent } from "./administration/administration.compone
     ArchiveComponent,
     AdministrationComponent,
     UserActionsComponent,
-    AcceptOrderComponent
+    AcceptOrderComponent,
+    ActivitiesComponent,
+    CustomerMappingComponent
   ],
   imports: [
     SharedModule
