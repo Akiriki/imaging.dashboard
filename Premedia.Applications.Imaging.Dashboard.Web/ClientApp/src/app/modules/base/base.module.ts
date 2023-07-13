@@ -12,6 +12,8 @@ import { AcceptOrderComponent } from './buttons/accept-order/accept-order.compon
 import { AdministrationComponent } from "./administration/administration.component";
 import { ActivitiesComponent } from './administration/activities/activities.component';
 import { CustomerMappingComponent } from './administration/customer-mapping/customer-mapping.component';
+import { ProjectsComponent } from './administration/projects/projects.component';
+import { AdministrationActionsComponent } from './buttons/administration-actions/administration-actions.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { CustomerMappingComponent } from './administration/customer-mapping/cust
     UserActionsComponent,
     AcceptOrderComponent,
     ActivitiesComponent,
-    CustomerMappingComponent
+    CustomerMappingComponent,
+    ProjectsComponent,
+    AdministrationActionsComponent
   ],
   imports: [
     SharedModule

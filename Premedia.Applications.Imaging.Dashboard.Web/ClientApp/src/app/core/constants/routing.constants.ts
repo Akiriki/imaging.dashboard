@@ -4,6 +4,9 @@ export const RoutingConstants = {
     COUNTER: 'counter',
     FETCH_DATA: 'fetch-data',
     ARCHIVE : 'archive',
-    ADMINISTRATION : 'administration'
+    ADMINISTRATION : 'administration',
+    ACTIVITIES : 'activities',
+    CUSTOMER_MAPPING : 'customer-mapping',
+    PROJECTS : 'projects'
   }
 }

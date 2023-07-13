@@ -17,7 +17,7 @@ export type Archiv =  {
 export class ArchiveService{
 
   archiveContent = new BehaviorSubject<Archiv[]>([]);
-  public pageSettings : PageSettingsModel = { pageSize : 5 };
+  public pageSettings : PageSettingsModel = { pageSize : 10 };
 
   private archiveList : Archiv[] = [
     {id : '1', jobNumber : 'Job Test 01', title : 'Christoph Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), editor : 'Christoph', status : 'offen'},
