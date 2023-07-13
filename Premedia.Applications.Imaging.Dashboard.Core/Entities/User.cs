@@ -17,8 +17,8 @@ public class User:EntityObject
     public ICollection<Job> JobsAsCreator { get; set; } = new List<Job>();
     public ICollection<Job> JobsAsCustomer { get; set; } = new List<Job>();
 
-    //public ICollection<JobFiles> JobFiles { get; set; } = new List<JobFiles>();
-    // public ICollection<AdditionalFile> AdditionalFile { get; set; } = new List<AdditionalFile>();
+    public ICollection<JobFiles> JobFiles { get; set; } = new List<JobFiles>();
+    public ICollection<AdditionalFile> AdditionalFile { get; set; } = new List<AdditionalFile>();
 
 }
 

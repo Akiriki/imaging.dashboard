@@ -17,7 +17,7 @@ public class Job:EntityObject
     public OrderType OrderType { get; set; }
     
     public string Project { get; set; }
-    public bool EasyJob { get; set; }
+    public string EasyJob { get; set; }
     public BillingOption BillingOption { get; set; }
     
 

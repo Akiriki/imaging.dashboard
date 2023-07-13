@@ -20,15 +20,15 @@ public class JobFiles:EntityObject
     public string ErrorCode { get; set; }
     public string ErrorMessage { get; set; }
 
-
+    
     //Realtions
-    /*public Guid CreatorId { get; set; }
-    public User CreatedBy { get; set; } = null!;*/
+    public Guid CreatorId { get; set; }
+    public User Creator { get; set; } = null!;
 
     public Guid JobId { get; set; }
     public Job Job { get; set; } = null!;
 
-    public Guid FilePathId { get; set; }
+    //public Guid FilePathId { get; set; }
     public FilePath FilePath { get; set; } = null!;
 
 }

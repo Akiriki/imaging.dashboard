@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Premedia.Applications.Imaging.Dashboard.Persistence;
 
@@ -11,9 +12,11 @@ using Premedia.Applications.Imaging.Dashboard.Persistence;
 namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 {
     [DbContext(typeof(ImagingDashboardDbContext))]
-    partial class ImagingDashboardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713091125_UserDatatypesAddition")]
+    partial class UserDatatypesAddition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,9 +209,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EasyJob")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("EasyJob")
+                        .HasColumnType("bit");
 
                     b.Property<Guid?>("EditorId")
                         .HasColumnType("uniqueidentifier");
@@ -281,6 +283,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.Property<string>("FileExtension")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("FilePathId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FileProperties")
                         .IsRequired()

@@ -32,6 +32,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
             builder.HasMany(x => x.History)
                 .WithOne(x => x.Editor)
                 .HasForeignKey(x => x.EditorId);
+            builder.HasMany(x => x.AdditionalFile)
+                .WithOne(x => x.Creator)
+                .HasForeignKey(x => x.CreatorId);
         }
     }
 }
