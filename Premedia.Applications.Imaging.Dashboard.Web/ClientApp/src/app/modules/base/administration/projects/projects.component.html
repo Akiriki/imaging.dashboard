@@ -1,1 +1,26 @@
-<p>projects works!</p>
+<br>
+<h3 class="headings">Projekte - Easy Job</h3>
+<br>
+<br>
+<br>
+
+<div class="container">
+  <div class="button-container">
+    <button ejs-button>Anlegen</button>
+  </div>
+
+  <div class="table-container">
+    <ejs-grid [dataSource]='projectDeclarationList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true" [width]="500">
+      <e-columns>
+        <e-column field='id' headerText='Nr.' [width]="100" [textAlign]="'center'"></e-column>
+        <e-column field='name' headerText='Projekt'></e-column>
+      </e-columns>
+      </ejs-grid>
+  </div>
+</div>
+
+<br>
+<br>
+
+
+

@@ -6,7 +6,6 @@ import {NgModule} from "@angular/core";
 import {RoutingConstants} from "./core/constants/routing.constants";
 import { OverviewComponent } from "./modules/overview/overview/overview.component";
 import { ArchiveComponent } from "./modules/base/archive/archive.component";
-import { AdministrationComponent } from "./modules/base/administration/administration.component";
 import { ActivitiesComponent } from "./modules/base/administration/activities/activities.component";
 import { CustomerMappingComponent } from "./modules/base/administration/customer-mapping/customer-mapping.component";
 import { ProjectsComponent } from "./modules/base/administration/projects/projects.component";
@@ -16,14 +15,16 @@ export const routes: Routes = [
   { path: RoutingConstants.BASE.COUNTER, component: CounterComponent },
   { path: RoutingConstants.BASE.FETCH_DATA, component: FetchDataComponent },
   { path: RoutingConstants.BASE.ARCHIVE, component: ArchiveComponent},
-  { path: RoutingConstants.BASE.ADMINISTRATION, component: AdministrationComponent,
-   children:[
+  { path: RoutingConstants.BASE.ACTIVITIES, component: ActivitiesComponent },
+  { path: RoutingConstants.BASE.CUSTOMER_MAPPING, component: CustomerMappingComponent} ,
+  { path: RoutingConstants.BASE.PROJECTS, component: ProjectsComponent }
+   /*children:[
       { path : RoutingConstants.BASE.ACTIVITIES, component: ActivitiesComponent },
       { path : RoutingConstants.BASE.CUSTOMER_MAPPING, component : CustomerMappingComponent },
       { path : RoutingConstants.BASE.PROJECTS, component : ProjectsComponent }
-    ]
-  }
+    ]*/
 ]
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

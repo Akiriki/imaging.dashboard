@@ -6,7 +6,7 @@ import {BehaviorSubject} from 'rxjs';
 export type Activities =  {
   id : string
   customer: string
-  serviceLocation : string
+  serviceType : string
   quality : string
 }
 
@@ -20,11 +20,12 @@ export type CustomerMapping = {
   erpContact : string
 }
 
-/*
-export type ProjectDeclaration = {
 
+export type ProjectDeclaration = {
+  id : string
+  name : string
 }
-*/
+
 
 @Injectable()
 export class AdministrationService{
@@ -35,13 +36,13 @@ export class AdministrationService{
   activitiesContent = new BehaviorSubject<Activities[]>([]);
 
   private activitiesList : Activities[] = [
-    {id : '1', customer : 'XXLAT', serviceLocation : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
-    {id : '2', customer : 'XXLAT', serviceLocation : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
-    {id : '3', customer : 'XXLAT', serviceLocation : 'Bearbeitung HQ eciRGB v2', quality: 'LQ'},
-    {id : '4', customer : 'XXLAT', serviceLocation : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
-    {id : '5', customer : 'XXLAT', serviceLocation : 'Bearbeitung HQ eciRGB v2', quality: 'LQ'},
-    {id : '6', customer : 'XXLAT', serviceLocation : 'Bearbeitung HQ eciRGB v2', quality: 'MQ'},
-    {id : '7', customer : 'XXLAT', serviceLocation : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'}
+    {id : '1', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
+    {id : '2', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
+    {id : '3', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'LQ'},
+    {id : '4', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
+    {id : '5', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'LQ'},
+    {id : '6', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'MQ'},
+    {id : '7', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'}
   ]
 
   customerMappingContent = new BehaviorSubject<CustomerMapping[]>([]);
@@ -56,11 +57,24 @@ export class AdministrationService{
     {id : '7', name : 'Lutz EBV', customer : 'XXLAT', projectType : 'FLAT ULAT PLAT XLAT', erpCustomer: 'XXLutz CH', erpProduct : 'XXXLutz CH EBV', erpContact : 'Rober Auinger'},
   ]
 
+  projectDeclarationContent = new BehaviorSubject<ProjectDeclaration[]>([]);
+
+  private projectDeclarationList : ProjectDeclaration[] = [
+    {id : '1', name : 'VHU8-2-a'},
+    {id : '2', name : 'VAT08-2-a'},
+    {id : '3', name : 'VHU8-2-b'},
+    {id : '4', name : 'VHU8-2-x'}
+  ]
+
   loadActivities(){
     this.activitiesContent.next(this.activitiesList);
   }
 
   loadCustomerMappingList(){
     this.customerMappingContent.next(this.customerMappingList);
+  }
+
+  loadProjectDeclaration(){
+    this.projectDeclarationContent.next(this.projectDeclarationList);
   }
 }
