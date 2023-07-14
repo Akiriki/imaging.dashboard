@@ -8,5 +8,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
     public class AdditionalFileReadModel
     {
+        public string Title { get; set; }
     }
 }

@@ -26,30 +26,27 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobReadModel>>> GetNewJobs()
         {
-            //var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Editor == null);
-            //return _mapper.Map<List<JobReadModel>>(jobs);
-            return null;
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Editor == null);
+            return _mapper.Map<List<JobReadModel>>(jobs);
         }
 
         public async Task<ActionResult<List<JobReadModel>>> GetAllJobs()
         {
-            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync();
+            var jobs = await _unitOfWork.JobRepository.GetAllAsync();
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
 
-        public async Task<ActionResult<List<JobReadModel>>> GetJobsById(Guid id)
+        public async Task<ActionResult<JobReadModel>> GetJobById(Guid id)
         {
-            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Id==id);
-            return _mapper.Map<List<JobReadModel>>(jobs);
+            var jobs = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id==id);
+            return _mapper.Map<JobReadModel>(jobs);
         }
 
         public async Task<ActionResult<List<JobReadModel>>> GetJobsByEditor(User editor)
         {
-            //var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Editor==editor);
-            //return _mapper.Map<List<JobReadModel>>(jobs);
-            return null;
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Editor==editor);
+            return _mapper.Map<List<JobReadModel>>(jobs);
         }
-
         public async Task<ActionResult<JobReadModel>> CreateJob(Job jobEntity)
         {
             var job = _mapper.Map<Job>(jobEntity);
@@ -77,21 +74,20 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, User editor)
         {
-            /*var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             if (existingJob == null)
             {
                 return null;
             }
 
             var newJob=existingJob;
-            existingJob.Editor = editor;
+            newJob.Editor = editor;
 
-            _mapper.Map(new Job, existingJob);
+            _mapper.Map(newJob, existingJob);
             await _unitOfWork.SaveChangesAsync();
 
             var updatedModel = _mapper.Map<JobReadModel>(existingJob);
-            return updatedModel;*/
-            return null;
+            return updatedModel;
         }
     }
 }

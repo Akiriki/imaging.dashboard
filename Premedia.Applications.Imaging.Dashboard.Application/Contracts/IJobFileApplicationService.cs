@@ -13,7 +13,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
     {
         Task<ActionResult<List<JobFileReadModel>>> GetNewJobFiles();
         Task<ActionResult<List<JobFileReadModel>>> GetAllJobFiles();
-        Task<ActionResult<List<JobFileReadModel>>> GetJobFilesById(Guid id);
+        Task<ActionResult<JobFileReadModel>> GetJobFileById(Guid id);
         Task<ActionResult<JobFileReadModel>> CreateJobFile(JobFiles jobFileEntity);
         Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, JobFiles jobFileEntity);
     }

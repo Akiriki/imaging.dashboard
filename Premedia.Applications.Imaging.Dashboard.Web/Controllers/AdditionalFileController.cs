@@ -18,13 +18,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             _additionalFileApplicationService = additionalFileApplicationService;
         }
 
-        [HttpGet(nameof(GetAdditionalFilesById))]
-        public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAdditionalFilesById(Guid id)
+        [HttpGet(nameof(GetAdditionalFileById))]
+        public async Task<ActionResult<AdditionalFileReadModel>> GetAdditionalFileById(Guid id)
         {
-            return await _additionalFileApplicationService.GetAdditionalFilesById(id);
+            return await _additionalFileApplicationService.GetAdditionalFileById(id);
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetAllAdditionalFiles))]
         public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles()
         {
             return await _additionalFileApplicationService.GetAllAdditionalFiles();

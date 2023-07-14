@@ -11,8 +11,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
 {
     public interface IClientApplicationService
     {
-        Task<ActionResult<List<ClientReadModel>>> GetClients();
-        Task<ActionResult<List<ClientReadModel>>> GetClientsById(Guid id);
+        Task<ActionResult<List<ClientReadModel>>> GetAllClients();
+        Task<ActionResult<ClientReadModel>> GetClientById(Guid id);
         Task<ActionResult<ClientReadModel>> CreateClient(Client clientEntity);
         Task<ActionResult<ClientReadModel>> UpdateClient(Guid id, Client clientEntity);
 

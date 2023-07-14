@@ -19,7 +19,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             _jobApplicationService=jobApplicationService;
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetNewJobs))]
         public async Task<ActionResult<List<JobReadModel>>> GetNewJobs()
         {
             return await _jobApplicationService.GetNewJobs();
@@ -31,10 +31,10 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _jobApplicationService.GetAllJobs();
         }
 
-        [HttpGet(nameof(GetJobsById))]
-        public async Task<ActionResult<List<JobReadModel>>> GetJobsById(Guid id)
+        [HttpGet(nameof(GetJobById))]
+        public async Task<ActionResult<JobReadModel>> GetJobById(Guid id)
         {
-            return await _jobApplicationService.GetJobsById(id);
+            return await _jobApplicationService.GetJobById(id);
         }
 
         [HttpGet(nameof(GetJobsByEditor))]
@@ -53,6 +53,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         public async Task<ActionResult<JobReadModel>> UpdateJob(Guid id, Job job)
         {
             return await _jobApplicationService.UpdateJob(id, job);
+        }
+
+        [HttpPut(nameof(ChangeEditor))]
+        public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, User editor)
+        {
+            return await _jobApplicationService.ChangeEditor(id, editor);
         }
     }
 }

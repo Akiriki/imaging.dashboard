@@ -24,16 +24,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ActionResult<List<ClientReadModel>>> GetClients()
+        public async Task<ActionResult<List<ClientReadModel>>> GetAllClients()
         {
-            var client = await _unitOfWork.ClientRepository.GetMultipleAsync();
+            var client = await _unitOfWork.ClientRepository.GetAllAsync();
             return _mapper.Map<List<ClientReadModel>>(client);
         }
 
-        public async Task<ActionResult<List<ClientReadModel>>> GetClientsById(Guid id)
+        public async Task<ActionResult<ClientReadModel>> GetClientById(Guid id)
         {
-            var client = await _unitOfWork.ClientRepository.GetMultipleAsync(x => x.Id==id);
-            return _mapper.Map<List<ClientReadModel>>(client);
+            var client = await _unitOfWork.ClientRepository.GetFirstOrDefaultAsync(x => x.Id==id);
+            return _mapper.Map<ClientReadModel>(client);
         }
 
         public async Task<ActionResult<ClientReadModel>> CreateClient(Client clientEntity)

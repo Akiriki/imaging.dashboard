@@ -19,14 +19,14 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             _historyApplicationService = historyApplicationService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<HistoryReadModel>>> GetChangedHistory()
+        [HttpGet(nameof(GetChangedHistories))]
+        public async Task<ActionResult<List<HistoryReadModel>>> GetChangedHistories()
         {
-            return await _historyApplicationService.GetChangedHistory();
+            return await _historyApplicationService.GetChangedHistories();
         }
 
         [HttpGet(nameof(GetHistoryById))]
-        public async Task<ActionResult<List<HistoryReadModel>>> GetHistoryById(Guid id)
+        public async Task<ActionResult<HistoryReadModel>> GetHistoryById(Guid id)
         {
             return await _historyApplicationService.GetHistoryById(id);
         }
@@ -36,7 +36,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         {
             return await _historyApplicationService.GetAllHistories();
         }
-        [HttpPost]
+        [HttpPost(nameof(GetAllHistories))]
         public async Task<ActionResult<HistoryReadModel>> CreateHistory(History history)
         {
             return await _historyApplicationService.CreateHistory(history);

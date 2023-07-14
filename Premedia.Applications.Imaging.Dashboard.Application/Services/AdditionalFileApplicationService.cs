@@ -24,15 +24,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAdditionalFilesById(Guid id)
+        public async Task<ActionResult<AdditionalFileReadModel>> GetAdditionalFileById(Guid id)
         {
-            var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetMultipleAsync(x => x.Id == id);
-            return _mapper.Map<List<AdditionalFileReadModel>>(additionalFiles);
+            var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<AdditionalFileReadModel>(additionalFiles);
         }
 
         public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles()
         {
-            var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetMultipleAsync();
+            var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetAllAsync();
             return _mapper.Map<List<AdditionalFileReadModel>>(additionalFiles);
         }
 

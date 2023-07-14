@@ -24,21 +24,21 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ActionResult<List<HistoryReadModel>>> GetChangedHistory()
+        public async Task<ActionResult<List<HistoryReadModel>>> GetChangedHistories()
         {
             var history = await _unitOfWork.HistoryRepository.GetMultipleAsync(x => x.NewValue != null);
             return _mapper.Map<List<HistoryReadModel>>(history);
         }
 
-        public async Task<ActionResult<List<HistoryReadModel>>> GetHistoryById(Guid id)
+        public async Task<ActionResult<HistoryReadModel>> GetHistoryById(Guid id)
         {
-            var history = await _unitOfWork.HistoryRepository.GetMultipleAsync(x => x.Id != id);
-            return _mapper.Map<List<HistoryReadModel>>(history);
+            var history = await _unitOfWork.HistoryRepository.GetFirstOrDefaultAsync(x => x.Id != id);
+            return _mapper.Map<HistoryReadModel>(history);
         }
 
         public async Task<ActionResult<List<HistoryReadModel>>> GetAllHistories()
         {
-            var history = await _unitOfWork.HistoryRepository.GetMultipleAsync();
+            var history = await _unitOfWork.HistoryRepository.GetAllAsync();
             return _mapper.Map<List<HistoryReadModel>>(history);
         }
 

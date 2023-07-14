@@ -19,16 +19,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             _clientApplicationService = clientApplicationService;
         }
 
-        [HttpGet(nameof(GetClients))]
-        public async Task<ActionResult<List<ClientReadModel>>> GetClients()
+        [HttpGet(nameof(GetAllClients))]
+        public async Task<ActionResult<List<ClientReadModel>>> GetAllClients()
         {
-            return await _clientApplicationService.GetClients();
+            return await _clientApplicationService.GetAllClients();
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<ClientReadModel>>> GetClientsById(Guid id)
+        [HttpGet(nameof(GetClientById))]
+        public async Task<ActionResult<ClientReadModel>> GetClientById(Guid id)
         {
-            return await _clientApplicationService.GetClientsById(id);
+            return await _clientApplicationService.GetClientById(id);
         }
 
         [HttpPost]

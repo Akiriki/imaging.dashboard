@@ -26,21 +26,20 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobFileReadModel>>> GetNewJobFiles()
         {
-            //var jobfiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.ToDo);
-            //return _mapper.Map<List<JobFileReadModel>>(jobfiles);
-            return null;
+            var jobfiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.ToDo);
+            return _mapper.Map<List<JobFileReadModel>>(jobfiles);
         }
 
         public async Task<ActionResult<List<JobFileReadModel>>> GetAllJobFiles()
         {
-            var jobfiles = await _unitOfWork.JobFileRepository.GetMultipleAsync();
+            var jobfiles = await _unitOfWork.JobFileRepository.GetAllAsync();
             return _mapper.Map<List<JobFileReadModel>>(jobfiles);
         }
 
-        public async Task<ActionResult<List<JobFileReadModel>>> GetJobFilesById(Guid id)
+        public async Task<ActionResult<JobFileReadModel>> GetJobFileById(Guid id)
         {
-            var jobfiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Id == id);
-            return _mapper.Map<List<JobFileReadModel>>(jobfiles);
+            var jobfiles = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<JobFileReadModel>(jobfiles);
         }
 
         public async Task<ActionResult<JobFileReadModel>> CreateJobFile(JobFiles jobFileEntity)

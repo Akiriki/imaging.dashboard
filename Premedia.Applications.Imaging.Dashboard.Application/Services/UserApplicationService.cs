@@ -24,15 +24,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ActionResult<List<UserReadModel>>> GetUser()
+        public async Task<ActionResult<List<UserReadModel>>> GetAllUsers()
         {
-            var user = await _unitOfWork.UserRepository.GetMultipleAsync();
+            var user = await _unitOfWork.UserRepository.GetAllAsync();
             return _mapper.Map<List<UserReadModel>>(user);
         }
-        public async Task<ActionResult<List<UserReadModel>>> GetUserById(Guid id)
+        public async Task<ActionResult<UserReadModel>> GetUserById(Guid id)
         {
-            var user = await _unitOfWork.UserRepository.GetMultipleAsync(x => x.Id==id);
-            return _mapper.Map<List<UserReadModel>>(user);
+            var user = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(x => x.Id==id);
+            return _mapper.Map<UserReadModel>(user);
         }
 
         public async Task<ActionResult<UserReadModel>> CreateUser(User userEntity)

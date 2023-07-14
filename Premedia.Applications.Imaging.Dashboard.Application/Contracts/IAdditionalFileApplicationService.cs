@@ -11,7 +11,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
 {
     public interface IAdditionalFileApplicationService
     {
-        Task<ActionResult<List<AdditionalFileReadModel>>> GetAdditionalFilesById(Guid id);
+        Task<ActionResult<AdditionalFileReadModel>> GetAdditionalFileById(Guid id);
         Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles();
 
         Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(AdditionalFile additionalFileEntity);

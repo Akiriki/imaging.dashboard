@@ -11,8 +11,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
 {
     public interface IUserApplicationService
     {
-        Task<ActionResult<List<UserReadModel>>> GetUser();
-        Task<ActionResult<List<UserReadModel>>> GetUserById(Guid id);
+        Task<ActionResult<List<UserReadModel>>> GetAllUsers();
+        Task<ActionResult<UserReadModel>> GetUserById(Guid id);
         Task<ActionResult<UserReadModel>> CreateUser(User userEntity);
         Task<ActionResult<UserReadModel>> UpdateUser(Guid id, User userEntity);
     }
