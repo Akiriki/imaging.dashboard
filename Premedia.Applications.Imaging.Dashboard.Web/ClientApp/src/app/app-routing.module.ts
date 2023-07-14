@@ -9,6 +9,7 @@ import { ArchiveComponent } from "./modules/base/archive/archive.component";
 import { ActivitiesComponent } from "./modules/base/administration/activities/activities.component";
 import { CustomerMappingComponent } from "./modules/base/administration/customer-mapping/customer-mapping.component";
 import { ProjectsComponent } from "./modules/base/administration/projects/projects.component";
+import { JobDetailsComponent } from "./modules/overview/overview/job-details/job-details.component";
 
 export const routes: Routes = [
   { path: RoutingConstants.BASE.HOME, component: OverviewComponent, pathMatch: 'full' },
@@ -17,7 +18,8 @@ export const routes: Routes = [
   { path: RoutingConstants.BASE.ARCHIVE, component: ArchiveComponent},
   { path: RoutingConstants.BASE.ACTIVITIES, component: ActivitiesComponent },
   { path: RoutingConstants.BASE.CUSTOMER_MAPPING, component: CustomerMappingComponent} ,
-  { path: RoutingConstants.BASE.PROJECTS, component: ProjectsComponent }
+  { path: RoutingConstants.BASE.PROJECTS, component: ProjectsComponent },
+  { path: RoutingConstants.BASE.JOB_DETAILS, component: JobDetailsComponent }
    /*children:[
       { path : RoutingConstants.BASE.ACTIVITIES, component: ActivitiesComponent },
       { path : RoutingConstants.BASE.CUSTOMER_MAPPING, component : CustomerMappingComponent },

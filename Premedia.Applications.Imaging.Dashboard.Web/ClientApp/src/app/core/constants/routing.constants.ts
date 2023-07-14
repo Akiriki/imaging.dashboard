@@ -7,6 +7,7 @@ export const RoutingConstants = {
     ADMINISTRATION : 'administration',
     ACTIVITIES : 'activities',
     CUSTOMER_MAPPING : 'customer-mapping',
-    PROJECTS : 'projects'
+    PROJECTS : 'projects',
+    JOB_DETAILS : 'job-details'
   }
 }

@@ -1,8 +1,13 @@
 <h3>Meine Aufgaben</h3>
 <ejs-grid [dataSource]='myTasksList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
   <e-columns>
-    <e-column field='id' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
-    <e-column field='jobNumber' headerText='Job-Nummer'></e-column>
+    <e-column field='id' headerText='ID' [visible]="false"></e-column>
+    <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
+    <e-column field="jobNumber" headerText="Job-Nummer">
+      <ng-template #template let-data>
+        <a (click)="navigateToJobDetails($event)">{{ data.jobNumber }}</a>
+      </ng-template>
+    </e-column>
     <e-column field='customer' headerText='Kunde'></e-column>
     <e-column field='date' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
     <e-column field='status' headerText='Status'></e-column>
