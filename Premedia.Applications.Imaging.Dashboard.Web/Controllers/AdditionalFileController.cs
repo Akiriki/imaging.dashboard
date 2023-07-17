@@ -21,26 +21,26 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpGet(nameof(GetAdditionalFileById))]
         public async Task<ActionResult<AdditionalFileReadModel>> GetAdditionalFileById(Guid id)
         {
-            return await _additionalFileApplicationService.GetAdditionalFileById(id);
+            return await _additionalFileApplicationService.GetAdditionalFileById(id).ConfigureAwait(false);
         }
 
         [HttpGet(nameof(GetAllAdditionalFiles))]
         public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles()
         {
-            return await _additionalFileApplicationService.GetAllAdditionalFiles();
+            return await _additionalFileApplicationService.GetAllAdditionalFiles().ConfigureAwait(false);
         }
 
         [HttpPost]
         public async Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(CreateAdditionalFileCommand command)
         {
-            await _additionalFileApplicationService.CreateAdditionalFile(command);
+            await _additionalFileApplicationService.CreateAdditionalFile(command).ConfigureAwait(false);
             return Ok();
         }
 
         [HttpPut]
         public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, UpdateAdditionalFileCommand command)
         {
-            await _additionalFileApplicationService.UpdateAdditionalFile(id, command);
+            await _additionalFileApplicationService.UpdateAdditionalFile(id, command).ConfigureAwait(false);
             return Ok();
         }
     }

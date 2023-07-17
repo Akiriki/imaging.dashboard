@@ -21,32 +21,32 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpGet(nameof(GetNewJobFiles))]
         public async Task<ActionResult<List<JobFileReadModel>>> GetNewJobFiles()
         {
-            return await _jobFileApplicationService.GetNewJobFiles();
+            return await _jobFileApplicationService.GetNewJobFiles().ConfigureAwait(false);
         }
 
         [HttpGet(nameof(GetAllJobFiles))]
         public async Task<ActionResult<List<JobFileReadModel>>> GetAllJobFiles()
         {
-            return await _jobFileApplicationService.GetAllJobFiles();
+            return await _jobFileApplicationService.GetAllJobFiles().ConfigureAwait(false);
         }
 
         [HttpGet(nameof(GetJobFilesById))]
         public async Task<ActionResult<JobFileReadModel>> GetJobFilesById(Guid id)
         {
-            return await _jobFileApplicationService.GetJobFileById(id);
+            return await _jobFileApplicationService.GetJobFileById(id).ConfigureAwait(false);
         }
 
         [HttpPost]
         public async Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command)
         {
-            await _jobFileApplicationService.CreateJobFile(command);
+            await _jobFileApplicationService.CreateJobFile(command).ConfigureAwait(false);
             return Ok();
         }
 
         [HttpPut]
         public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, UpdateJobFileCommand command)
         {
-            await _jobFileApplicationService.UpdateJobFile(id, command);
+            await _jobFileApplicationService.UpdateJobFile(id, command).ConfigureAwait(false);
             return Ok();
         }
     }

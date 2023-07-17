@@ -21,31 +21,31 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpGet(nameof(GetChangedHistories))]
         public async Task<ActionResult<List<HistoryReadModel>>> GetChangedHistories()
         {
-            return await _historyApplicationService.GetChangedHistories();
+            return await _historyApplicationService.GetChangedHistories().ConfigureAwait(false);
         }
 
         [HttpGet(nameof(GetHistoryById))]
         public async Task<ActionResult<HistoryReadModel>> GetHistoryById(Guid id)
         {
-            return await _historyApplicationService.GetHistoryById(id);
+            return await _historyApplicationService.GetHistoryById(id).ConfigureAwait(false);
         }
 
         [HttpGet(nameof(GetAllHistories))]
         public async Task<ActionResult<List<HistoryReadModel>>> GetAllHistories()
         {
-            return await _historyApplicationService.GetAllHistories();
+            return await _historyApplicationService.GetAllHistories().ConfigureAwait(false);
         }
         [HttpPost(nameof(GetAllHistories))]
         public async Task<ActionResult<HistoryReadModel>> CreateHistory(CreateHistoryCommand command)
         {
-            await _historyApplicationService.CreateHistory(command);
+            await _historyApplicationService.CreateHistory(command).ConfigureAwait(false);
             return Ok();
         }
 
         [HttpPut]
         public async Task<ActionResult<HistoryReadModel>> UpdateHistory(Guid id, UpdateHistoryCommand command)
         {
-            await _historyApplicationService.UpdateHistory(id, command);
+            await _historyApplicationService.UpdateHistory(id, command).ConfigureAwait(false);
             return Ok();
         }
     }
