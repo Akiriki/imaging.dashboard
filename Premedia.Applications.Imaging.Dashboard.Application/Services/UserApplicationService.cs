@@ -23,8 +23,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<UserReadModel>>> GetAllUsers()
         {
-            var user = await _unitOfWork.UserRepository.GetAllAsync();
-            return _mapper.Map<List<UserReadModel>>(user);
+            var users = await _unitOfWork.UserRepository.GetAllAsync();
+            return _mapper.Map<List<UserReadModel>>(users);
         }
         public async Task<ActionResult<UserReadModel>> GetUserById(Guid id)
         {
@@ -47,7 +47,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var existingUser = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
             if (existingUser == null)
             {
-                throw HttpResponseException.NotFound("Client");
+                throw HttpResponseException.NotFound("User");
             }
 
             _mapper.Map(command, existingUser);

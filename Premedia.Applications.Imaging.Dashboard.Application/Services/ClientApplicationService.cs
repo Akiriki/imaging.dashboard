@@ -23,8 +23,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<ClientReadModel>>> GetAllClients()
         {
-            var client = await _unitOfWork.ClientRepository.GetAllAsync();
-            return _mapper.Map<List<ClientReadModel>>(client);
+            var clients = await _unitOfWork.ClientRepository.GetAllAsync();
+            return _mapper.Map<List<ClientReadModel>>(clients);
         }
 
         public async Task<ActionResult<ClientReadModel>> GetClientById(Guid id)

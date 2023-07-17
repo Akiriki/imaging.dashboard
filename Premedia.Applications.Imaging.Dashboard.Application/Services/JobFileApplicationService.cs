@@ -23,20 +23,20 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobFileReadModel>>> GetNewJobFiles()
         {
-            var jobfiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.ToDo);
-            return _mapper.Map<List<JobFileReadModel>>(jobfiles);
+            var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.ToDo);
+            return _mapper.Map<List<JobFileReadModel>>(jobFiles);
         }
 
         public async Task<ActionResult<List<JobFileReadModel>>> GetAllJobFiles()
         {
-            var jobfiles = await _unitOfWork.JobFileRepository.GetAllAsync();
-            return _mapper.Map<List<JobFileReadModel>>(jobfiles);
+            var jobFiles = await _unitOfWork.JobFileRepository.GetAllAsync();
+            return _mapper.Map<List<JobFileReadModel>>(jobFiles);
         }
 
         public async Task<ActionResult<JobFileReadModel>> GetJobFileById(Guid id)
         {
-            var jobfiles = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
-            return _mapper.Map<JobFileReadModel>(jobfiles);
+            var jobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<JobFileReadModel>(jobFile);
         }
 
         public async Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command)

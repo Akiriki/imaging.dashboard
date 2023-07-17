@@ -35,8 +35,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobReadModel>> GetJobById(Guid id)
         {
-            var jobs = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id);
-            return _mapper.Map<JobReadModel>(jobs);
+            var job = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<JobReadModel>(job);
         }
 
         public async Task<ActionResult<List<JobReadModel>>> GetJobsByEditor(User editor)

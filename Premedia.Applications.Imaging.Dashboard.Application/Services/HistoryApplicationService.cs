@@ -23,8 +23,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<HistoryReadModel>>> GetChangedHistories()
         {
-            var history = await _unitOfWork.HistoryRepository.GetMultipleAsync(x => x.NewValue != null);
-            return _mapper.Map<List<HistoryReadModel>>(history);
+            var histories = await _unitOfWork.HistoryRepository.GetMultipleAsync(x => x.NewValue != null);
+            return _mapper.Map<List<HistoryReadModel>>(histories);
         }
 
         public async Task<ActionResult<HistoryReadModel>> GetHistoryById(Guid id)
@@ -35,8 +35,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<HistoryReadModel>>> GetAllHistories()
         {
-            var history = await _unitOfWork.HistoryRepository.GetAllAsync();
-            return _mapper.Map<List<HistoryReadModel>>(history);
+            var histories = await _unitOfWork.HistoryRepository.GetAllAsync();
+            return _mapper.Map<List<HistoryReadModel>>(histories);
         }
 
         public async Task<ActionResult<HistoryReadModel>> CreateHistory(CreateHistoryCommand command)

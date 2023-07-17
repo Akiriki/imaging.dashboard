@@ -23,8 +23,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingsByEditor(User editor)
         {
-            var timeTracking = await _unitOfWork.TimeTrackingRepository.GetMultipleAsync(x => x.Editor == editor);
-            return _mapper.Map<List<TimeTrackingReadModel>>(timeTracking);
+            var timeTrackings = await _unitOfWork.TimeTrackingRepository.GetMultipleAsync(x => x.Editor == editor);
+            return _mapper.Map<List<TimeTrackingReadModel>>(timeTrackings);
         }
 
         public async Task<ActionResult<TimeTrackingReadModel>> GetTimeTrackingById(Guid id)
@@ -35,8 +35,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<TimeTrackingReadModel>>> GetAllTimeTrackings()
         {
-            var timeTracking = await _unitOfWork.TimeTrackingRepository.GetAllAsync();
-            return _mapper.Map<List<TimeTrackingReadModel>>(timeTracking);
+            var timeTrackings = await _unitOfWork.TimeTrackingRepository.GetAllAsync();
+            return _mapper.Map<List<TimeTrackingReadModel>>(timeTrackings);
         }
 
         public async Task<ActionResult<TimeTrackingReadModel>> CreateTimeTracking(CreateTimeTrackingCommand command)
