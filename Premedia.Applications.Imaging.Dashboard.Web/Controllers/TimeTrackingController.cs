@@ -40,13 +40,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpPost]
         public async Task<ActionResult<TimeTrackingReadModel>> CreateTimeTracking(CreateTimeTrackingCommand command)
         {
-            return await _timeTrackingApplicationService.CreateTimeTracking(command);
+            await _timeTrackingApplicationService.CreateTimeTracking(command);
+            return Ok();
         }
 
         [HttpPut]
         public async Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(Guid id, UpdateTimeTrackingCommand command)
         {
-            return await _timeTrackingApplicationService.UpdateTimeTracking(id, command);
+            await _timeTrackingApplicationService.UpdateTimeTracking(id, command);
+            return Ok();
         }
     }
 }

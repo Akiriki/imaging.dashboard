@@ -52,13 +52,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpPut]
         public async Task<ActionResult<JobReadModel>> UpdateJob(Guid id, UpdateJobCommand command)
         {
-            return await _jobApplicationService.UpdateJob(id, command);
+            await _jobApplicationService.UpdateJob(id, command);
+            return Ok();
         }
 
         [HttpPut(nameof(ChangeEditor))]
         public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, UpdateJobEditorCommand command)
         {
-            return await _jobApplicationService.ChangeEditor(id, command);
+            await _jobApplicationService.ChangeEditor(id, command);
+            return Ok();
         }
     }
 }

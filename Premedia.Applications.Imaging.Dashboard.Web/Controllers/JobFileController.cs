@@ -39,13 +39,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpPost]
         public async Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command)
         {
-            return await _jobFileApplicationService.CreateJobFile(command);
+            await _jobFileApplicationService.CreateJobFile(command);
+            return Ok();
         }
 
         [HttpPut]
         public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, UpdateJobFileCommand command)
         {
-            return await _jobFileApplicationService.UpdateJobFile(id, command);
+            await _jobFileApplicationService.UpdateJobFile(id, command);
+            return Ok();
         }
     }
 }
