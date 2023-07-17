@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 mt-4">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title headings">Bearbeiter</h5>
@@ -14,14 +14,14 @@
           <div class="container">
             <div class="row">
               <div class="col-md-6">
-                <div class="card">
+                <div class="card h-100">
                   <div class="card-body">
                     <h6 class="card-title">Typ:</h6>
                     <p class="card-text">Aufgabe</p>
                     <h6 class="card-title">Kunde:</h6>
                     <p class="card-text">Aufgabe Moebelix und Moemax</p>
                     <h6 class="card-title">Auftraggeber:</h6>
-                    <p class="card-text">asdsa</p>
+                    <p class="card-text">asd</p>
                     <h6 class="card-title">Projekt:</h6>
                     <p class="card-text">Testprojekt</p>
                     <h6 class="card-title">ERP-Nr.:</h6>
@@ -34,7 +34,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="card">
+                <div class="card h-100">
                   <div class="card-body">
                     <h6 class="card-title">Bearbeiter:</h6>
                     <p class="card-text">Katharina Rauch</p>
@@ -44,13 +44,13 @@
                     <p class="card-text" contenteditable="true">21.04.2022</p>
                     <h6 class="card-title">Status:</h6>
                     <p class="card-text">In Bearbeitung</p>
-                    <button ejs-button>Zeitbuchungen: 6m</button><br> <br>
-                    <button ejs-button>Zeitbuchung Retusche 0m</button>
                     <br>
                     <br>
-                    <br>
-                    <br>
-                    <br>
+                    <div class="card-text text-center">
+                      <button ejs-button>Zeitbuchungen: 6m</button><br> <br>
+                      <button ejs-button>Retusche buchen</button>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -61,12 +61,12 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 mt-4">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title headings">Job-Files</h5>
 
-          <ejs-grid [dataSource]='jobFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+          <ejs-grid #grid [dataSource]='jobFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
             <e-columns>
               <e-column field='id' headerText='ID' [visible]="false"></e-column>
               <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
@@ -86,7 +86,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 mt-4">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title headings">History</h5>
