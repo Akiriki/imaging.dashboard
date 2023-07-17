@@ -4,7 +4,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
 public class History:EntityObject
 {
-    
     public string Action { get; set; }
     public string Field { get; set; }
     public string ErrorCode { get; set; }

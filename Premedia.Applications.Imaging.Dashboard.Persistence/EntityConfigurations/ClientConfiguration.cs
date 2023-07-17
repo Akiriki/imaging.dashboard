@@ -14,6 +14,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
         public void Configure(EntityTypeBuilder<Client> builder)
         {
             builder.HasKey(x => x.Id);
+
             builder.HasMany(x => x.Job)
                 .WithOne(x => x.Client)
                 .HasForeignKey(x => x.ClientId);

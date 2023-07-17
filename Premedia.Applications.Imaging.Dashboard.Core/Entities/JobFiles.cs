@@ -10,7 +10,6 @@ public class JobFiles:EntityObject
     public string OriginalFilename { get; set; }
     public string EditedFilename { get; set; }
     public string FileExtension { get; set; }
-    
     public Status Status { get; set; }
     public string FileProperties { get; set; }
     public string Thumbnail { get; set; }
@@ -28,7 +27,6 @@ public class JobFiles:EntityObject
     public Guid JobId { get; set; }
     public Job Job { get; set; } = null!;
 
-    //public Guid FilePathId { get; set; }
     public FilePath FilePath { get; set; } = null!;
 
 }

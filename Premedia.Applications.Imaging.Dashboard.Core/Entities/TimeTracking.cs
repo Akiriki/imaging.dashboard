@@ -11,7 +11,7 @@ public class TimeTracking:EntityObject
 
     //Relations
     public Guid CreatorId { get; set; }
-    public User CreatedBy { get; set; } = null!;
+    public User Creator { get; set; } = null!;
 
     public Guid EditorId { get; set; }
     public User Editor { get; set; } = null!;
