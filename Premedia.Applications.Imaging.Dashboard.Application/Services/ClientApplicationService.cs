@@ -39,8 +39,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             await _unitOfWork.ClientRepository.AddAsync(client);
             await _unitOfWork.SaveChangesAsync();
 
-            var createdModel = _mapper.Map<ClientReadModel>(client);
-            return createdModel;
+            var result = _mapper.Map<ClientReadModel>(client);
+            return result;
         }
 
         public async Task<ActionResult<ClientReadModel>> UpdateClient(UpdateClientCommand command)
@@ -54,8 +54,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper.Map(command, existingClient);
             await _unitOfWork.SaveChangesAsync();
 
-            var updatedModel = _mapper.Map<ClientReadModel>(existingClient);
-            return updatedModel;
+            var result = _mapper.Map<ClientReadModel>(existingClient);
+            return result;
         }
     }
 }

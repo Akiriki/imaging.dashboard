@@ -39,8 +39,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             await _unitOfWork.AdditionalFileRepository.AddAsync(additionalFile);
             await _unitOfWork.SaveChangesAsync();
 
-            var createdModel = _mapper.Map<AdditionalFileReadModel>(additionalFile);
-            return createdModel;
+            var result = _mapper.Map<AdditionalFileReadModel>(additionalFile);
+            return result;
         }
 
         public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(UpdateAdditionalFileCommand command)
@@ -54,8 +54,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper.Map(command, existingFile);
             await _unitOfWork.SaveChangesAsync();
 
-            var updatedModel = _mapper.Map<AdditionalFileReadModel>(existingFile);
-            return updatedModel;
+            var result = _mapper.Map<AdditionalFileReadModel>(existingFile);
+            return result;
         }
     }
 }

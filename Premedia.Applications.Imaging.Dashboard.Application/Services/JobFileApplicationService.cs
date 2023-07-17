@@ -45,8 +45,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             await _unitOfWork.JobFileRepository.AddAsync(jobFile);
             await _unitOfWork.SaveChangesAsync();
 
-            var createdModel = _mapper.Map<JobFileReadModel>(jobFile);
-            return createdModel;
+            var result = _mapper.Map<JobFileReadModel>(jobFile);
+            return result;
         }
 
         public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(UpdateJobFileCommand command)
@@ -60,8 +60,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper.Map(command, existingJobFile);
             await _unitOfWork.SaveChangesAsync();
 
-            var updatedModel = _mapper.Map<JobFileReadModel>(existingJobFile);
-            return updatedModel;
+            var result = _mapper.Map<JobFileReadModel>(existingJobFile);
+            return result;
         }
     }
 }

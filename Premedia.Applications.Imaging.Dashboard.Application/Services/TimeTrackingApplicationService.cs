@@ -45,8 +45,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             await _unitOfWork.TimeTrackingRepository.AddAsync(timeTracking);
             await _unitOfWork.SaveChangesAsync();
 
-            var createdModel = _mapper.Map<TimeTrackingReadModel>(timeTracking);
-            return createdModel;
+            var result = _mapper.Map<TimeTrackingReadModel>(timeTracking);
+            return result;
         }
 
         public async Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(UpdateTimeTrackingCommand command)
@@ -60,8 +60,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper.Map(command, existingTimeTracking);
             await _unitOfWork.SaveChangesAsync();
 
-            var updatedModel = _mapper.Map<TimeTrackingReadModel>(existingTimeTracking);
-            return updatedModel;
+            var result = _mapper.Map<TimeTrackingReadModel>(existingTimeTracking);
+            return result;
         }
     }
 }
