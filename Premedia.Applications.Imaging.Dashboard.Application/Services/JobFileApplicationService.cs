@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -42,9 +43,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return _mapper.Map<JobFileReadModel>(jobfiles);
         }
 
-        public async Task<ActionResult<JobFileReadModel>> CreateJobFile(JobFiles jobFileEntity)
+        public async Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command)
         {
-            var jobFile = _mapper.Map<JobFiles>(jobFileEntity);
+            var jobFile = _mapper.Map<UpdateJobFilesCommand>(command);
             await _unitOfWork.JobFileRepository.AddAsync(jobFile);
             await _unitOfWork.SaveChangesAsync();
 
@@ -52,7 +53,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return createdModel;
         }
 
-        public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, JobFiles jobFileEntity)
+        public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, UpdateJobFileCommand command)
         {
             var existingJobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             if (existingJobFile == null)
@@ -60,7 +61,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
                 return null;
             }
 
-            _mapper.Map(jobFileEntity, existingJobFile);
+            _mapper.Map(command, existingJobFile);
             await _unitOfWork.SaveChangesAsync();
 
             var updatedModel = _mapper.Map<JobFileReadModel>(existingJobFile);

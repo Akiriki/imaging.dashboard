@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.Contracts;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Application.Services;
@@ -32,15 +33,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ClientReadModel>> CreateClient(Client client)
+        public async Task<ActionResult<ClientReadModel>> CreateClient(CreateClientCommand command)
         {
-            return await _clientApplicationService.CreateClient(client);
+            return await _clientApplicationService.CreateClient(command);
         }
 
         [HttpPut]
-        public async Task<ActionResult<ClientReadModel>> UpdateClient(Guid id, Client client)
+        public async Task<ActionResult<ClientReadModel>> UpdateClient(Guid id, UpdateClientCommand command)
         {
-            return await _clientApplicationService.UpdateClient(id, client);
+            return await _clientApplicationService.UpdateClient(id, command);
         }
     }
 }

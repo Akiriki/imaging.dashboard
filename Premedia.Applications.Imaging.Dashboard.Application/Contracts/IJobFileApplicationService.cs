@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using System;
@@ -14,7 +15,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
         Task<ActionResult<List<JobFileReadModel>>> GetNewJobFiles();
         Task<ActionResult<List<JobFileReadModel>>> GetAllJobFiles();
         Task<ActionResult<JobFileReadModel>> GetJobFileById(Guid id);
-        Task<ActionResult<JobFileReadModel>> CreateJobFile(JobFiles jobFileEntity);
-        Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, JobFiles jobFileEntity);
+        Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command);
+        Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, UpdateJobFileCommand command);
     }
 }

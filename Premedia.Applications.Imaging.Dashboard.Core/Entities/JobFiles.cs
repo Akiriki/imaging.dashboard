@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
-public class JobFiles:EntityObject
+public class UpdateJobFilesCommand:EntityObject
 {
 
     public string SwitchJobField { get; set; }

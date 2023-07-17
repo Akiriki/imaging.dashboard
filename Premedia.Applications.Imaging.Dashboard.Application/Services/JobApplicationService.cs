@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -47,7 +48,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Editor==editor);
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
-        public async Task<ActionResult<JobReadModel>> CreateJob(Job jobEntity)
+        public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand jobEntity)
         {
             var job = _mapper.Map<Job>(jobEntity);
             await _unitOfWork.JobRepository.AddAsync(job);
@@ -57,7 +58,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return createdModel;
         }
 
-        public async Task<ActionResult<JobReadModel>> UpdateJob(Guid id, Job jobEntity)
+        public async Task<ActionResult<JobReadModel>> UpdateJob(Guid id, UpdateJobCommand command)
         {
             var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             if (existingJob == null)
@@ -65,14 +66,14 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
                 return null;
             }
 
-            _mapper.Map(jobEntity, existingJob);
+            _mapper.Map(command, existingJob);
             await _unitOfWork.SaveChangesAsync();
 
             var updatedModel = _mapper.Map<JobReadModel>(existingJob);
             return updatedModel;
         }
 
-        public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, User editor)
+        public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, UpdateJobEditorCommand command)
         {
             var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             if (existingJob == null)
@@ -80,10 +81,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
                 return null;
             }
 
-            var newJob=existingJob;
-            newJob.Editor = editor;
 
-            _mapper.Map(newJob, existingJob);
+            _mapper.Map(command, existingJob.Editor);
             await _unitOfWork.SaveChangesAsync();
 
             var updatedModel = _mapper.Map<JobReadModel>(existingJob);

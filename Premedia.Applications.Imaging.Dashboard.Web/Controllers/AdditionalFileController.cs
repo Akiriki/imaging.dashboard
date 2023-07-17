@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.Contracts;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
@@ -31,15 +32,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFiles(AdditionalFile additionalFile)
+        public async Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(CreateAdditionalFileCommand command)
         {
-            return await _additionalFileApplicationService.CreateAdditionalFile(additionalFile);
+            return await _additionalFileApplicationService.CreateAdditionalFile(command);
         }
 
         [HttpPut]
-        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFiles(Guid id, AdditionalFile additionalFile)
+        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, UpdateAdditionalFileCommand command)
         {
-            return await _additionalFileApplicationService.UpdateAdditionalFile(id, additionalFile);
+            return await _additionalFileApplicationService.UpdateAdditionalFile(id, command);
         }
     }
 }

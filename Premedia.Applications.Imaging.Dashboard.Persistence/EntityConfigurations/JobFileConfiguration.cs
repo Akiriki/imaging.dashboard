@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfigurations
 {
-    public class JobFileConfiguration : IEntityTypeConfiguration<JobFiles>
+    public class JobFileConfiguration : IEntityTypeConfiguration<UpdateJobFilesCommand>
     {
-        public void Configure(EntityTypeBuilder<JobFiles> builder)
+        public void Configure(EntityTypeBuilder<UpdateJobFilesCommand> builder)
         {
             builder.HasKey(x => x.Id);
 

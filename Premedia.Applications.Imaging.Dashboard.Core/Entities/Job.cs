@@ -18,7 +18,7 @@ public class Job:EntityObject
     public BillingOption BillingOption { get; set; }
 
     //Relations
-    public ICollection<JobFiles> JobFiles { get; set; }=new List<JobFiles>();
+    public ICollection<UpdateJobFilesCommand> JobFiles { get; set; }=new List<UpdateJobFilesCommand>();
     public ICollection<History> History { get; set; } = new List<History>();
     public ICollection<AdditionalFile> AdditionalFile { get; set; } = new List<AdditionalFile>();
     public ICollection<TimeTracking> TimeTracking { get; set; } = new List<TimeTracking>();

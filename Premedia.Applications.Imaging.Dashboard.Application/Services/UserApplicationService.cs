@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -35,9 +36,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return _mapper.Map<UserReadModel>(user);
         }
 
-        public async Task<ActionResult<UserReadModel>> CreateUser(User userEntity)
+        public async Task<ActionResult<UserReadModel>> CreateUser(CreateUserCommand command)
         {
-            var user = _mapper.Map<User>(userEntity);
+            var user = _mapper.Map<User>(command);
             await _unitOfWork.UserRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
 
@@ -45,7 +46,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return createdModel;
         }
 
-        public async Task<ActionResult<UserReadModel>> UpdateUser(Guid id, User userEntity)
+        public async Task<ActionResult<UserReadModel>> UpdateUser(Guid id, UpdateUserCommand command)
         {
             var existingUser = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             if (existingUser == null)
@@ -53,7 +54,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
                 return null;
             }
 
-            _mapper.Map(userEntity, existingUser);
+            _mapper.Map(command, existingUser);
             await _unitOfWork.SaveChangesAsync();
 
             var updatedModel = _mapper.Map<UserReadModel>(existingUser);

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -36,9 +37,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return _mapper.Map<List<AdditionalFileReadModel>>(additionalFiles);
         }
 
-        public async Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(AdditionalFile additionalFileEntity)
+        public async Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(CreateAdditionalFileCommand command)
         {
-            var additionalFile = _mapper.Map<AdditionalFile>(additionalFileEntity);
+            var additionalFile = _mapper.Map<AdditionalFile>(command);
             await _unitOfWork.AdditionalFileRepository.AddAsync(additionalFile);
             await _unitOfWork.SaveChangesAsync();
 
@@ -46,7 +47,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return createdModel;
         }
 
-        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, AdditionalFile additionalFileEntity)
+        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, UpdateAdditionalFileCommand command)
         {
             var existingFile = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             if (existingFile == null)
@@ -54,7 +55,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
                 return null;
             }
 
-            _mapper.Map(additionalFileEntity, existingFile);
+            _mapper.Map(command, existingFile);
             await _unitOfWork.SaveChangesAsync();
 
             var updatedModel = _mapper.Map<AdditionalFileReadModel>(existingFile);

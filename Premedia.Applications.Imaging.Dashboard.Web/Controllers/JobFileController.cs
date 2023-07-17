@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.Contracts;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Application.Services;
@@ -38,15 +39,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<JobFileReadModel>> CreateJobFile(JobFiles jobFile)
+        public async Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command)
         {
-            return await _jobFileApplicationService.CreateJobFile(jobFile);
+            return await _jobFileApplicationService.CreateJobFile(command);
         }
 
         [HttpPut]
-        public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, JobFiles jobFile)
+        public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, UpdateJobFileCommand command)
         {
-            return await _jobFileApplicationService.UpdateJobFile(id, jobFile);
+            return await _jobFileApplicationService.UpdateJobFile(id, command);
         }
     }
 }

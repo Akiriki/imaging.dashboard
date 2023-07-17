@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.Contracts;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Application.Services;
@@ -38,15 +39,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<TimeTrackingReadModel>> CreateTimeTracking(TimeTracking timeTracking)
+        public async Task<ActionResult<TimeTrackingReadModel>> CreateTimeTracking(CreateTimeTrackingCommand command)
         {
-            return await _timeTrackingApplicationService.CreateTimeTracking(timeTracking);
+            return await _timeTrackingApplicationService.CreateTimeTracking(command);
         }
 
         [HttpPut]
-        public async Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(Guid id, TimeTracking timeTracking)
+        public async Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(Guid id, UpdateTimeTrackingCommand command)
         {
-            return await _timeTrackingApplicationService.UpdateTimeTracking(id, timeTracking);
+            return await _timeTrackingApplicationService.UpdateTimeTracking(id, command);
         }
     }
 }

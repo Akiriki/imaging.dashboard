@@ -7,7 +7,7 @@ public interface IUnitOfWork
     Task SaveChangesAsync();
 
     IRepository<Job> JobRepository { get; set; }
-    IRepository<JobFiles> JobFileRepository { get; set; }
+    IRepository<UpdateJobFilesCommand> JobFileRepository { get; set; }
     IRepository<AdditionalFile> AdditionalFileRepository { get; set; }
     IRepository<Client> ClientRepository { get; set; }
     IRepository<FilePath> FilePathRepository { get; set; }

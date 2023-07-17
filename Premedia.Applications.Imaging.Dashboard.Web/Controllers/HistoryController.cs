@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.Contracts;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Application.Services;
@@ -37,15 +38,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _historyApplicationService.GetAllHistories();
         }
         [HttpPost(nameof(GetAllHistories))]
-        public async Task<ActionResult<HistoryReadModel>> CreateHistory(History history)
+        public async Task<ActionResult<HistoryReadModel>> CreateHistory(CreateHistoryCommand command)
         {
-            return await _historyApplicationService.CreateHistory(history);
+            return await _historyApplicationService.CreateHistory(command);
         }
 
         [HttpPut]
-        public async Task<ActionResult<HistoryReadModel>> UpdateHistory(Guid id, History history)
+        public async Task<ActionResult<HistoryReadModel>> UpdateHistory(Guid id, UpdateHistoryCommand command)
         {
-            return await _historyApplicationService.UpdateHistory(id, history);
+            return await _historyApplicationService.UpdateHistory(id, command);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.Contracts;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Application.Services;
@@ -44,21 +45,21 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<JobReadModel>> CreateJob(Job job)
+        public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand command)
         {
-            return await _jobApplicationService.CreateJob(job);
+            return await _jobApplicationService.CreateJob(command);
         }
 
         [HttpPut]
-        public async Task<ActionResult<JobReadModel>> UpdateJob(Guid id, Job job)
+        public async Task<ActionResult<JobReadModel>> UpdateJob(Guid id, UpdateJobCommand command)
         {
-            return await _jobApplicationService.UpdateJob(id, job);
+            return await _jobApplicationService.UpdateJob(id, command);
         }
 
         [HttpPut(nameof(ChangeEditor))]
-        public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, User editor)
+        public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, UpdateJobEditorCommand command)
         {
-            return await _jobApplicationService.ChangeEditor(id, editor);
+            return await _jobApplicationService.ChangeEditor(id, command);
         }
     }
 }

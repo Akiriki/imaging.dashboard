@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using System;
@@ -13,7 +14,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
     {
         Task<ActionResult<AdditionalFileReadModel>> GetAdditionalFileById(Guid id);
         Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles();
-        Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(AdditionalFile additionalFileEntity);
-        Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, AdditionalFile additionalFileEntity);
+        Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(CreateAdditionalFileCommand command);
+        Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, UpdateAdditionalFileCommand command);
     }
 }
