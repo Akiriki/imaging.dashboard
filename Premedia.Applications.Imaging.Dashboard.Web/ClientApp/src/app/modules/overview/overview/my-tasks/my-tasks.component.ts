@@ -29,8 +29,7 @@ export class MyTasksComponent extends DestroySubscriptionsComponent{
 
     if (selectedJob) {
       console.log('Selected Job:', selectedJob); // Logge das ausgewählte Job-Objekt
-      //this.router.navigate(['/job-details', selectedJob.id]);
-      this.router.navigate(['/job-details']);
+      this.router.navigate(['/job-details', selectedJob.id]);
     } else {
       console.log('Selected Job not found'); // Logge eine Meldung, wenn der Job nicht gefunden wurde
     }

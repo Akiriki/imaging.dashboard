@@ -8,6 +8,6 @@ export const RoutingConstants = {
     ACTIVITIES : 'activities',
     CUSTOMER_MAPPING : 'customer-mapping',
     PROJECTS : 'projects',
-    JOB_DETAILS : 'job-details'
+    JOB_DETAILS : 'job-details/:id'
   }
 }

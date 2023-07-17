@@ -1,1 +1,109 @@
 <h3 class="headings">Job Details - ID: {{ jobID }}</h3>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title headings">Bearbeiter</h5>
+          <div class="d-flex justify-content-end">
+            <button ejs-button>Bearbeitung abschließen</button>
+          </div>
+          <br>
+          <!-- Hier kommen die Details des Bearbeiters -->
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">Typ:</h6>
+                    <p class="card-text">Aufgabe</p>
+                    <h6 class="card-title">Kunde:</h6>
+                    <p class="card-text">Aufgabe Moebelix und Moemax</p>
+                    <h6 class="card-title">Auftraggeber:</h6>
+                    <p class="card-text">asdsa</p>
+                    <h6 class="card-title">Projekt:</h6>
+                    <p class="card-text">Testprojekt</p>
+                    <h6 class="card-title">ERP-Nr.:</h6>
+                    <p class="card-text"  contenteditable="true">P092528</p>
+                    <h6 class="card-title">Verrechnungsoption:</h6>
+                    <p class="card-text">Auf Job buchen</p>
+                    <h6 class="card-title">Beschreibung:</h6>
+                    <p class="card-text"  contenteditable="true">/</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">Bearbeiter:</h6>
+                    <p class="card-text">Katharina Rauch</p>
+                    <h6 class="card-title">Erstellt am:</h6>
+                    <p class="card-text">20.04.2022 11:42</p>
+                    <h6 class="card-title">Fällig bis:</h6>
+                    <p class="card-text" contenteditable="true">21.04.2022</p>
+                    <h6 class="card-title">Status:</h6>
+                    <p class="card-text">In Bearbeitung</p>
+                    <button ejs-button>Zeitbuchungen: 6m</button><br> <br>
+                    <button ejs-button>Zeitbuchung Retusche 0m</button>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title headings">Job-Files</h5>
+
+          <ejs-grid [dataSource]='jobFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+            <e-columns>
+              <e-column field='id' headerText='ID' [visible]="false"></e-column>
+              <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
+              <e-column field='error' headerText='Fehler'></e-column>
+              <e-column field='originalFileName' headerText='Orignialer Dateiname'></e-column>
+              <e-column field='editedFileName' headerText='editedFileName'></e-column>
+              <e-column field='action' headerText='Aktion'></e-column>
+              <e-column field='storageLocation' headerText='Ablageort'></e-column>
+              <e-column field='filingPath' headerText='Ablagepfad'></e-column>
+              <e-column field='activity' headerText='Aktivität'></e-column>
+              <e-column field='status' headerText='Status'></e-column>
+            </e-columns>
+
+          </ejs-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title headings">History</h5>
+
+
+          <ejs-grid [dataSource]='historyList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+            <e-columns>
+              <e-column field='id' headerText='ID' [visible]="false"></e-column>
+              <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
+              <e-column field='date' headerText='Datum und Uhrzeit' [format]="'dd.MM.yyyy hh:mm'"></e-column>
+              <e-column field='title' headerText='Titel'></e-column>
+              <e-column field='editor' headerText='Bearbeiter'></e-column>
+            </e-columns>
+          </ejs-grid>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
