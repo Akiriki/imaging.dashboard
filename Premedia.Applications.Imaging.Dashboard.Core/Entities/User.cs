@@ -8,7 +8,7 @@ public class User:EntityObject
     public string Email { get; set; }
 
     //Realtions
-    public ICollection<History> History { get; set; }=new List<History>();
+    public ICollection<History> History { get; set; } = new List<History>();
     public ICollection<TimeTracking> TimeTrackingCreator { get; set; } = new List<TimeTracking>();
     public ICollection<TimeTracking> TimeTrackingEditor { get; set; } = new List<TimeTracking>();
     public ICollection<Job> JobsAsEditor { get; set; } = new List<Job>();

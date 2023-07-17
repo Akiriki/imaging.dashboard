@@ -6,6 +6,7 @@ using Premedia.Applications.Imaging.Dashboard.Persistence.Contracts;
 using AutoMapper;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
+using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -22,8 +23,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<AdditionalFileReadModel>> GetAdditionalFileById(Guid id)
         {
-            var additionalFiles = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
-            return _mapper.Map<AdditionalFileReadModel>(additionalFiles);
+            var additionalFile = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            return _mapper.Map<AdditionalFileReadModel>(additionalFile);
         }
 
         public async Task<ActionResult<List<AdditionalFileReadModel>>> GetAllAdditionalFiles()
@@ -42,12 +43,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return createdModel;
         }
 
-        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, UpdateAdditionalFileCommand command)
+        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(UpdateAdditionalFileCommand command)
         {
-            var existingFile = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            var existingFile = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
             if (existingFile == null)
             {
-                return null;
+                throw HttpResponseException.NotFound("Additional File");
             }
 
             _mapper.Map(command, existingFile);

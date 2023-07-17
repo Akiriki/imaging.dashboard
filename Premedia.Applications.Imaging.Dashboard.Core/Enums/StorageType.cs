@@ -8,6 +8,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Core.Enums
 {
     public enum StorageType
     {
-        SSD, HDD
+        SSD,
+        HDD
     }
 }

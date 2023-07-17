@@ -2,6 +2,7 @@
 {
     public class UpdateHistoryCommand
     {
+        public Guid Id { get; set; }
         public string Action { get; set; }
         public string Field { get; set; }
         public string ErrorCode { get; set; }

@@ -7,10 +7,10 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
 {
     public interface ITimeTrackingApplicationService
     {
-        Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingByEditor(User editor);
+        Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingsByEditor(User editor);
         Task<ActionResult<TimeTrackingReadModel>> GetTimeTrackingById(Guid id);
         Task<ActionResult<List<TimeTrackingReadModel>>> GetAllTimeTrackings();
         Task<ActionResult<TimeTrackingReadModel>> CreateTimeTracking(CreateTimeTrackingCommand command);
-        Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(Guid id, UpdateTimeTrackingCommand command);
+        Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(UpdateTimeTrackingCommand command);
     }
 }

@@ -33,15 +33,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpPost]
         public async Task<ActionResult<ClientReadModel>> CreateClient(CreateClientCommand command)
         {
-            await _clientApplicationService.CreateClient(command).ConfigureAwait(false);
-            return Ok();
+            return await _clientApplicationService.CreateClient(command).ConfigureAwait(false);
         }
 
         [HttpPut]
-        public async Task<ActionResult<ClientReadModel>> UpdateClient(Guid id, UpdateClientCommand command)
+        public async Task<ActionResult<ClientReadModel>> UpdateClient(UpdateClientCommand command)
         {
-            await _clientApplicationService.UpdateClient(id, command).ConfigureAwait(false);
-            return Ok();
+            return await _clientApplicationService.UpdateClient(command).ConfigureAwait(false);
         }
     }
 }

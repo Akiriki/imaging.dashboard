@@ -19,10 +19,10 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             _timeTrackingApplicationService = timeTrackingApplicationService;
         }
 
-        [HttpGet(nameof(GetTimeTrackingByEditor))]
-        public async Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingByEditor(User editor)
+        [HttpGet(nameof(GetTimeTrackingsByEditor))]
+        public async Task<ActionResult<List<TimeTrackingReadModel>>> GetTimeTrackingsByEditor(User editor)
         {
-            return await _timeTrackingApplicationService.GetTimeTrackingByEditor(editor).ConfigureAwait(false);
+            return await _timeTrackingApplicationService.GetTimeTrackingsByEditor(editor).ConfigureAwait(false);
         }
 
         [HttpGet(nameof(GetAllTimeTrackings))]
@@ -40,15 +40,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpPost]
         public async Task<ActionResult<TimeTrackingReadModel>> CreateTimeTracking(CreateTimeTrackingCommand command)
         {
-            await _timeTrackingApplicationService.CreateTimeTracking(command).ConfigureAwait(false);
-            return Ok();
+            return await _timeTrackingApplicationService.CreateTimeTracking(command).ConfigureAwait(false);
         }
 
         [HttpPut]
-        public async Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(Guid id, UpdateTimeTrackingCommand command)
+        public async Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(UpdateTimeTrackingCommand command)
         {
-            await _timeTrackingApplicationService.UpdateTimeTracking(id, command).ConfigureAwait(false);
-            return Ok();
+            return await _timeTrackingApplicationService.UpdateTimeTracking(command).ConfigureAwait(false);
         }
     }
 }

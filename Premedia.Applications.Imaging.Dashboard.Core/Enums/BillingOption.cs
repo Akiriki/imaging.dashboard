@@ -8,6 +8,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Core.Enums
 {
     public enum BillingOption
     {
-        Cash, CreditCard, DebitCard, Checks
+        Cash,
+        CreditCard,
+        DebitCard,
+        Checks
     }
 }

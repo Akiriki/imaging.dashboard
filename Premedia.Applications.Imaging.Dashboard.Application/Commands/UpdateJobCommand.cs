@@ -4,6 +4,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Commands
 {
     public class UpdateJobCommand
     {
+        public Guid Id { get; set; }
         public int ConsecutiveNumber { get; set; }
         public string Title { get; set; }
         public DateTime DeliveryDate { get; set; }

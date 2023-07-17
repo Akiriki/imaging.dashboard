@@ -6,6 +6,7 @@ using Premedia.Applications.Imaging.Dashboard.Persistence.Contracts;
 using AutoMapper;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
+using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -27,7 +28,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
         }
         public async Task<ActionResult<UserReadModel>> GetUserById(Guid id)
         {
-            var user = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(x => x.Id==id);
+            var user = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<UserReadModel>(user);
         }
 
@@ -41,12 +42,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return createdModel;
         }
 
-        public async Task<ActionResult<UserReadModel>> UpdateUser(Guid id, UpdateUserCommand command)
+        public async Task<ActionResult<UserReadModel>> UpdateUser(UpdateUserCommand command)
         {
-            var existingUser = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            var existingUser = await _unitOfWork.UserRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
             if (existingUser == null)
             {
-                return null;
+                throw HttpResponseException.NotFound("Client");
             }
 
             _mapper.Map(command, existingUser);

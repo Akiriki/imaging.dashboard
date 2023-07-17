@@ -50,17 +50,15 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<JobReadModel>> UpdateJob(Guid id, UpdateJobCommand command)
+        public async Task<ActionResult<JobReadModel>> UpdateJob(UpdateJobCommand command)
         {
-            await _jobApplicationService.UpdateJob(id, command).ConfigureAwait(false);
-            return Ok();
+            return await _jobApplicationService.UpdateJob(command).ConfigureAwait(false);
         }
 
         [HttpPut(nameof(ChangeEditor))]
-        public async Task<ActionResult<JobReadModel>> ChangeEditor(Guid id, UpdateJobEditorCommand command)
+        public async Task<ActionResult<JobReadModel>> ChangeEditor(UpdateJobEditorCommand command)
         {
-            await _jobApplicationService.ChangeEditor(id, command).ConfigureAwait(false);
-            return Ok();
+            return await _jobApplicationService.ChangeEditor(command).ConfigureAwait(false);
         }
     }
 }

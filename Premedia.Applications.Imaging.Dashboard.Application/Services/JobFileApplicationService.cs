@@ -6,6 +6,7 @@ using Premedia.Applications.Imaging.Dashboard.Persistence.Contracts;
 using AutoMapper;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
+using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -48,12 +49,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return createdModel;
         }
 
-        public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, UpdateJobFileCommand command)
+        public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(UpdateJobFileCommand command)
         {
-            var existingJobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            var existingJobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
             if (existingJobFile == null)
             {
-                return null;
+                throw HttpResponseException.NotFound("Job File");
             }
 
             _mapper.Map(command, existingJobFile);

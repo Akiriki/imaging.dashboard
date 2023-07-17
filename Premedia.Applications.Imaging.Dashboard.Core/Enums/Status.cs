@@ -8,6 +8,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Core.Enums
 {
     public enum Status
     {
-        ToDo, InProgress, Finished
+        ToDo,
+        InProgress,
+        Finished
     }
 }

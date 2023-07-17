@@ -9,7 +9,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
         Task<ActionResult<List<ClientReadModel>>> GetAllClients();
         Task<ActionResult<ClientReadModel>> GetClientById(Guid id);
         Task<ActionResult<ClientReadModel>> CreateClient(CreateClientCommand command);
-        Task<ActionResult<ClientReadModel>> UpdateClient(Guid id, UpdateClientCommand command);
+        Task<ActionResult<ClientReadModel>> UpdateClient(UpdateClientCommand command);
 
     }
 }

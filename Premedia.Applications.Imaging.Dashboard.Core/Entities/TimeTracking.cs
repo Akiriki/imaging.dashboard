@@ -8,11 +8,11 @@ public class TimeTracking:EntityObject
 
     //Relations
     public Guid CreatorId { get; set; }
-    public User Creator { get; set; } = null!;
+    public User? Creator { get; set; }
 
     public Guid EditorId { get; set; }
-    public User Editor { get; set; } = null!;
+    public User? Editor { get; set; }
 
     public Guid JobId { get; set; }
-    public Job Job { get; set; } = null!;
+    public Job? Job { get; set; }
 }

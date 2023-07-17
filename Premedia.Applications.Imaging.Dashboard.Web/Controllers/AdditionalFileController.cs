@@ -33,15 +33,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpPost]
         public async Task<ActionResult<AdditionalFileReadModel>> CreateAdditionalFile(CreateAdditionalFileCommand command)
         {
-            await _additionalFileApplicationService.CreateAdditionalFile(command).ConfigureAwait(false);
-            return Ok();
+            return await _additionalFileApplicationService.CreateAdditionalFile(command).ConfigureAwait(false);
         }
 
         [HttpPut]
-        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(Guid id, UpdateAdditionalFileCommand command)
+        public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(UpdateAdditionalFileCommand command)
         {
-            await _additionalFileApplicationService.UpdateAdditionalFile(id, command).ConfigureAwait(false);
-            return Ok();
+            return await _additionalFileApplicationService.UpdateAdditionalFile(command).ConfigureAwait(false);
         }
     }
 }

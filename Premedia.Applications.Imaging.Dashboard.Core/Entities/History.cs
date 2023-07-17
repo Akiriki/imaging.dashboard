@@ -12,8 +12,8 @@ public class History:EntityObject
     
     //relations
     public Guid EditorId { get; set; }
-    public User Editor { get; set; } = null!;
+    public User? Editor { get; set; }
 
     public Guid JobId { get; set; }
-    public Job Job { get; set; } = null!;
+    public Job? Job { get; set; }
 }

@@ -20,10 +20,10 @@ public class UpdateJobFilesCommand:EntityObject
     
     //Realtions
     public Guid CreatorId { get; set; }
-    public User Creator { get; set; } = null!;
+    public User? Creator { get; set; }
 
     public Guid JobId { get; set; }
-    public Job Job { get; set; } = null!;
+    public Job? Job { get; set; }
 
-    public FilePath FilePath { get; set; } = null!;
+    public FilePath? FilePath { get; set; }
 }

@@ -38,15 +38,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         [HttpPost(nameof(GetAllHistories))]
         public async Task<ActionResult<HistoryReadModel>> CreateHistory(CreateHistoryCommand command)
         {
-            await _historyApplicationService.CreateHistory(command).ConfigureAwait(false);
-            return Ok();
+            return await _historyApplicationService.CreateHistory(command).ConfigureAwait(false);
         }
 
         [HttpPut]
-        public async Task<ActionResult<HistoryReadModel>> UpdateHistory(Guid id, UpdateHistoryCommand command)
+        public async Task<ActionResult<HistoryReadModel>> UpdateHistory(UpdateHistoryCommand command)
         {
-            await _historyApplicationService.UpdateHistory(id, command).ConfigureAwait(false);
-            return Ok();
+            return await _historyApplicationService.UpdateHistory(command).ConfigureAwait(false);
         }
     }
 }

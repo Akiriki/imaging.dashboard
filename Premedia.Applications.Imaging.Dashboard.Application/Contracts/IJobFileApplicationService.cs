@@ -10,6 +10,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
         Task<ActionResult<List<JobFileReadModel>>> GetAllJobFiles();
         Task<ActionResult<JobFileReadModel>> GetJobFileById(Guid id);
         Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command);
-        Task<ActionResult<JobFileReadModel>> UpdateJobFile(Guid id, UpdateJobFileCommand command);
+        Task<ActionResult<JobFileReadModel>> UpdateJobFile(UpdateJobFileCommand command);
     }
 }
