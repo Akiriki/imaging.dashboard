@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Premedia.Applications.Imaging.Dashboard.ActionFIlters;
+using Premedia.Applications.Imaging.Dashboard.Application.Mappings;
 using Premedia.Applications.Imaging.Dashboard.Extensions;
 using Serilog;
 
@@ -31,6 +32,8 @@ try
     
     builder.Services.ConfigureSwagger();
     builder.Services.AddEndpointsApiExplorer();
+
+    builder.Services.AddAutoMapper(typeof(UserMapping));
 
     builder.Services.AddControllers(config =>
     {
