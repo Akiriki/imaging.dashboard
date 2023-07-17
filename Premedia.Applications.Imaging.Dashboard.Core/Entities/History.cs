@@ -17,4 +17,3 @@ public class History:EntityObject
     public Guid JobId { get; set; }
     public Job Job { get; set; } = null!;
 }
-

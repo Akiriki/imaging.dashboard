@@ -2,7 +2,6 @@
 
 public class TimeTracking:EntityObject
 {
-    
     public DateTime StartedOn { get; set; }
     public TimeSpan WorkingDuration { get; set; }
 
@@ -17,4 +16,3 @@ public class TimeTracking:EntityObject
     public Guid JobId { get; set; }
     public Job Job { get; set; } = null!;
 }
-

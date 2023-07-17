@@ -9,4 +9,3 @@ public abstract class EntityObject
     public DateTime CreatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
 }
-

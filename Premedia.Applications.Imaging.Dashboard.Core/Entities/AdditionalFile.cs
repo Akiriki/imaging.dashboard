@@ -13,4 +13,3 @@ public class AdditionalFile:EntityObject
 
     public FilePath FilePath { get; set; } = null!;
 }
-

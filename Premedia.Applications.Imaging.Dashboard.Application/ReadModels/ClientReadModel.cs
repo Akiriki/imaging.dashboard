@@ -14,4 +14,3 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
         public string LastName { get; set; }
     }
 }
-

@@ -3,7 +3,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
 public class Job:EntityObject
 {
-    
     public int ConsecutiveNumber { get;set; }
     public string Title { get; set; }
     public DateTime DeliveryDate { get; set; }
@@ -32,8 +31,4 @@ public class Job:EntityObject
 
     public Guid ClientId { get; set; }
     public Client Client { get; set; } = null!;
-
-
-
 }
-

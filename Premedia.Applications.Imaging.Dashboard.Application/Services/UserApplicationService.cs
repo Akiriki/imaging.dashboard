@@ -57,4 +57,3 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
         }
     }
 }
-

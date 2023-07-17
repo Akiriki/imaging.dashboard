@@ -9,6 +9,4 @@ public class Client:EntityObject
 
     //Relations
     public ICollection<Job> Job { get; set; } = new List<Job>();
-
 }
-

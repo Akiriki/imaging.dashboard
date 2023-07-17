@@ -17,6 +17,4 @@ public class User:EntityObject
 
     public ICollection<UpdateJobFilesCommand> JobFiles { get; set; } = new List<UpdateJobFilesCommand>();
     public ICollection<AdditionalFile> AdditionalFile { get; set; } = new List<AdditionalFile>();
-
 }
-

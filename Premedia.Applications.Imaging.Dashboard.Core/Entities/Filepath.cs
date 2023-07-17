@@ -2,7 +2,6 @@
 
 public class FilePath : EntityObject
 {
-    
     public string WindowsPath { get; set; }
     public string MacPath { get; set; }
     public string EbvFileaction { get; set; }
@@ -14,4 +13,3 @@ public class FilePath : EntityObject
     public Guid AdditionalFileId { get; set; }
     public AdditionalFile AdditionalFile { get; set; }
 }
-

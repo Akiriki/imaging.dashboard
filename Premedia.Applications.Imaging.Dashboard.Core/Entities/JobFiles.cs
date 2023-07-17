@@ -4,7 +4,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
 public class UpdateJobFilesCommand:EntityObject
 {
-
     public string SwitchJobField { get; set; }
     public string OriginalFilename { get; set; }
     public string EditedFilename { get; set; }
@@ -27,6 +26,4 @@ public class UpdateJobFilesCommand:EntityObject
     public Job Job { get; set; } = null!;
 
     public FilePath FilePath { get; set; } = null!;
-
 }
-

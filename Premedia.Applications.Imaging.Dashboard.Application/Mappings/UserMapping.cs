@@ -10,6 +10,5 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Mappings
         {
             CreateMap<UserReadModel, User>().ReverseMap();
         }
-
     }
 }
