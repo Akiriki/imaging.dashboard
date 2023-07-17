@@ -9,6 +9,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
     public class JobReadModel
     {
+        public Guid Id { get; set; }
+        public DateTime CreatedAt { get; set; }
         public int ConsecutiveNumber { get; set; }
         public string Title { get; set; }
         public DateTime DeliveryDate { get; set; }
