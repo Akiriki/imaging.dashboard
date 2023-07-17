@@ -1,5 +1,4 @@
 ﻿using Premedia.Applications.Imaging.Dashboard.Core.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Premedia.Applications.Imaging.Dashboard.Core.Entities;
+﻿using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Persistence.Contracts;
 using Premedia.Applications.Imaging.Dashboard.Persistence.Repositories;
 namespace Premedia.Applications.Imaging.Dashboard.Persistence;
