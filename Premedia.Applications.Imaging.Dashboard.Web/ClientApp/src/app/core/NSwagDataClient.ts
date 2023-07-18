@@ -2054,6 +2054,8 @@ export class WeatherForecastClient implements IWeatherForecastClient {
 }
 
 export class AdditionalFileReadModel implements IAdditionalFileReadModel {
+    id?: string;
+    createdAt?: Date;
     title?: string;
 
     constructor(data?: IAdditionalFileReadModel) {
@@ -2067,6 +2069,8 @@ export class AdditionalFileReadModel implements IAdditionalFileReadModel {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.title = _data["title"];
         }
     }
@@ -2080,12 +2084,16 @@ export class AdditionalFileReadModel implements IAdditionalFileReadModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["title"] = this.title;
         return data;
     }
 }
 
 export interface IAdditionalFileReadModel {
+    id?: string;
+    createdAt?: Date;
     title?: string;
 }
 
@@ -2166,6 +2174,8 @@ export interface IUpdateAdditionalFileCommand {
 }
 
 export class ClientReadModel implements IClientReadModel {
+    id?: string;
+    createdAt?: Date;
     email?: string;
     shortcut?: string;
     firstName?: string;
@@ -2182,6 +2192,8 @@ export class ClientReadModel implements IClientReadModel {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.email = _data["email"];
             this.shortcut = _data["shortcut"];
             this.firstName = _data["firstName"];
@@ -2198,6 +2210,8 @@ export class ClientReadModel implements IClientReadModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["email"] = this.email;
         data["shortcut"] = this.shortcut;
         data["firstName"] = this.firstName;
@@ -2207,6 +2221,8 @@ export class ClientReadModel implements IClientReadModel {
 }
 
 export interface IClientReadModel {
+    id?: string;
+    createdAt?: Date;
     email?: string;
     shortcut?: string;
     firstName?: string;
@@ -2314,6 +2330,8 @@ export interface IUpdateClientCommand {
 }
 
 export class HistoryReadModel implements IHistoryReadModel {
+    id?: string;
+    createdAt?: Date;
     action?: string;
     field?: string;
     errorCode?: string;
@@ -2332,6 +2350,8 @@ export class HistoryReadModel implements IHistoryReadModel {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.action = _data["action"];
             this.field = _data["field"];
             this.errorCode = _data["errorCode"];
@@ -2350,6 +2370,8 @@ export class HistoryReadModel implements IHistoryReadModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["action"] = this.action;
         data["field"] = this.field;
         data["errorCode"] = this.errorCode;
@@ -2361,6 +2383,8 @@ export class HistoryReadModel implements IHistoryReadModel {
 }
 
 export interface IHistoryReadModel {
+    id?: string;
+    createdAt?: Date;
     action?: string;
     field?: string;
     errorCode?: string;
@@ -2486,6 +2510,8 @@ export interface IUpdateHistoryCommand {
 }
 
 export class JobReadModel implements IJobReadModel {
+    id?: string;
+    createdAt?: Date;
     consecutiveNumber?: number;
     title?: string;
     deliveryDate?: Date;
@@ -2496,6 +2522,7 @@ export class JobReadModel implements IJobReadModel {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    status?: Status;
 
     constructor(data?: IJobReadModel) {
         if (data) {
@@ -2508,6 +2535,8 @@ export class JobReadModel implements IJobReadModel {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.consecutiveNumber = _data["consecutiveNumber"];
             this.title = _data["title"];
             this.deliveryDate = _data["deliveryDate"] ? new Date(_data["deliveryDate"].toString()) : <any>undefined;
@@ -2518,6 +2547,7 @@ export class JobReadModel implements IJobReadModel {
             this.project = _data["project"];
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
+            this.status = _data["status"];
         }
     }
 
@@ -2530,6 +2560,8 @@ export class JobReadModel implements IJobReadModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["consecutiveNumber"] = this.consecutiveNumber;
         data["title"] = this.title;
         data["deliveryDate"] = this.deliveryDate ? this.deliveryDate.toISOString() : <any>undefined;
@@ -2540,11 +2572,14 @@ export class JobReadModel implements IJobReadModel {
         data["project"] = this.project;
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
+        data["status"] = this.status;
         return data;
     }
 }
 
 export interface IJobReadModel {
+    id?: string;
+    createdAt?: Date;
     consecutiveNumber?: number;
     title?: string;
     deliveryDate?: Date;
@@ -2555,6 +2590,7 @@ export interface IJobReadModel {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    status?: Status;
 }
 
 export enum OrderType {
@@ -2567,6 +2603,12 @@ export enum BillingOption {
     CreditCard = 1,
     DebitCard = 2,
     Checks = 3,
+}
+
+export enum Status {
+    ToDo = 0,
+    InProgress = 1,
+    Finished = 2,
 }
 
 export class User implements IUser {
@@ -2823,6 +2865,7 @@ export class Job implements IJob {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    status?: Status;
     jobFiles?: UpdateJobFilesCommand[];
     history?: History[];
     additionalFile?: AdditionalFile[];
@@ -2860,6 +2903,7 @@ export class Job implements IJob {
             this.project = _data["project"];
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
+            this.status = _data["status"];
             if (Array.isArray(_data["jobFiles"])) {
                 this.jobFiles = [] as any;
                 for (let item of _data["jobFiles"])
@@ -2913,6 +2957,7 @@ export class Job implements IJob {
         data["project"] = this.project;
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
+        data["status"] = this.status;
         if (Array.isArray(this.jobFiles)) {
             data["jobFiles"] = [];
             for (let item of this.jobFiles)
@@ -2959,6 +3004,7 @@ export interface IJob {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    status?: Status;
     jobFiles?: UpdateJobFilesCommand[];
     history?: History[];
     additionalFile?: AdditionalFile[];
@@ -3083,12 +3129,6 @@ export interface IUpdateJobFilesCommand {
     jobId?: string;
     job?: Job | undefined;
     filePath?: FilePath | undefined;
-}
-
-export enum Status {
-    ToDo = 0,
-    InProgress = 1,
-    Finished = 2,
 }
 
 export class FilePath implements IFilePath {
@@ -3463,6 +3503,7 @@ export class UpdateJobCommand implements IUpdateJobCommand {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    status?: Status;
 
     constructor(data?: IUpdateJobCommand) {
         if (data) {
@@ -3486,6 +3527,7 @@ export class UpdateJobCommand implements IUpdateJobCommand {
             this.project = _data["project"];
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
+            this.status = _data["status"];
         }
     }
 
@@ -3509,6 +3551,7 @@ export class UpdateJobCommand implements IUpdateJobCommand {
         data["project"] = this.project;
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
+        data["status"] = this.status;
         return data;
     }
 }
@@ -3525,6 +3568,7 @@ export interface IUpdateJobCommand {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    status?: Status;
 }
 
 export class UpdateJobEditorCommand implements IUpdateJobEditorCommand {
@@ -3580,6 +3624,8 @@ export interface IUpdateJobEditorCommand {
 }
 
 export class JobFileReadModel implements IJobFileReadModel {
+    id?: string;
+    createdAt?: Date;
     switchJobField?: string;
     originalFilename?: string;
     editedFilename?: string;
@@ -3604,6 +3650,8 @@ export class JobFileReadModel implements IJobFileReadModel {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.switchJobField = _data["switchJobField"];
             this.originalFilename = _data["originalFilename"];
             this.editedFilename = _data["editedFilename"];
@@ -3628,6 +3676,8 @@ export class JobFileReadModel implements IJobFileReadModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["switchJobField"] = this.switchJobField;
         data["originalFilename"] = this.originalFilename;
         data["editedFilename"] = this.editedFilename;
@@ -3645,6 +3695,8 @@ export class JobFileReadModel implements IJobFileReadModel {
 }
 
 export interface IJobFileReadModel {
+    id?: string;
+    createdAt?: Date;
     switchJobField?: string;
     originalFilename?: string;
     editedFilename?: string;
@@ -3824,6 +3876,8 @@ export interface IUpdateJobFileCommand {
 }
 
 export class TimeTrackingReadModel implements ITimeTrackingReadModel {
+    id?: string;
+    createdAt?: Date;
     startedOn?: Date;
     workingDuration?: string;
 
@@ -3838,6 +3892,8 @@ export class TimeTrackingReadModel implements ITimeTrackingReadModel {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.startedOn = _data["startedOn"] ? new Date(_data["startedOn"].toString()) : <any>undefined;
             this.workingDuration = _data["workingDuration"];
         }
@@ -3852,6 +3908,8 @@ export class TimeTrackingReadModel implements ITimeTrackingReadModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["startedOn"] = this.startedOn ? this.startedOn.toISOString() : <any>undefined;
         data["workingDuration"] = this.workingDuration;
         return data;
@@ -3859,6 +3917,8 @@ export class TimeTrackingReadModel implements ITimeTrackingReadModel {
 }
 
 export interface ITimeTrackingReadModel {
+    id?: string;
+    createdAt?: Date;
     startedOn?: Date;
     workingDuration?: string;
 }
@@ -3948,6 +4008,8 @@ export interface IUpdateTimeTrackingCommand {
 }
 
 export class UserReadModel implements IUserReadModel {
+    id?: string;
+    createdAt?: Date;
     userName?: string;
     firstName?: string;
     lastName?: string;
@@ -3964,6 +4026,8 @@ export class UserReadModel implements IUserReadModel {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
             this.userName = _data["userName"];
             this.firstName = _data["firstName"];
             this.lastName = _data["lastName"];
@@ -3980,6 +4044,8 @@ export class UserReadModel implements IUserReadModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
         data["userName"] = this.userName;
         data["firstName"] = this.firstName;
         data["lastName"] = this.lastName;
@@ -3989,6 +4055,8 @@ export class UserReadModel implements IUserReadModel {
 }
 
 export interface IUserReadModel {
+    id?: string;
+    createdAt?: Date;
     userName?: string;
     firstName?: string;
     lastName?: string;
