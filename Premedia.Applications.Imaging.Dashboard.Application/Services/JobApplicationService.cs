@@ -44,6 +44,25 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Editor == editor);
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
+
+        public async Task<ActionResult<List<JobReadModel>>> GetJobsByEditorId(Guid id)
+        {
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.EditorId == id);
+            return _mapper.Map<List<JobReadModel>>(jobs);
+        }
+
+        public async Task<ActionResult<List<JobReadModel>>> GetColleagueJobs(Guid id)
+        {
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.EditorId != id && x.EditorId != null);
+            return _mapper.Map<List<JobReadModel>>(jobs);
+        }
+
+        public async Task<ActionResult<List<JobReadModel>>> GetTransferredJobs()
+        {
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Transferred2Partner);
+            return _mapper.Map<List<JobReadModel>>(jobs);
+        }
+
         public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand jobEntity)
         {
             var job = _mapper.Map<Job>(jobEntity);
