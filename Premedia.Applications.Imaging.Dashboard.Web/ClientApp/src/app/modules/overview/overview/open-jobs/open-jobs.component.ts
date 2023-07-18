@@ -3,6 +3,7 @@ import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { OpenJobs, OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
+import { JobReadModel } from 'src/app/core/NSwagDataClient';
 
 @Component({
   selector: 'app-open-jobs',
@@ -11,7 +12,7 @@ import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 })
 export class OpenJobsComponent extends DestroySubscriptionsComponent{
 
-  openJobList : OpenJobs[] = [];
+  openJobList : JobReadModel[] = [];
   pageSettings: PageSettingsModel;
 
   constructor(public overviewService : OverviewService) {

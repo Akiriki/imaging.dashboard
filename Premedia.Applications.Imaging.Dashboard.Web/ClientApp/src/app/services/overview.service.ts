@@ -79,18 +79,11 @@ export type HistoryInfo = {
 
 @Injectable()
 export class OverviewService {
-  openJobs = new BehaviorSubject<OpenJobs[]>([]);
+  openJobs = new BehaviorSubject<DataClient.JobReadModel[]>([]);
+  //myTasks = new BehaviorSubject<DataClient.[]>([]);
+  //colleaguesTasks = new BehaviorSubject<DataClient.JobFil>
+  //allPartnerFiles = new BehaviorSubject<DataClient.[]>([]);
   public pageSettings : PageSettingsModel = { pageSize : 5 };
-
-  private openJobList : OpenJobs[] = [
-    {id : '632c3f68-0c90-4799-8a66-6c2e5e71d639', consecutiveNumber : 1, title : 'Anna Mauder', customer: 'XXLDE', date : new Date('10.06.2023'), numberOfFiles : 12},
-    {id : '265f6f8e-d272-458f-b9e4-9223ff0f6030', consecutiveNumber : 2, title : 'Berta Mauder', customer: 'XXLAT', date : new Date('10.03.2023'), numberOfFiles : 9},
-    {id : '57b978e7-02ac-4cfd-85c1-28d240c99688', consecutiveNumber : 3, title : 'Claudia Mauder', customer: 'XXLAT', date : new Date('10.01.2023'), numberOfFiles : 6},
-    {id : 'dc448ab6-00d7-46b9-9a2f-8a7b011216c4', consecutiveNumber : 4, title : 'Doris Mauder', customer: 'XXLAT', date : new Date('10.04.2023'), numberOfFiles : 2},
-    {id : '54c2d31e-7465-4295-92ea-70dd8d49f609', consecutiveNumber : 5, title : 'Emilia Mauder', customer: 'XXLDE', date : new Date('10.09.2023'), numberOfFiles : 4},
-    {id : '7c3ecdb1-4d90-4d94-9e4a-819f9358bd7f', consecutiveNumber : 6, title : 'Franziska Mauder', customer: 'XXLAT', date : new Date('10.02.2023'), numberOfFiles : 21},
-    {id : '46d1c2b5-5fcb-4b9e-a432-a26f398b6850', consecutiveNumber : 7, title : 'Gertrude Mauder', customer: 'XXLDE', date : new Date('10.05.2023'), numberOfFiles : 3}
-  ]
 
   myTasks = new BehaviorSubject<MyTasks[]>([]);
 
@@ -156,7 +149,7 @@ export class OverviewService {
     {id : '632c3f68-0c90-4799-8a66-6c2e5e71d789', consecutiveNumber : 3, date : new Date('12.1.2023 16:50'), title : 'File Status geändert', editor : 'KRA'}
   ]
 
-  constructor(private dataClient: DataClient.WeatherForecastClient) {
+  constructor(private dataClient: DataClient.JobClient) {
   }
 
   //Hier werden die Daten aus dem Backend geladen
@@ -165,23 +158,48 @@ export class OverviewService {
       this.weatherForecasts.next(result);
     }, error => console.error(error));*/
 
-    this.openJobs.next(this.openJobList);
+    this.dataClient.getNewJobs().subscribe(result => {
+      this.openJobs.next(result);
+    }, error => console.error(error));
   }
 
   loadMyTasks(){
     this.myTasks.next(this.myTaskList);
+    /*
+      this.dataClient.getNewJobs().subscribe(result => {
+      this.openJobs.next(result);
+    }, error => console.error(error));
+    */
   }
 
   loadAllPartnerFiles(){
     this.allPartnerFiles.next(this.allPartnerFilesList)
+
+    /*
+      this.dataClient.getNewJobs().subscribe(result => {
+      this.openJobs.next(result);
+    }, error => console.error(error));
+    */
   }
 
   loadColleaguesTasks(){
     this.colleaguesTasks.next(this.colleaguesTasksList)
+
+    /*
+      this.dataClient.getNewJobs().subscribe(result => {
+      this.openJobs.next(result);
+    }, error => console.error(error));
+    */
   }
 
   loadAllCorruptedFiles(){
     this.allCorruptedFiles.next(this.allCorruptedFilesList)
+
+    /*
+      this.dataClient.getNewJobs().subscribe(result => {
+      this.openJobs.next(result);
+    }, error => console.error(error));
+    */
   }
 
   loadJobFiles(){

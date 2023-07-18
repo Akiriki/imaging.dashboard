@@ -1,7 +1,7 @@
 <h3>Neue Aufträge</h3>
 <ejs-grid [dataSource]='openJobList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
 <e-columns>
-  <e-column field='id' headerText='ID' [visible]="false"></e-column>
+  <!--<e-column [field]='title' headerText='ID' [visible]="false"></e-column>
   <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
   <e-column field='title' headerText='Titel'></e-column>
   <e-column field='customer' headerText='Kunde'></e-column>
@@ -10,7 +10,8 @@
   <e-column [textAlign]="'center'" [allowFiltering]="false" [allowSorting]="false">
     <ng-template #template let-data>
       <button ejs-button>Auftrag übernehmen</button>
-    </ng-template></e-column>
+    </ng-template></e-column> -->
+    <e-column field='title' headerText='Titel'></e-column>
 </e-columns>
 </ejs-grid>
 <!--{id : '1', title : 'Verene Mauder', customer: 'XXLDE', date : new Date('10.05.2022'), numberOfFiles : 2},-->
