@@ -39,6 +39,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return _mapper.Map<JobFileReadModel>(jobFile);
         }
 
+        public async Task<ActionResult<List<JobFileReadModel>>> GetTransferredJobFiles()
+        {
+            var jobFiles = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Status == Core.Enums.Status.Transferred2Partner);
+            return _mapper.Map<List<JobFileReadModel>>(jobFiles);
+        }
+
         public async Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command)
         {
             var jobFile = _mapper.Map<UpdateJobFilesCommand>(command);
