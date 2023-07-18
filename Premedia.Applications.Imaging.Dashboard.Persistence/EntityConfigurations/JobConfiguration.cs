@@ -31,10 +31,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
                 .WithMany(x => x.Job)
                 .HasForeignKey(x => x.ClientId).OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(x => x.Customer)
-                .WithMany(x => x.JobsAsCustomer)
-                .HasForeignKey(x => x.CustomerId).OnDelete(DeleteBehavior.NoAction);
-
             builder.HasOne(x => x.Creator)
                 .WithMany(x => x.JobsAsCreator)
                 .HasForeignKey(x => x.CreatorId).OnDelete(DeleteBehavior.NoAction);
