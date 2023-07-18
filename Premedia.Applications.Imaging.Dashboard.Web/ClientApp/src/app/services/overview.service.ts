@@ -166,17 +166,16 @@ export class OverviewService {
   loadMyTasks(){
     this.myTasks.next(this.myTaskList);
     /*
-      this.dataClient.getNewJobs().subscribe(result => {
-      this.openJobs.next(result);
+      this.dataClient.getJobsByEditorId('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
+      this.myTasks.next(result);
     }, error => console.error(error));
     */
   }
 
   loadAllPartnerFiles(){
     this.allPartnerFiles.next(this.allPartnerFilesList)
-
     /*
-      this.dataClient.getNewJobs().subscribe(result => {
+      this.dataClient.getTransferedJobFiles().subscribe(result => {
       this.openJobs.next(result);
     }, error => console.error(error));
     */
@@ -184,10 +183,9 @@ export class OverviewService {
 
   loadColleaguesTasks(){
     this.colleaguesTasks.next(this.colleaguesTasksList)
-
     /*
-      this.dataClient.getNewJobs().subscribe(result => {
-      this.openJobs.next(result);
+      this.dataClient.getColleagueJobs('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
+      this.colleagueTasks.next(result);
     }, error => console.error(error));
     */
   }
