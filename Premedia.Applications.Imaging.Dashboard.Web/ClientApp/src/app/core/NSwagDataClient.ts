@@ -2523,6 +2523,8 @@ export class JobReadModel implements IJobReadModel {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
 
     constructor(data?: IJobReadModel) {
         if (data) {
@@ -2548,6 +2550,8 @@ export class JobReadModel implements IJobReadModel {
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
             this.status = _data["status"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
         }
     }
 
@@ -2573,6 +2577,8 @@ export class JobReadModel implements IJobReadModel {
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
         data["status"] = this.status;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
         return data;
     }
 }
@@ -2591,6 +2597,8 @@ export interface IJobReadModel {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
 }
 
 export enum OrderType {
@@ -2624,7 +2632,6 @@ export class User implements IUser {
     timeTrackingEditor?: TimeTracking[];
     jobsAsEditor?: Job[];
     jobsAsCreator?: Job[];
-    jobsAsCustomer?: Job[];
     jobFiles?: UpdateJobFilesCommand[];
     additionalFile?: AdditionalFile[];
 
@@ -2670,11 +2677,6 @@ export class User implements IUser {
                 this.jobsAsCreator = [] as any;
                 for (let item of _data["jobsAsCreator"])
                     this.jobsAsCreator!.push(Job.fromJS(item));
-            }
-            if (Array.isArray(_data["jobsAsCustomer"])) {
-                this.jobsAsCustomer = [] as any;
-                for (let item of _data["jobsAsCustomer"])
-                    this.jobsAsCustomer!.push(Job.fromJS(item));
             }
             if (Array.isArray(_data["jobFiles"])) {
                 this.jobFiles = [] as any;
@@ -2730,11 +2732,6 @@ export class User implements IUser {
             for (let item of this.jobsAsCreator)
                 data["jobsAsCreator"].push(item.toJSON());
         }
-        if (Array.isArray(this.jobsAsCustomer)) {
-            data["jobsAsCustomer"] = [];
-            for (let item of this.jobsAsCustomer)
-                data["jobsAsCustomer"].push(item.toJSON());
-        }
         if (Array.isArray(this.jobFiles)) {
             data["jobFiles"] = [];
             for (let item of this.jobFiles)
@@ -2762,7 +2759,6 @@ export interface IUser {
     timeTrackingEditor?: TimeTracking[];
     jobsAsEditor?: Job[];
     jobsAsCreator?: Job[];
-    jobsAsCustomer?: Job[];
     jobFiles?: UpdateJobFilesCommand[];
     additionalFile?: AdditionalFile[];
 }
@@ -2866,12 +2862,12 @@ export class Job implements IJob {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
     jobFiles?: UpdateJobFilesCommand[];
     history?: History[];
     additionalFile?: AdditionalFile[];
     timeTracking?: TimeTracking[];
-    customerId?: string;
-    customer?: User | undefined;
     creatorId?: string;
     creator?: User | undefined;
     editorId?: string | undefined;
@@ -2904,6 +2900,8 @@ export class Job implements IJob {
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
             this.status = _data["status"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
             if (Array.isArray(_data["jobFiles"])) {
                 this.jobFiles = [] as any;
                 for (let item of _data["jobFiles"])
@@ -2924,8 +2922,6 @@ export class Job implements IJob {
                 for (let item of _data["timeTracking"])
                     this.timeTracking!.push(TimeTracking.fromJS(item));
             }
-            this.customerId = _data["customerId"];
-            this.customer = _data["customer"] ? User.fromJS(_data["customer"]) : <any>undefined;
             this.creatorId = _data["creatorId"];
             this.creator = _data["creator"] ? User.fromJS(_data["creator"]) : <any>undefined;
             this.editorId = _data["editorId"];
@@ -2958,6 +2954,8 @@ export class Job implements IJob {
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
         data["status"] = this.status;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
         if (Array.isArray(this.jobFiles)) {
             data["jobFiles"] = [];
             for (let item of this.jobFiles)
@@ -2978,8 +2976,6 @@ export class Job implements IJob {
             for (let item of this.timeTracking)
                 data["timeTracking"].push(item.toJSON());
         }
-        data["customerId"] = this.customerId;
-        data["customer"] = this.customer ? this.customer.toJSON() : <any>undefined;
         data["creatorId"] = this.creatorId;
         data["creator"] = this.creator ? this.creator.toJSON() : <any>undefined;
         data["editorId"] = this.editorId;
@@ -3005,12 +3001,12 @@ export interface IJob {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
     jobFiles?: UpdateJobFilesCommand[];
     history?: History[];
     additionalFile?: AdditionalFile[];
     timeTracking?: TimeTracking[];
-    customerId?: string;
-    customer?: User | undefined;
     creatorId?: string;
     creator?: User | undefined;
     editorId?: string | undefined;
@@ -3430,6 +3426,8 @@ export class CreateJobCommand implements ICreateJobCommand {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    numberOfFiles?: number;
+    customer?: string;
 
     constructor(data?: ICreateJobCommand) {
         if (data) {
@@ -3452,6 +3450,8 @@ export class CreateJobCommand implements ICreateJobCommand {
             this.project = _data["project"];
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
         }
     }
 
@@ -3474,6 +3474,8 @@ export class CreateJobCommand implements ICreateJobCommand {
         data["project"] = this.project;
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
         return data;
     }
 }
@@ -3489,6 +3491,8 @@ export interface ICreateJobCommand {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    numberOfFiles?: number;
+    customer?: string;
 }
 
 export class UpdateJobCommand implements IUpdateJobCommand {
@@ -3504,6 +3508,8 @@ export class UpdateJobCommand implements IUpdateJobCommand {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
 
     constructor(data?: IUpdateJobCommand) {
         if (data) {
@@ -3528,6 +3534,8 @@ export class UpdateJobCommand implements IUpdateJobCommand {
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
             this.status = _data["status"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
         }
     }
 
@@ -3552,6 +3560,8 @@ export class UpdateJobCommand implements IUpdateJobCommand {
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
         data["status"] = this.status;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
         return data;
     }
 }
@@ -3569,6 +3579,8 @@ export interface IUpdateJobCommand {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
 }
 
 export class UpdateJobEditorCommand implements IUpdateJobEditorCommand {
