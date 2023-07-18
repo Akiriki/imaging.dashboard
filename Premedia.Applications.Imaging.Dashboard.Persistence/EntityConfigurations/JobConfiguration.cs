@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
+using Premedia.Applications.Imaging.Dashboard.Core.Enums;
 
 namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfigurations
 {
@@ -41,6 +42,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
             builder.HasOne(x => x.Editor)
                 .WithMany(x => x.JobsAsEditor)
                 .HasForeignKey(x =>x.EditorId).OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(x => x.Status).HasDefaultValue(Status.ToDo);
         }
     }
 }
