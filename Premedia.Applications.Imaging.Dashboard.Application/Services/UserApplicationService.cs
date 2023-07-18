@@ -38,8 +38,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             await _unitOfWork.UserRepository.AddAsync(user);
             await _unitOfWork.SaveChangesAsync();
 
-            var createdModel = _mapper.Map<UserReadModel>(user);
-            return createdModel;
+            var result = _mapper.Map<UserReadModel>(user);
+            return result;
         }
 
         public async Task<ActionResult<UserReadModel>> UpdateUser(UpdateUserCommand command)
@@ -53,8 +53,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper.Map(command, existingUser);
             await _unitOfWork.SaveChangesAsync();
 
-            var updatedModel = _mapper.Map<UserReadModel>(existingUser);
-            return updatedModel;
+            var result = _mapper.Map<UserReadModel>(existingUser);
+            return result;
         }
     }
 }

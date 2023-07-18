@@ -15,5 +15,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Commands
         public string Project { get; set; }
         public string EasyJob { get; set; }
         public BillingOption BillingOption { get; set; }
+        public Status Status { get; set; }
     }
 }

@@ -45,8 +45,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             await _unitOfWork.HistoryRepository.AddAsync(history);
             await _unitOfWork.SaveChangesAsync();
 
-            var createdModel = _mapper.Map<HistoryReadModel>(history);
-            return createdModel;
+            var result = _mapper.Map<HistoryReadModel>(history);
+            return result;
         }
 
         public async Task<ActionResult<HistoryReadModel>> UpdateHistory(UpdateHistoryCommand command)
@@ -60,8 +60,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper.Map(command, existingHistory);
             await _unitOfWork.SaveChangesAsync();
 
-            var updatedModel = _mapper.Map<HistoryReadModel>(existingHistory);
-            return updatedModel;
+            var result = _mapper.Map<HistoryReadModel>(existingHistory);
+            return result;
         }
     }
 }
