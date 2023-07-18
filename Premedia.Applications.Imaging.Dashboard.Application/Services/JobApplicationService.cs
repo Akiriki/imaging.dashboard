@@ -50,8 +50,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             await _unitOfWork.JobRepository.AddAsync(job);
             await _unitOfWork.SaveChangesAsync();
 
-            var createdModel = _mapper.Map<JobReadModel>(job);
-            return createdModel;
+            var result = _mapper.Map<JobReadModel>(job);
+            return result;
         }
 
         public async Task<ActionResult<JobReadModel>> UpdateJob(UpdateJobCommand command)
@@ -65,8 +65,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper.Map(command, existingJob);
             await _unitOfWork.SaveChangesAsync();
 
-            var updatedModel = _mapper.Map<JobReadModel>(existingJob);
-            return updatedModel;
+            var result = _mapper.Map<JobReadModel>(existingJob);
+            return result;
         }
 
         public async Task<ActionResult<JobReadModel>> ChangeEditor(UpdateJobEditorCommand command)
@@ -81,8 +81,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             _mapper.Map(command, existingJob.Editor);
             await _unitOfWork.SaveChangesAsync();
 
-            var updatedModel = _mapper.Map<JobReadModel>(existingJob);
-            return updatedModel;
+            var result = _mapper.Map<JobReadModel>(existingJob);
+            return result;
         }
     }
 }

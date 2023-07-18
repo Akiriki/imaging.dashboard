@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class AdditionalFileReadModel : BaseReadModel
+    public abstract class BaseReadModel
     {
-        public string Title { get; set; }
+        public Guid Id { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

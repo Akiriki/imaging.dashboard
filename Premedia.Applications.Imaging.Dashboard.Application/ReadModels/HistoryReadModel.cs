@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class HistoryReadModel
+    public class HistoryReadModel : BaseReadModel
     {
         public string Action { get; set; }
         public string Field { get; set; }

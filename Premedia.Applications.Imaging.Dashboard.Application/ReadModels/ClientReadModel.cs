@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class ClientReadModel
+    public class ClientReadModel : BaseReadModel
     {
         public string Email { get; set; }
         public string Shortcut { get; set; }

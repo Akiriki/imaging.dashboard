@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class JobReadModel
+    public class JobReadModel : BaseReadModel
     {
         public int ConsecutiveNumber { get; set; }
         public string Title { get; set; }
@@ -19,5 +19,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
         public string Project { get; set; }
         public string EasyJob { get; set; }
         public BillingOption BillingOption { get; set; }
+        public Status Status { get; set; }
     }
 }
