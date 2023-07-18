@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class TimeTrackingReadModel : ReadModelObject
+    public class TimeTrackingReadModel : BaseReadModel
     {
         public DateTime StartedOn { get; set; }
         public TimeSpan WorkingDuration { get; set; }

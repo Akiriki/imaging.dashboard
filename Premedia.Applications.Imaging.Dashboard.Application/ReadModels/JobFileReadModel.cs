@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class JobFileReadModel : ReadModelObject
+    public class JobFileReadModel : BaseReadModel
     {
         public string SwitchJobField { get; set; }
         public string OriginalFilename { get; set; }

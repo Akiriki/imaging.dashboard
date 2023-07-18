@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public abstract class ReadModelObject
+    public abstract class BaseReadModel
     {
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }

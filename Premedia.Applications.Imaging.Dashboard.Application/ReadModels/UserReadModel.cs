@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class UserReadModel : ReadModelObject
+    public class UserReadModel : BaseReadModel
     {
         public string UserName { get; set; }
         public string FirstName { get; set; }
