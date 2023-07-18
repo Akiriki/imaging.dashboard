@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class UserReadModel
+    public class UserReadModel : ReadModelObject
     {
-        public Guid Id { get; set; }
-        public DateTime CreatedAt { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

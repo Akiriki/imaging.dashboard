@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class JobFileReadModel
+    public class JobFileReadModel : ReadModelObject
     {
-        public Guid Id { get; set; }
-        public DateTime CreatedAt { get; set; }
         public string SwitchJobField { get; set; }
         public string OriginalFilename { get; set; }
         public string EditedFilename { get; set; }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class TimeTrackingReadModel : ReadModelObject
+    public abstract class ReadModelObject
     {
-        public DateTime StartedOn { get; set; }
-        public TimeSpan WorkingDuration { get; set; }
+        public Guid Id { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
