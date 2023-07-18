@@ -18,10 +18,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
                 .WithOne(x => x.Editor)
                 .HasForeignKey(x => x.EditorId);
 
-            builder.HasMany(x => x.JobsAsCustomer)
-                .WithOne(x => x.Customer)
-                .HasForeignKey(x => x.CustomerId);
-
             builder.HasMany(x => x.TimeTrackingCreator)
                 .WithOne(x => x.Creator)
                 .HasForeignKey(x => x.CreatorId);
