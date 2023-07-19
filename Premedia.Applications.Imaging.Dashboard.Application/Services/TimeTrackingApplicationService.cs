@@ -51,16 +51,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<TimeTrackingReadModel>> UpdateTimeTracking(UpdateTimeTrackingCommand command)
         {
-            var existingTimeTracking = await _unitOfWork.TimeTrackingRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
-            if (existingTimeTracking == null)
+            var timeTracking = await _unitOfWork.TimeTrackingRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            if (timeTracking == null)
             {
                 throw HttpResponseException.NotFound("Time Tracking");
             }
 
-            _mapper.Map(command, existingTimeTracking);
+            _mapper.Map(command, timeTracking);
             await _unitOfWork.SaveChangesAsync();
 
-            var result = _mapper.Map<TimeTrackingReadModel>(existingTimeTracking);
+            var result = _mapper.Map<TimeTrackingReadModel>(timeTracking);
             return result;
         }
     }

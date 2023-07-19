@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Premedia.Applications.Imaging.Dashboard.Persistence;
 
@@ -11,9 +12,11 @@ using Premedia.Applications.Imaging.Dashboard.Persistence;
 namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 {
     [DbContext(typeof(ImagingDashboardDbContext))]
-    partial class ImagingDashboardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230719105937_JobNumberAddition")]
+    partial class JobNumberAddition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,6 +221,10 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("JobNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("NumberOfFiles")
                         .HasColumnType("bigint");
 
@@ -295,6 +302,10 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 
                     b.Property<Guid>("JobId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("JobNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OriginalFilename")
                         .IsRequired()

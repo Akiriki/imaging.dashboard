@@ -45,16 +45,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<ClientReadModel>> UpdateClient(UpdateClientCommand command)
         {
-            var existingClient = await _unitOfWork.ClientRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
-            if (existingClient == null)
+            var client = await _unitOfWork.ClientRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            if (client == null)
             {
                 throw HttpResponseException.NotFound("Client");
             }
 
-            _mapper.Map(command, existingClient);
+            _mapper.Map(command, client);
             await _unitOfWork.SaveChangesAsync();
 
-            var result = _mapper.Map<ClientReadModel>(existingClient);
+            var result = _mapper.Map<ClientReadModel>(client);
             return result;
         }
     }

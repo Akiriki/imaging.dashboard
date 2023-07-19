@@ -7,6 +7,7 @@ using AutoMapper;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -41,13 +42,14 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobFileReadModel>>> GetTransferredJobFiles()
         {
-            var jobFiles = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Status == Core.Enums.Status.Transferred2Partner);
+            var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Transferred2Partner,
+                x => x.Include(y => y.FilePath).Include(y => y.Job).ThenInclude(y => y.Editor));
             return _mapper.Map<List<JobFileReadModel>>(jobFiles);
         }
 
         public async Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command)
         {
-            var jobFile = _mapper.Map<UpdateJobFilesCommand>(command);
+            var jobFile = _mapper.Map<JobFiles>(command);
             await _unitOfWork.JobFileRepository.AddAsync(jobFile);
             await _unitOfWork.SaveChangesAsync();
 
@@ -57,16 +59,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(UpdateJobFileCommand command)
         {
-            var existingJobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
-            if (existingJobFile == null)
+            var jobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            if (jobFile == null)
             {
                 throw HttpResponseException.NotFound("Job File");
             }
 
-            _mapper.Map(command, existingJobFile);
+            _mapper.Map(command, jobFile);
             await _unitOfWork.SaveChangesAsync();
 
-            var result = _mapper.Map<JobFileReadModel>(existingJobFile);
+            var result = _mapper.Map<JobFileReadModel>(jobFile);
             return result;
         }
     }

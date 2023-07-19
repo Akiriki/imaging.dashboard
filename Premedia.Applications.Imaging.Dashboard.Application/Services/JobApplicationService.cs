@@ -7,6 +7,7 @@ using AutoMapper;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -53,7 +54,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobReadModel>>> GetColleagueJobs(Guid id)
         {
-            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.EditorId != id && x.EditorId != null);
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.EditorId != id && x.EditorId != null, x => x.Include(y => y.Editor));
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
 
@@ -63,9 +64,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
 
-        public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand jobEntity)
+        public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand command)
         {
-            var job = _mapper.Map<Job>(jobEntity);
+            var job = _mapper.Map<Job>(command);
             await _unitOfWork.JobRepository.AddAsync(job);
             await _unitOfWork.SaveChangesAsync();
 
@@ -90,17 +91,17 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobReadModel>> ChangeEditor(UpdateJobEditorCommand command)
         {
-            var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
-            if (existingJob == null)
+            var job = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            if (job == null)
             {
                 throw HttpResponseException.NotFound("Job");
             }
 
 
-            _mapper.Map(command, existingJob.Editor);
+            _mapper.Map(command, job.Editor);
             await _unitOfWork.SaveChangesAsync();
 
-            var result = _mapper.Map<JobReadModel>(existingJob);
+            var result = _mapper.Map<JobReadModel>(job);
             return result;
         }
     }

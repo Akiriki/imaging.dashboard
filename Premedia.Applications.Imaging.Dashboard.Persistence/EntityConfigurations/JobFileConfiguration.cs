@@ -4,9 +4,9 @@ using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
 namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfigurations
 {
-    public class JobFileConfiguration : IEntityTypeConfiguration<UpdateJobFilesCommand>
+    public class JobFileConfiguration : IEntityTypeConfiguration<JobFiles>
     {
-        public void Configure(EntityTypeBuilder<UpdateJobFilesCommand> builder)
+        public void Configure(EntityTypeBuilder<JobFiles> builder)
         {
             builder.HasKey(x => x.Id);
 

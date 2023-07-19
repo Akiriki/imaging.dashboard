@@ -45,16 +45,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<AdditionalFileReadModel>> UpdateAdditionalFile(UpdateAdditionalFileCommand command)
         {
-            var existingFile = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
-            if (existingFile == null)
+            var file = await _unitOfWork.AdditionalFileRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            if (file == null)
             {
                 throw HttpResponseException.NotFound("Additional File");
             }
 
-            _mapper.Map(command, existingFile);
+            _mapper.Map(command, file);
             await _unitOfWork.SaveChangesAsync();
 
-            var result = _mapper.Map<AdditionalFileReadModel>(existingFile);
+            var result = _mapper.Map<AdditionalFileReadModel>(file);
             return result;
         }
     }

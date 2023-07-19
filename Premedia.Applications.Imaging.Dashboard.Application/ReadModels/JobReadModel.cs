@@ -1,4 +1,5 @@
-﻿using Premedia.Applications.Imaging.Dashboard.Core.Enums;
+﻿using Premedia.Applications.Imaging.Dashboard.Core.Entities;
+using Premedia.Applications.Imaging.Dashboard.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +23,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
         public Status Status { get; set; }
         public long NumberOfFiles { get; set; }
         public string Customer { get; set; }
+        public UserReadModel Editor { get; set; }
     }
 }
