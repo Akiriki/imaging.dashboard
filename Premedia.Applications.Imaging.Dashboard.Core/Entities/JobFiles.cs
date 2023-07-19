@@ -17,7 +17,7 @@ public class JobFiles:EntityObject
     public string ErrorCode { get; set; }
     public string ErrorMessage { get; set; }
 
-    
+
     //Realtions
     public Guid CreatorId { get; set; }
     public User? Creator { get; set; }

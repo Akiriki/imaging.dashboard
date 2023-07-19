@@ -7,6 +7,7 @@ using AutoMapper;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -53,7 +54,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobReadModel>>> GetColleagueJobs(Guid id)
         {
-            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.EditorId != id && x.EditorId != null);
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.EditorId != id && x.EditorId != null, x => x.Include(y => y.Editor));
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
 

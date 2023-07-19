@@ -7,6 +7,7 @@ using AutoMapper;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -41,7 +42,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobFileReadModel>>> GetTransferredJobFiles()
         {
-            var jobFiles = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Status == Core.Enums.Status.Transferred2Partner);
+            var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Transferred2Partner,
+                x => x.Include(y => y.FilePath).Include(y => y.Job).ThenInclude(y => y.Editor));
             return _mapper.Map<List<JobFileReadModel>>(jobFiles);
         }
 
