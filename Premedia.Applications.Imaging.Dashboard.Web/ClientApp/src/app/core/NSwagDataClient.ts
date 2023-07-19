@@ -2757,6 +2757,7 @@ export class JobReadModel implements IJobReadModel {
     status?: Status;
     numberOfFiles?: number;
     customer?: string;
+    editor?: UserReadModel;
 
     constructor(data?: IJobReadModel) {
         if (data) {
@@ -2784,6 +2785,7 @@ export class JobReadModel implements IJobReadModel {
             this.status = _data["status"];
             this.numberOfFiles = _data["numberOfFiles"];
             this.customer = _data["customer"];
+            this.editor = _data["editor"] ? UserReadModel.fromJS(_data["editor"]) : <any>undefined;
         }
     }
 
@@ -2811,6 +2813,7 @@ export class JobReadModel implements IJobReadModel {
         data["status"] = this.status;
         data["numberOfFiles"] = this.numberOfFiles;
         data["customer"] = this.customer;
+        data["editor"] = this.editor ? this.editor.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -2831,6 +2834,7 @@ export interface IJobReadModel {
     status?: Status;
     numberOfFiles?: number;
     customer?: string;
+    editor?: UserReadModel;
 }
 
 export enum OrderType {
@@ -2852,6 +2856,62 @@ export enum Status {
     Transferred2Partner = 3,
 }
 
+export class UserReadModel implements IUserReadModel {
+    id?: string;
+    createdAt?: Date;
+    userName?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+
+    constructor(data?: IUserReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.userName = _data["userName"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.email = _data["email"];
+        }
+    }
+
+    static fromJS(data: any): UserReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["userName"] = this.userName;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["email"] = this.email;
+        return data;
+    }
+}
+
+export interface IUserReadModel {
+    id?: string;
+    createdAt?: Date;
+    userName?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+}
+
 export class User implements IUser {
     id?: string;
     createdAt?: Date;
@@ -2865,7 +2925,7 @@ export class User implements IUser {
     timeTrackingEditor?: TimeTracking[];
     jobsAsEditor?: Job[];
     jobsAsCreator?: Job[];
-    jobFiles?: UpdateJobFilesCommand[];
+    jobFiles?: JobFiles[];
     additionalFile?: AdditionalFile[];
 
     constructor(data?: IUser) {
@@ -2914,7 +2974,7 @@ export class User implements IUser {
             if (Array.isArray(_data["jobFiles"])) {
                 this.jobFiles = [] as any;
                 for (let item of _data["jobFiles"])
-                    this.jobFiles!.push(UpdateJobFilesCommand.fromJS(item));
+                    this.jobFiles!.push(JobFiles.fromJS(item));
             }
             if (Array.isArray(_data["additionalFile"])) {
                 this.additionalFile = [] as any;
@@ -2992,7 +3052,7 @@ export interface IUser {
     timeTrackingEditor?: TimeTracking[];
     jobsAsEditor?: Job[];
     jobsAsCreator?: Job[];
-    jobFiles?: UpdateJobFilesCommand[];
+    jobFiles?: JobFiles[];
     additionalFile?: AdditionalFile[];
 }
 
@@ -3097,7 +3157,7 @@ export class Job implements IJob {
     status?: Status;
     numberOfFiles?: number;
     customer?: string;
-    jobFiles?: UpdateJobFilesCommand[];
+    jobFiles?: JobFiles[];
     history?: History[];
     additionalFile?: AdditionalFile[];
     timeTracking?: TimeTracking[];
@@ -3138,7 +3198,7 @@ export class Job implements IJob {
             if (Array.isArray(_data["jobFiles"])) {
                 this.jobFiles = [] as any;
                 for (let item of _data["jobFiles"])
-                    this.jobFiles!.push(UpdateJobFilesCommand.fromJS(item));
+                    this.jobFiles!.push(JobFiles.fromJS(item));
             }
             if (Array.isArray(_data["history"])) {
                 this.history = [] as any;
@@ -3236,7 +3296,7 @@ export interface IJob {
     status?: Status;
     numberOfFiles?: number;
     customer?: string;
-    jobFiles?: UpdateJobFilesCommand[];
+    jobFiles?: JobFiles[];
     history?: History[];
     additionalFile?: AdditionalFile[];
     timeTracking?: TimeTracking[];
@@ -3248,7 +3308,7 @@ export interface IJob {
     client?: Client | undefined;
 }
 
-export class UpdateJobFilesCommand implements IUpdateJobFilesCommand {
+export class JobFiles implements IJobFiles {
     id?: string;
     createdAt?: Date;
     deletedAt?: Date | undefined;
@@ -3270,7 +3330,7 @@ export class UpdateJobFilesCommand implements IUpdateJobFilesCommand {
     job?: Job | undefined;
     filePath?: FilePath | undefined;
 
-    constructor(data?: IUpdateJobFilesCommand) {
+    constructor(data?: IJobFiles) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3304,9 +3364,9 @@ export class UpdateJobFilesCommand implements IUpdateJobFilesCommand {
         }
     }
 
-    static fromJS(data: any): UpdateJobFilesCommand {
+    static fromJS(data: any): JobFiles {
         data = typeof data === 'object' ? data : {};
-        let result = new UpdateJobFilesCommand();
+        let result = new JobFiles();
         result.init(data);
         return result;
     }
@@ -3337,7 +3397,7 @@ export class UpdateJobFilesCommand implements IUpdateJobFilesCommand {
     }
 }
 
-export interface IUpdateJobFilesCommand {
+export interface IJobFiles {
     id?: string;
     createdAt?: Date;
     deletedAt?: Date | undefined;
@@ -3368,7 +3428,7 @@ export class FilePath implements IFilePath {
     macPath?: string;
     ebvFileaction?: string;
     jobFileId?: string;
-    jobFiles?: UpdateJobFilesCommand;
+    jobFiles?: JobFiles;
     additionalFileId?: string;
     additionalFile?: AdditionalFile;
 
@@ -3390,7 +3450,7 @@ export class FilePath implements IFilePath {
             this.macPath = _data["macPath"];
             this.ebvFileaction = _data["ebvFileaction"];
             this.jobFileId = _data["jobFileId"];
-            this.jobFiles = _data["jobFiles"] ? UpdateJobFilesCommand.fromJS(_data["jobFiles"]) : <any>undefined;
+            this.jobFiles = _data["jobFiles"] ? JobFiles.fromJS(_data["jobFiles"]) : <any>undefined;
             this.additionalFileId = _data["additionalFileId"];
             this.additionalFile = _data["additionalFile"] ? AdditionalFile.fromJS(_data["additionalFile"]) : <any>undefined;
         }
@@ -3427,7 +3487,7 @@ export interface IFilePath {
     macPath?: string;
     ebvFileaction?: string;
     jobFileId?: string;
-    jobFiles?: UpdateJobFilesCommand;
+    jobFiles?: JobFiles;
     additionalFileId?: string;
     additionalFile?: AdditionalFile;
 }
@@ -3883,6 +3943,8 @@ export class JobFileReadModel implements IJobFileReadModel {
     source?: string;
     errorCode?: string;
     errorMessage?: string;
+    job?: JobReadModel;
+    filePath?: FilePathReadModel;
 
     constructor(data?: IJobFileReadModel) {
         if (data) {
@@ -3909,6 +3971,8 @@ export class JobFileReadModel implements IJobFileReadModel {
             this.source = _data["source"];
             this.errorCode = _data["errorCode"];
             this.errorMessage = _data["errorMessage"];
+            this.job = _data["job"] ? JobReadModel.fromJS(_data["job"]) : <any>undefined;
+            this.filePath = _data["filePath"] ? FilePathReadModel.fromJS(_data["filePath"]) : <any>undefined;
         }
     }
 
@@ -3935,6 +3999,8 @@ export class JobFileReadModel implements IJobFileReadModel {
         data["source"] = this.source;
         data["errorCode"] = this.errorCode;
         data["errorMessage"] = this.errorMessage;
+        data["job"] = this.job ? this.job.toJSON() : <any>undefined;
+        data["filePath"] = this.filePath ? this.filePath.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -3954,6 +4020,60 @@ export interface IJobFileReadModel {
     source?: string;
     errorCode?: string;
     errorMessage?: string;
+    job?: JobReadModel;
+    filePath?: FilePathReadModel;
+}
+
+export class FilePathReadModel implements IFilePathReadModel {
+    id?: string;
+    createdAt?: Date;
+    windowsPath?: string;
+    macPath?: string;
+    ebvFileaction?: string;
+
+    constructor(data?: IFilePathReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.windowsPath = _data["windowsPath"];
+            this.macPath = _data["macPath"];
+            this.ebvFileaction = _data["ebvFileaction"];
+        }
+    }
+
+    static fromJS(data: any): FilePathReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new FilePathReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["windowsPath"] = this.windowsPath;
+        data["macPath"] = this.macPath;
+        data["ebvFileaction"] = this.ebvFileaction;
+        return data;
+    }
+}
+
+export interface IFilePathReadModel {
+    id?: string;
+    createdAt?: Date;
+    windowsPath?: string;
+    macPath?: string;
+    ebvFileaction?: string;
 }
 
 export class CreateJobFileCommand implements ICreateJobFileCommand {
@@ -4250,62 +4370,6 @@ export interface IUpdateTimeTrackingCommand {
     id?: string;
     startedOn?: Date;
     workingDuration?: string;
-}
-
-export class UserReadModel implements IUserReadModel {
-    id?: string;
-    createdAt?: Date;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-
-    constructor(data?: IUserReadModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.userName = _data["userName"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
-            this.email = _data["email"];
-        }
-    }
-
-    static fromJS(data: any): UserReadModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserReadModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["userName"] = this.userName;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
-        data["email"] = this.email;
-        return data;
-    }
-}
-
-export interface IUserReadModel {
-    id?: string;
-    createdAt?: Date;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
 }
 
 export class CreateUserCommand implements ICreateUserCommand {

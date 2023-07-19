@@ -12,6 +12,7 @@ import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscripti
 export class ColleaguesTasksComponent extends DestroySubscriptionsComponent{
   colleaguesTasksList : JobReadModel[] = [];
   pageSettings: PageSettingsModel;
+  editorUserName: string = '';
 
 
   constructor(public overviewService : OverviewService) {
@@ -23,5 +24,24 @@ export class ColleaguesTasksComponent extends DestroySubscriptionsComponent{
 
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
     overviewService.loadColleaguesTasks();
+
+    // Beispiel: Setze den editorUserName, wenn das JSON-Objekt über die API empfangen wurde
+    const firstTaskWithEditor = this.colleaguesTasksList.find((task) => !!task.editor);
+    this.editorUserName = (firstTaskWithEditor?.editor?.userName || '') as string;
+  }
+
+  getStatusString(status: number): string {
+    switch (status) {
+      case 0:
+        return 'TO-DO';
+      case 1:
+        return 'In Progress';
+      case 2:
+        return 'Finished';
+      case 3:
+        return 'TRANSFERRED2PARTNER';
+      default:
+        return 'Unbekannter Status';
+    }
   }
 }

@@ -40,5 +40,18 @@ export class MyTasksComponent extends DestroySubscriptionsComponent{
     }
   }
 
-
+   getStatusString(status: number): string {
+    switch (status) {
+      case 0:
+        return 'TO-DO';
+      case 1:
+        return 'In Progress';
+      case 2:
+        return 'Finished';
+      case 3:
+        return 'TRANSFERRED2PARTNER';
+      default:
+        return 'Unbekannter Status';
+    }
+  }
 }
