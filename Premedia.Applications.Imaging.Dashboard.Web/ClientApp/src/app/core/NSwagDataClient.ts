@@ -772,6 +772,9 @@ export interface IJobClient {
     getAllJobs(): Observable<JobReadModel[]>;
     getJobById(id: string | undefined): Observable<JobReadModel>;
     getJobsByEditor(editor: User): Observable<JobReadModel[]>;
+    getJobsByEditorId(id: string | undefined): Observable<JobReadModel[]>;
+    getColleagueJobs(id: string | undefined): Observable<JobReadModel[]>;
+    getTransferredJobs(): Observable<JobReadModel[]>;
     createJob(command: CreateJobCommand): Observable<JobReadModel>;
     updateJob(command: UpdateJobCommand): Observable<JobReadModel>;
     changeEditor(command: UpdateJobEditorCommand): Observable<JobReadModel>;
@@ -1011,6 +1014,179 @@ export class JobClient implements IJobClient {
         return _observableOf(null as any);
     }
 
+    getJobsByEditorId(id: string | undefined): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetJobsByEditorId?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetJobsByEditorId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetJobsByEditorId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobReadModel[]>;
+        }));
+    }
+
+    protected processGetJobsByEditorId(response: HttpResponseBase): Observable<JobReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getColleagueJobs(id: string | undefined): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetColleagueJobs?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetColleagueJobs(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetColleagueJobs(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobReadModel[]>;
+        }));
+    }
+
+    protected processGetColleagueJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getTransferredJobs(): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetTransferredJobs";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransferredJobs(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransferredJobs(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobReadModel[]>;
+        }));
+    }
+
+    protected processGetTransferredJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
     createJob(command: CreateJobCommand): Observable<JobReadModel> {
         let url_ = this.baseUrl + "/Job";
         url_ = url_.replace(/[?&]$/, "");
@@ -1172,6 +1348,7 @@ export interface IJobFileClient {
     getNewJobFiles(): Observable<JobFileReadModel[]>;
     getAllJobFiles(): Observable<JobFileReadModel[]>;
     getJobFilesById(id: string | undefined): Observable<JobFileReadModel>;
+    getTransferredJobFiles(): Observable<JobFileReadModel[]>;
     createJobFile(command: CreateJobFileCommand): Observable<JobFileReadModel>;
     updateJobFile(command: UpdateJobFileCommand): Observable<JobFileReadModel>;
 }
@@ -1341,6 +1518,61 @@ export class JobFileClient implements IJobFileClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = JobFileReadModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getTransferredJobFiles(): Observable<JobFileReadModel[]> {
+        let url_ = this.baseUrl + "/JobFile/GetTransferredJobFiles";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransferredJobFiles(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransferredJobFiles(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobFileReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobFileReadModel[]>;
+        }));
+    }
+
+    protected processGetTransferredJobFiles(response: HttpResponseBase): Observable<JobFileReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobFileReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2617,6 +2849,7 @@ export enum Status {
     ToDo = 0,
     InProgress = 1,
     Finished = 2,
+    Transferred2Partner = 3,
 }
 
 export class User implements IUser {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
-import { AllPartnerFiles, OverviewService } from 'src/app/services/overview.service';
+import { JobFileReadModel } from 'src/app/core/NSwagDataClient';
+import { OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 
 @Component({
@@ -9,13 +10,13 @@ import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscripti
   styleUrls: ['./all-partner-files.component.scss']
 })
 export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
-  allPartnerFilesList : AllPartnerFiles[] = [];
+  partnerFilesList : JobFileReadModel[] = [];
   pageSettings: PageSettingsModel;
 
   constructor(public overviewService : OverviewService) {
     super();
-    overviewService.allPartnerFiles.subscribe((allPartnerFiles) => {
-      this.allPartnerFilesList = allPartnerFiles
+    this.setNewSubscription = overviewService.partnerFiles.subscribe((partnerFiles) => {
+      this.partnerFilesList = partnerFiles
     })
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
     overviewService.loadAllPartnerFiles();

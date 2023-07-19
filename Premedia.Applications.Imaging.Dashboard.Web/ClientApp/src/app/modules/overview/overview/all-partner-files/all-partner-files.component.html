@@ -1,13 +1,12 @@
 <h3>Alle Files bei Partner</h3>
-<ejs-grid [dataSource]='allPartnerFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+<ejs-grid [dataSource]='partnerFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
   <e-columns>
     <e-column field='id' headerText='ID' [visible]="false"></e-column>
-    <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
-    <e-column field='jobNumber' headerText='Job-Nummer'></e-column>
-    <e-column field='fileName' headerText='Filename'></e-column>
+    <e-column field='consecutiveNumber' headerText='Job-Nummer'></e-column>
+    <e-column field='editedFilename' headerText='Filename'></e-column> <!-- TO DO -->
     <e-column field='customer' headerText='Kunde'></e-column>
-    <e-column field='date' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
-    <e-column field='editor' headerText='Bearbeiter'></e-column>
-    <e-column field='fileAction' headerText='File Action'></e-column>
+    <e-column field='deliveryDate' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
+    <e-column field='editor' headerText='Bearbeiter'></e-column> <!-- TO DO -->
+    <e-column field='activity' headerText='File Action'></e-column> <!-- TO DO -->
   </e-columns>
 </ejs-grid>
