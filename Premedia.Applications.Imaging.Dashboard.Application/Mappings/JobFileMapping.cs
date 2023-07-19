@@ -8,7 +8,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Mappings
     {
         public JobFileMapping()
         {
-            CreateMap<JobFileReadModel, UpdateJobFilesCommand>().ReverseMap();
+            CreateMap<JobFileReadModel, JobFiles>().ReverseMap();
         }
 
     }

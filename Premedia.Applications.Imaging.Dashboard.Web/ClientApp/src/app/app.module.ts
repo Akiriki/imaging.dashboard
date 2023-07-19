@@ -10,11 +10,18 @@ import {AppRoutingModule} from "./app-routing.module";
 import {environment} from '../environments/environment';
 import {API_BASE_URL} from './core/NSwagDataClient';
 import {FetchDataService} from './services/fetch-data.service';
+import { GridModule, PagerModule, PageService, SortService, FilterService } from '@syncfusion/ej2-angular-grids';
+import { OverviewModule } from './modules/overview/overview.module';
+import { OverviewService } from './services/overview.service';
+/*import buttons*/
+import { DropDownButtonModule, SplitButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
+import { ArchiveService } from './services/archive.service';
+import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
+import { AdministrationService } from './services/administration.service';
 
 @NgModule({
   declarations: [
     AppComponent
-
   ],
   imports: [
     HttpClientModule,
@@ -22,6 +29,9 @@ import {FetchDataService} from './services/fetch-data.service';
     BaseModule,
     AppRoutingModule,
     BrowserModule,
+    GridModule,
+    SplitButtonModule,
+    DropDownButtonModule
   ],
   providers: [
     HttpClientModule,
@@ -30,6 +40,12 @@ import {FetchDataService} from './services/fetch-data.service';
       provide: API_BASE_URL,
       useValue: environment.apiRoot
     },
+    OverviewService,
+    PageService,
+    SortService,
+    FilterService,
+    ArchiveService,
+    AdministrationService
   ],
   bootstrap: [AppComponent]
 })

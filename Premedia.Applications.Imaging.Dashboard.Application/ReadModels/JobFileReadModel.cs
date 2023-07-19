@@ -1,4 +1,5 @@
-﻿using Premedia.Applications.Imaging.Dashboard.Core.Enums;
+﻿using Premedia.Applications.Imaging.Dashboard.Core.Entities;
+using Premedia.Applications.Imaging.Dashboard.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
         public string Source { get; set; }
         public string ErrorCode { get; set; }
         public string ErrorMessage { get; set; }
+        public JobReadModel Job { get; set; }
+        public FilePathReadModel FilePath { get; set; }
     }
 }

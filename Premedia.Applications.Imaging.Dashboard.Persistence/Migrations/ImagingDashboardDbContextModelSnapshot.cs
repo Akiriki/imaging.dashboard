@@ -254,45 +254,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.ToTable("Job");
                 });
 
-            modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.TimeTracking", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EditorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("JobId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("WorkingDuration")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("EditorId");
-
-                    b.HasIndex("JobId");
-
-                    b.ToTable("TimeTracking");
-                });
-
-            modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.UpdateJobFilesCommand", b =>
+            modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.JobFiles", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -363,7 +325,45 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("UpdateJobFilesCommand");
+                    b.ToTable("JobFiles");
+                });
+
+            modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.TimeTracking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EditorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("WorkingDuration")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("EditorId");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("TimeTracking");
                 });
 
             modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", b =>
@@ -426,7 +426,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.UpdateJobFilesCommand", "JobFiles")
+                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.JobFiles", "JobFiles")
                         .WithOne("FilePath")
                         .HasForeignKey("Premedia.Applications.Imaging.Dashboard.Core.Entities.FilePath", "JobFileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -482,6 +482,25 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.Navigation("Editor");
                 });
 
+            modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.JobFiles", b =>
+                {
+                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "Creator")
+                        .WithMany("JobFiles")
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.Job", "Job")
+                        .WithMany("JobFiles")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Job");
+                });
+
             modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.TimeTracking", b =>
                 {
                     b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "Creator")
@@ -509,25 +528,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.Navigation("Job");
                 });
 
-            modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.UpdateJobFilesCommand", b =>
-                {
-                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.User", "Creator")
-                        .WithMany("JobFiles")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Premedia.Applications.Imaging.Dashboard.Core.Entities.Job", "Job")
-                        .WithMany("JobFiles")
-                        .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Creator");
-
-                    b.Navigation("Job");
-                });
-
             modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.AdditionalFile", b =>
                 {
                     b.Navigation("FilePath");
@@ -549,7 +549,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.Migrations
                     b.Navigation("TimeTracking");
                 });
 
-            modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.UpdateJobFilesCommand", b =>
+            modelBuilder.Entity("Premedia.Applications.Imaging.Dashboard.Core.Entities.JobFiles", b =>
                 {
                     b.Navigation("FilePath");
                 });

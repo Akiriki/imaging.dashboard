@@ -1,0 +1,40 @@
+.e-btn {
+  background-color: #E67800;
+  color: #ffffff;
+}
+
+// pager back ground
+.e-grid .e-pager,.e-grid .e-pager .e-pagercontainer,.e-grid .e-pager .e-pagercontainer *{
+  background-color: white;
+}
+// settings for index.html (pager controlls)
+.e-grid .e-pager .e-currentitem, .e-pager .e-currentitem:hover{
+   background-color: #E67800 !important;
+}
+
+.headings{
+  color: #E67800;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left),
+.e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left),
+.e-input-group:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled):not(.e-float-icon-left),
+.e-input-group.e-control-wrapper:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled):not(.e-float-icon-left) {
+  border-color: #E67800;
+}
+
+input#jobNumber_filterBarcell.e-filtertext.e-input.e-focus {
+  border-color: #E67800;
+}
+
+.e-grid .e-filterbarcell .e-input-group.e-input-focus::after,
+.e-grid .e-filterbarcell .e-input-group.e-input-focus::before{
+      background-color: #E67800;
+}
+
+.e-grid .e-headercell .e-headercelldiv{
+  font-weight: bold;
+  color: black;
+}

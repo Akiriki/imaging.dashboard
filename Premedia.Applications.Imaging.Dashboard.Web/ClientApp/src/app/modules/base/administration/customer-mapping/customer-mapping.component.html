@@ -1,0 +1,37 @@
+<br>
+<h3 class="headings">Kunden-Mapping</h3>
+<br>
+<br>
+<br>
+
+
+<div class="container">
+  <div class="button-container">
+    <button ejs-button>Neues Kunden-Mapping</button>
+  </div>
+
+  <div class="table-container">
+    <ejs-grid [dataSource]='customerMappingList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+      <e-columns>
+        <e-column field='name' headerText='Name' [width]="120"></e-column>
+        <e-column field='customer' headerText='Kunde' [width]="120"></e-column>
+        <e-column field='projectType' headerText='Projekt-Typen' [width]="200"></e-column>
+        <e-column field='erpCustomer' headerText='ERP-Kunde' [width]="140"></e-column>
+        <e-column field='erpProduct' headerText='ERP-Produkt' [width]="170"></e-column>
+        <e-column field='erpContact' headerText='ERP-Kontakt' [width]="140"></e-column>
+        <e-column [textAlign]="'center'">
+            <ng-template #template let-data>
+              <button ejs-button style="margin-right: 15px;">edit</button>
+              <button ejs-button>remove</button>
+            </ng-template>
+        </e-column>
+      </e-columns>
+      </ejs-grid>
+  </div>
+</div>
+
+<br>
+<br>
+
+
+

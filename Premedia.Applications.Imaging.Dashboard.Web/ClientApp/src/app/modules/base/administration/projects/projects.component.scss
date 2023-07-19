@@ -1,0 +1,17 @@
+.container {
+  position: relative;
+}
+
+.table-container {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  position: absolute;
+  bottom: -30px; /* Passe den Abstand nach Bedarf an */
+}
+
+h3 {
+  font-size: 30px;
+}

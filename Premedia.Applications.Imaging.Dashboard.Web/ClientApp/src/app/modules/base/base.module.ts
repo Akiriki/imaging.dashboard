@@ -6,13 +6,27 @@ import {CounterComponent} from "./counter/counter.component";
 import {SharedModule} from "../../shared/shared.module";
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import {NgClass, NgIf} from '@angular/common';
+import { ArchiveComponent } from './archive/archive.component';
+import { UserActionsComponent } from './buttons/user-actions/user-actions.component';
+import { AcceptOrderComponent } from './buttons/accept-order/accept-order.component';
+import { ActivitiesComponent } from './administration/activities/activities.component';
+import { CustomerMappingComponent } from './administration/customer-mapping/customer-mapping.component';
+import { ProjectsComponent } from './administration/projects/projects.component';
+import { AdministrationActionsComponent } from './buttons/administration-actions/administration-actions.component';
 
 @NgModule({
   declarations: [
     NavMenuComponent,
     HomeComponent,
     FetchDataComponent,
-    CounterComponent
+    CounterComponent,
+    ArchiveComponent,
+    UserActionsComponent,
+    AcceptOrderComponent,
+    ActivitiesComponent,
+    CustomerMappingComponent,
+    ProjectsComponent,
+    AdministrationActionsComponent
   ],
   imports: [
     SharedModule

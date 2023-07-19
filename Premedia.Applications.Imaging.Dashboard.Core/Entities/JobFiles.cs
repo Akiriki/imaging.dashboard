@@ -2,7 +2,7 @@
 
 namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
-public class UpdateJobFilesCommand:EntityObject
+public class JobFiles:EntityObject
 {
     public string SwitchJobField { get; set; }
     public string OriginalFilename { get; set; }
@@ -17,7 +17,7 @@ public class UpdateJobFilesCommand:EntityObject
     public string ErrorCode { get; set; }
     public string ErrorMessage { get; set; }
 
-    
+
     //Realtions
     public Guid CreatorId { get; set; }
     public User? Creator { get; set; }

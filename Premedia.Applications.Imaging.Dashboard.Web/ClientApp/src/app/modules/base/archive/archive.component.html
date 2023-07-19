@@ -1,0 +1,19 @@
+<br/>
+<h3 class="headings" style="font-size: 30px">Archiv<h3>
+<br/>
+
+<ejs-grid [dataSource]='archiveList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true" [style]="">
+  <e-columns>
+    <e-column field='id' headerText='Nr.' width="100" [textAlign]="'center'"></e-column>
+    <e-column field='jobNumber' headerText='Job-Nummer'></e-column>
+    <e-column field='title' headerText='Titel'></e-column>
+    <e-column field='customer' headerText='Kunde'></e-column>
+    <e-column field='date' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
+    <e-column field='editor' headerText='Bearbeiter'></e-column>
+    <e-column field='status' headerText='Status'></e-column>
+  </e-columns>
+</ejs-grid>
+
+<br>
+<br>
+

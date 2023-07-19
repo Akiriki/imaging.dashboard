@@ -43,6 +43,24 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _jobApplicationService.GetJobsByEditor(editor).ConfigureAwait(false);
         }
 
+        [HttpGet(nameof(GetJobsByEditorId))]
+        public async Task<ActionResult<List<JobReadModel>>> GetJobsByEditorId(Guid id)
+        {
+            return await _jobApplicationService.GetJobsByEditorId(id).ConfigureAwait(false);
+        }
+
+        [HttpGet(nameof(GetColleagueJobs))]
+        public async Task<ActionResult<List<JobReadModel>>> GetColleagueJobs(Guid id)
+        {
+            return await _jobApplicationService.GetColleagueJobs(id).ConfigureAwait(false);
+        }
+
+        [HttpGet(nameof(GetTransferredJobs))]
+        public async Task<ActionResult<List<JobReadModel>>> GetTransferredJobs()
+        {
+            return await _jobApplicationService.GetTransferredJobs().ConfigureAwait(false);
+        }
+
         [HttpPost]
         public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand command)
         {

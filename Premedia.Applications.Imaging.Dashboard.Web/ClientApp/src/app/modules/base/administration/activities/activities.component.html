@@ -1,0 +1,33 @@
+<br>
+<h3 class="headings">Aktivitäten</h3>
+<br>
+<br>
+<br>
+
+
+<div class="container">
+  <div class="button-container">
+    <button ejs-button>Neue Leistungsart</button>
+  </div>
+
+  <div class="table-container">
+    <ejs-grid [dataSource]='activitiesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+      <e-columns>
+        <e-column field='id' headerText='Nr.' [width]="100" [textAlign]="'center'"></e-column>
+        <e-column field='customer' headerText='Kunde'></e-column>
+        <e-column field='serviceType' headerText='Leistungsart'></e-column>
+        <e-column field='quality' headerText='Qualität'></e-column>
+        <e-column [textAlign]="'center'">
+            <ng-template #template let-data>
+              <button ejs-button style="margin-right: 15px;">edit</button>
+              <button ejs-button>remove</button>
+            </ng-template>
+        </e-column>
+      </e-columns>
+      </ejs-grid>
+
+  </div>
+</div>
+
+<br>
+<br>
