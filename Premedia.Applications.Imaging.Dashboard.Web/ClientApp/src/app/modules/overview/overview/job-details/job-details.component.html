@@ -95,10 +95,14 @@
           <ejs-grid [dataSource]='historyList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
             <e-columns>
               <e-column field='id' headerText='ID' [visible]="false"></e-column>
-              <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
               <e-column field='date' headerText='Datum und Uhrzeit' [format]="'dd.MM.yyyy hh:mm'"></e-column>
               <e-column field='title' headerText='Titel'></e-column>
-              <e-column field='editor' headerText='Bearbeiter'></e-column>
+              <e-column field='editor' headerText='Bearbeiter' [width]="200"></e-column>
+              <e-column [textAlign]="'center'" [allowFiltering]="false" [allowSorting]="false">
+                <ng-template #template let-data>
+                  <button style="width: 30px; font-size: 10px;" ejs-button>v</button>
+                </ng-template>
+              </e-column>
             </e-columns>
           </ejs-grid>
 

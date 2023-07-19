@@ -81,7 +81,7 @@ export type HistoryInfo = {
 export class OverviewService {
   openJobs = new BehaviorSubject<DataClient.JobReadModel[]>([]);
   //myTasks = new BehaviorSubject<DataClient.[]>([]);
-  //colleaguesTasks = new BehaviorSubject<DataClient.JobFil>
+  //colleaguesTasks = new BehaviorSubject<DataClient.JobReadModel>
   //allPartnerFiles = new BehaviorSubject<DataClient.[]>([]);
   public pageSettings : PageSettingsModel = { pageSize : 5 };
 
@@ -152,7 +152,8 @@ export class OverviewService {
   constructor(private dataClient: DataClient.JobClient) {
   }
 
-  //Hier werden die Daten aus dem Backend geladen
+  //Hier werden die Daten aus dem Backend geladen:
+
   loadOpenJobs() {
     /*this.dataClient.get().subscribe(result => {
       this.weatherForecasts.next(result);
@@ -200,6 +201,7 @@ export class OverviewService {
     */
   }
 
+  // Mockdaten geladen siehe oben
   loadJobFiles(){
     this.jobFiles.next(this.jobFileList)
   }
