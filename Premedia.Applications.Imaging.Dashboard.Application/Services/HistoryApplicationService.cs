@@ -51,16 +51,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<HistoryReadModel>> UpdateHistory(UpdateHistoryCommand command)
         {
-            var existingHistory = await _unitOfWork.HistoryRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
-            if (existingHistory == null)
+            var history = await _unitOfWork.HistoryRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            if (history == null)
             {
                 throw HttpResponseException.NotFound("History");
             }
             
-            _mapper.Map(command, existingHistory);
+            _mapper.Map(command, history);
             await _unitOfWork.SaveChangesAsync();
 
-            var result = _mapper.Map<HistoryReadModel>(existingHistory);
+            var result = _mapper.Map<HistoryReadModel>(history);
             return result;
         }
     }

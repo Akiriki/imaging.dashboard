@@ -47,7 +47,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobFileReadModel>> CreateJobFile(CreateJobFileCommand command)
         {
-            var jobFile = _mapper.Map<UpdateJobFilesCommand>(command);
+            var jobFile = _mapper.Map<JobFiles>(command);
             await _unitOfWork.JobFileRepository.AddAsync(jobFile);
             await _unitOfWork.SaveChangesAsync();
 
@@ -57,16 +57,16 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobFileReadModel>> UpdateJobFile(UpdateJobFileCommand command)
         {
-            var existingJobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
-            if (existingJobFile == null)
+            var jobFile = await _unitOfWork.JobFileRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            if (jobFile == null)
             {
                 throw HttpResponseException.NotFound("Job File");
             }
 
-            _mapper.Map(command, existingJobFile);
+            _mapper.Map(command, jobFile);
             await _unitOfWork.SaveChangesAsync();
 
-            var result = _mapper.Map<JobFileReadModel>(existingJobFile);
+            var result = _mapper.Map<JobFileReadModel>(jobFile);
             return result;
         }
     }

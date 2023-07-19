@@ -63,9 +63,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
 
-        public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand jobEntity)
+        public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand command)
         {
-            var job = _mapper.Map<Job>(jobEntity);
+            var job = _mapper.Map<Job>(command);
             await _unitOfWork.JobRepository.AddAsync(job);
             await _unitOfWork.SaveChangesAsync();
 
@@ -90,17 +90,17 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobReadModel>> ChangeEditor(UpdateJobEditorCommand command)
         {
-            var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
-            if (existingJob == null)
+            var job = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            if (job == null)
             {
                 throw HttpResponseException.NotFound("Job");
             }
 
 
-            _mapper.Map(command, existingJob.Editor);
+            _mapper.Map(command, job.Editor);
             await _unitOfWork.SaveChangesAsync();
 
-            var result = _mapper.Map<JobReadModel>(existingJob);
+            var result = _mapper.Map<JobReadModel>(job);
             return result;
         }
     }

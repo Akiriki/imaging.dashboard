@@ -8,7 +8,7 @@ public class FilePath : EntityObject
 
     //Realtions
     public Guid JobFileId { get; set; }
-    public UpdateJobFilesCommand JobFiles { get; set; }
+    public JobFiles JobFiles { get; set; }
 
     public Guid AdditionalFileId { get; set; }
     public AdditionalFile AdditionalFile { get; set; }
