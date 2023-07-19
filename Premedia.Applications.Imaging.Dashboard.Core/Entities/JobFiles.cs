@@ -2,7 +2,7 @@
 
 namespace Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
-public class UpdateJobFilesCommand:EntityObject
+public class JobFiles:EntityObject
 {
     public string SwitchJobField { get; set; }
     public string OriginalFilename { get; set; }
