@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Mappings
 {
-    public class FilePathMapping:Profile
+    public class FilePathMapping : Profile
     {
         public FilePathMapping()
         {
