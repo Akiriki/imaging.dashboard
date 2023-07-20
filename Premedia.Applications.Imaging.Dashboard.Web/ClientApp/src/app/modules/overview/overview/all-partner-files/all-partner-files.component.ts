@@ -19,6 +19,5 @@ export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
       this.partnerFilesList = partnerFiles
     })
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
-    overviewService.loadAllPartnerFiles();
   }
 }

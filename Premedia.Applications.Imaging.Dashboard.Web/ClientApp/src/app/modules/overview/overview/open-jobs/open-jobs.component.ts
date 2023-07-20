@@ -21,6 +21,5 @@ export class OpenJobsComponent extends DestroySubscriptionsComponent{
       this.openJobList = openJobs
     })
     this.pageSettings = {pageSize : overviewService.pageSettings.pageSize}
-    overviewService.loadOpenJobs()
   }
 }

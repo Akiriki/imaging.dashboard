@@ -23,7 +23,6 @@ export class MyTasksComponent extends DestroySubscriptionsComponent{
     })
 
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
-    overviewService.loadMyTasks();
   }
 
   navigateToJobDetails(event: any) {

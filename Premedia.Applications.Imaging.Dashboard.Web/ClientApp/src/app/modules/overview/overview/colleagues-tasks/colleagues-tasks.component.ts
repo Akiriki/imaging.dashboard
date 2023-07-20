@@ -23,7 +23,6 @@ export class ColleaguesTasksComponent extends DestroySubscriptionsComponent{
     })
 
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
-    overviewService.loadColleaguesTasks();
 
     // Beispiel: Setze den editorUserName, wenn das JSON-Objekt über die API empfangen wurde
     const firstTaskWithEditor = this.colleaguesTasksList.find((task) => !!task.editor);
