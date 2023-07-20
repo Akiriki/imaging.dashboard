@@ -23,10 +23,15 @@ export class OverviewComponent extends DestroySubscriptionsComponent{
   // Methode zum Laden der Daten
   loadData(){
     // daten manuell laden
+    // Startseite
     this.overviewService.loadOpenJobs();
     this.overviewService.loadMyTasks();
     this.overviewService.loadColleaguesTasks();
     this.overviewService.loadAllPartnerFiles();
+
+    // Detailseite
+    this.overviewService.loadJobFileDetails();
+    this.overviewService.loadHistoryFileDetails();
 
     this.refreshInterval = setInterval(() => {
       this.refreshTables();
@@ -34,10 +39,15 @@ export class OverviewComponent extends DestroySubscriptionsComponent{
   }
 
   refreshTables(){
+    // Startseite
     this.overviewService.loadOpenJobs();
     this.overviewService.loadMyTasks();
     this.overviewService.loadColleaguesTasks();
     this.overviewService.loadAllPartnerFiles();
+
+    // Detailseite
+    this.overviewService.loadJobFileDetails();
+    this.overviewService.loadHistoryFileDetails();
 
     console.log('refreshing...');
   }
