@@ -35,6 +35,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         {
             return await _historyApplicationService.GetAllHistories().ConfigureAwait(false);
         }
+
+        [HttpGet(nameof(GetHistoriesByJobId))]
+        public async Task<ActionResult<List<HistoryReadModel>>> GetHistoriesByJobId(Guid id)
+        {
+            return await _historyApplicationService.GetHistoriesByJobId(id).ConfigureAwait(false);
+        }
+
         [HttpPost(nameof(GetAllHistories))]
         public async Task<ActionResult<HistoryReadModel>> CreateHistory(CreateHistoryCommand command)
         {

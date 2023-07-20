@@ -40,6 +40,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return _mapper.Map<JobFileReadModel>(jobFile);
         }
 
+        public async Task<ActionResult<List<JobFileReadModel>>> GetJobFilesByJobId(Guid id)
+        {
+            var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.JobId == id);
+            return _mapper.Map<List<JobFileReadModel>>(jobFiles);
+        }
+
         public async Task<ActionResult<List<JobFileReadModel>>> GetTransferredJobFiles()
         {
             var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Transferred2Partner,
