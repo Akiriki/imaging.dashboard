@@ -10,16 +10,27 @@ import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscripti
 export class OverviewComponent extends DestroySubscriptionsComponent{
 
   refreshInterval : any
+  firstLoadCompleted : boolean = true;
 
   constructor(public overviewService : OverviewService){
     super();
   }
 
   ngOnInit(){
-    // für das Refreshing der Tabellen
+    this.loadData();
+  }
+
+  // Methode zum Laden der Daten
+  loadData(){
+    // daten manuell laden
+    this.overviewService.loadOpenJobs();
+    this.overviewService.loadMyTasks();
+    this.overviewService.loadColleaguesTasks();
+    this.overviewService.loadAllPartnerFiles();
+
     this.refreshInterval = setInterval(() => {
       this.refreshTables();
-    }, 500); // alle 0,5 Sekunden
+    }, 10000); // 10 Sekunden (10000 Millisekunden)
   }
 
   refreshTables(){
@@ -27,6 +38,7 @@ export class OverviewComponent extends DestroySubscriptionsComponent{
     this.overviewService.loadMyTasks();
     this.overviewService.loadColleaguesTasks();
     this.overviewService.loadAllPartnerFiles();
-  }
 
+    console.log('refreshing...');
+  }
 }

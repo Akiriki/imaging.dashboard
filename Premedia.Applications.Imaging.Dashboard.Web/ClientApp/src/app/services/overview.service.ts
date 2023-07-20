@@ -28,11 +28,14 @@ export type HistoryInfo = {
 
 @Injectable()
 export class OverviewService {
-  // Objekte für Daten
+  // Objekte für Daten Startseite
   openJobs = new BehaviorSubject<DataClient.JobReadModel[]>([]);
   myTasks = new BehaviorSubject<DataClient.JobReadModel[]>([]);
   colleaguesTasks = new BehaviorSubject<DataClient.JobReadModel[]>([]);
   partnerFiles = new BehaviorSubject<DataClient.JobFileReadModel[]>([]);
+
+  // Objekte für Jobdetailansicht
+
 
   // Property zum setzen: wie viele Datensätze in der Syncfusion Tabelle angezeigt werden sollten
   public pageSettings : PageSettingsModel = { pageSize : 5 };

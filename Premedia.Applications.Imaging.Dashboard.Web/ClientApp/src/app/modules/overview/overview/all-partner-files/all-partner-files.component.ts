@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { JobFileReadModel } from 'src/app/core/NSwagDataClient';
 import { OverviewService } from 'src/app/services/overview.service';
@@ -13,11 +14,26 @@ export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
   partnerFilesList : JobFileReadModel[] = [];
   pageSettings: PageSettingsModel;
 
-  constructor(public overviewService : OverviewService) {
+  constructor(public overviewService : OverviewService, private router : Router) {
     super();
     this.setNewSubscription = overviewService.partnerFiles.subscribe((partnerFiles) => {
       this.partnerFilesList = partnerFiles
     })
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
   }
+
+  // TODO - Backend Consecutive Number nicht vorhanden
+  /*navigateToJobDetails(event: any) {
+    const selectedJobNumber = parseInt(event.target.innerText, 10);
+    console.log('Selected Job Number:', selectedJobNumber);
+
+    const selectedJob = this.partnerFilesList.find(task => task.consecutiveNumber === selectedJobNumber);
+
+    if (selectedJob) {
+      console.log('Selected Job:', selectedJob);
+      this.router.navigate(['/job-details', selectedJob.id]);
+    } else {
+      console.log('Selected Job not found');
+    }
+  }*/
 }

@@ -26,7 +26,7 @@ export class MyTasksComponent extends DestroySubscriptionsComponent{
   }
 
   navigateToJobDetails(event: any) {
-    const selectedJobNumber = parseInt(event.target.innerText, 10); // Oder: Number(event.target.innerText);
+    const selectedJobNumber = parseInt(event.target.innerText, 10);
     console.log('Selected Job Number:', selectedJobNumber);
 
     const selectedJob = this.myTasksList.find(task => task.consecutiveNumber === selectedJobNumber);

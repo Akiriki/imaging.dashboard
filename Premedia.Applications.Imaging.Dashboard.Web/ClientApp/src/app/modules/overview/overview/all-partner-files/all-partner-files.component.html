@@ -2,7 +2,11 @@
 <ejs-grid [dataSource]='partnerFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
   <e-columns>
     <e-column field='id' headerText='ID' [visible]="false"></e-column>
-    <e-column field='consecutiveNumber' headerText='Job-Nummer'></e-column>
+    <e-column field="consecutiveNumber" headerText="Job-Nummer">
+      <!--<ng-template #template let-data>
+        <a (click)="navigateToJobDetails($event)">{{ data.consecutiveNumber }}</a>
+      </ng-template> -->
+    </e-column>
     <e-column field='originalFilename' headerText='Filename'></e-column> <!-- TO DO -->
     <e-column field='customer' headerText='Kunde'></e-column>
     <e-column field='deliveryDate' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
