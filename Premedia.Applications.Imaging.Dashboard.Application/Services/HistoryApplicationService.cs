@@ -39,6 +39,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             return _mapper.Map<List<HistoryReadModel>>(histories);
         }
 
+        public async Task<ActionResult<List<HistoryReadModel>>> GetHistoriesByJobId(Guid id)
+        {
+            var histories = await _unitOfWork.HistoryRepository.GetMultipleAsync(x => x.JobId == id);
+            return _mapper.Map<List<HistoryReadModel>>(histories);
+        }
+
         public async Task<ActionResult<HistoryReadModel>> CreateHistory(CreateHistoryCommand command)
         {
             var history = _mapper.Map<History>(command);
