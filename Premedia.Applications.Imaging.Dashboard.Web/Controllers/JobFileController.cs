@@ -36,6 +36,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _jobFileApplicationService.GetJobFileById(id).ConfigureAwait(false);
         }
 
+        [HttpGet(nameof(GetJobFilesByJobId))]
+        public async Task<ActionResult<List<JobFileReadModel>>> GetJobFilesByJobId(Guid id)
+        {
+            return await _jobFileApplicationService.GetJobFilesByJobId(id).ConfigureAwait(false);
+        }
+
         [HttpGet(nameof(GetTransferredJobFiles))]
         public async Task<ActionResult<List<JobFileReadModel>>> GetTransferredJobFiles()
         {
