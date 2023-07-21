@@ -51,14 +51,14 @@ export class OverviewService {
 
   // TO-DO Endpoint Backend (sollte mit Niklas Pull Request da sein)
   loadJobFileDetails(){
-    this.jobFileDataClient.getJobFilesById('').subscribe(result => {
+    this.jobFileDataClient.getJobFilesById('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
       this.jobdetailsFiles.next(result);
     }, error => console.error(error))
   }
 
   // TO-DO Endpoint Backend (sollte mit Niklas Pull Request da sein)
   loadHistoryFileDetails(){
-    this.historyDataClient.getHistoryById('').subscribe(result => {
+    this.historyDataClient.getHistoryById('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
       this.jobdetailsHistory.next(result);
     }, error => console.error(error))
   }
