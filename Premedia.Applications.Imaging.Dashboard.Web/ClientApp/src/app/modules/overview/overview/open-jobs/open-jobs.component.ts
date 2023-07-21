@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
-import { OpenJobs, OverviewService } from 'src/app/services/overview.service';
+import { OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 import { ButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { JobReadModel } from 'src/app/core/NSwagDataClient';
@@ -21,6 +21,5 @@ export class OpenJobsComponent extends DestroySubscriptionsComponent{
       this.openJobList = openJobs
     })
     this.pageSettings = {pageSize : overviewService.pageSettings.pageSize}
-    overviewService.loadOpenJobs()
   }
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
-import { MyTasks, OverviewService } from 'src/app/services/overview.service';
+import { OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
+import { JobReadModel } from 'src/app/core/NSwagDataClient';
 
 @Component({
   selector: 'app-my-tasks',
@@ -11,27 +12,45 @@ import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscripti
 })
 export class MyTasksComponent extends DestroySubscriptionsComponent{
 
-  myTasksList : MyTasks[] = [];
+  myTasksList : JobReadModel[] = [];
   pageSettings: PageSettingsModel;
 
   constructor(public overviewService : OverviewService, private router : Router) {
     super();
-    overviewService.myTasks.subscribe((myTasks) => {
+
+    this.setNewSubscription = overviewService.myTasks.subscribe((myTasks) => {
       this.myTasksList = myTasks
     })
+
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
-    overviewService.loadMyTasks();
   }
 
   navigateToJobDetails(event: any) {
-    const selectedJobNumber = event.target.innerText;
-    const selectedJob = this.myTasksList.find(task => task.jobNumber === selectedJobNumber);
+    const selectedJobNumber = parseInt(event.target.innerText, 10);
+    console.log('Selected Job Number:', selectedJobNumber);
+
+    const selectedJob = this.myTasksList.find(task => task.consecutiveNumber === selectedJobNumber);
 
     if (selectedJob) {
-      console.log('Selected Job:', selectedJob); // Logge das ausgewählte Job-Objekt
+      console.log('Selected Job:', selectedJob);
       this.router.navigate(['/job-details', selectedJob.id]);
     } else {
-      console.log('Selected Job not found'); // Logge eine Meldung, wenn der Job nicht gefunden wurde
+      console.log('Selected Job not found');
+    }
+  }
+
+   getStatusString(status: number): string {
+    switch (status) {
+      case 0:
+        return 'TO-DO';
+      case 1:
+        return 'In Progress';
+      case 2:
+        return 'Finished';
+      case 3:
+        return 'TRANSFERRED2PARTNER';
+      default:
+        return 'Unbekannter Status';
     }
   }
 }

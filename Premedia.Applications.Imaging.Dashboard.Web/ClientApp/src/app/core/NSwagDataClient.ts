@@ -484,6 +484,7 @@ export interface IHistoryClient {
     getHistoryById(id: string | undefined): Observable<HistoryReadModel>;
     getAllHistories(): Observable<HistoryReadModel[]>;
     createHistory(command: CreateHistoryCommand): Observable<HistoryReadModel>;
+    getHistoriesByJobId(id: string | undefined): Observable<HistoryReadModel[]>;
     updateHistory(command: UpdateHistoryCommand): Observable<HistoryReadModel>;
 }
 
@@ -714,6 +715,65 @@ export class HistoryClient implements IHistoryClient {
         return _observableOf(null as any);
     }
 
+    getHistoriesByJobId(id: string | undefined): Observable<HistoryReadModel[]> {
+        let url_ = this.baseUrl + "/History/GetHistoriesByJobId?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetHistoriesByJobId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetHistoriesByJobId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<HistoryReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<HistoryReadModel[]>;
+        }));
+    }
+
+    protected processGetHistoriesByJobId(response: HttpResponseBase): Observable<HistoryReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(HistoryReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
     updateHistory(command: UpdateHistoryCommand): Observable<HistoryReadModel> {
         let url_ = this.baseUrl + "/History";
         url_ = url_.replace(/[?&]$/, "");
@@ -772,6 +832,9 @@ export interface IJobClient {
     getAllJobs(): Observable<JobReadModel[]>;
     getJobById(id: string | undefined): Observable<JobReadModel>;
     getJobsByEditor(editor: User): Observable<JobReadModel[]>;
+    getJobsByEditorId(id: string | undefined): Observable<JobReadModel[]>;
+    getColleagueJobs(id: string | undefined): Observable<JobReadModel[]>;
+    getTransferredJobs(): Observable<JobReadModel[]>;
     createJob(command: CreateJobCommand): Observable<JobReadModel>;
     updateJob(command: UpdateJobCommand): Observable<JobReadModel>;
     changeEditor(command: UpdateJobEditorCommand): Observable<JobReadModel>;
@@ -1011,6 +1074,179 @@ export class JobClient implements IJobClient {
         return _observableOf(null as any);
     }
 
+    getJobsByEditorId(id: string | undefined): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetJobsByEditorId?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetJobsByEditorId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetJobsByEditorId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobReadModel[]>;
+        }));
+    }
+
+    protected processGetJobsByEditorId(response: HttpResponseBase): Observable<JobReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getColleagueJobs(id: string | undefined): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetColleagueJobs?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetColleagueJobs(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetColleagueJobs(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobReadModel[]>;
+        }));
+    }
+
+    protected processGetColleagueJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getTransferredJobs(): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetTransferredJobs";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransferredJobs(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransferredJobs(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobReadModel[]>;
+        }));
+    }
+
+    protected processGetTransferredJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
     createJob(command: CreateJobCommand): Observable<JobReadModel> {
         let url_ = this.baseUrl + "/Job";
         url_ = url_.replace(/[?&]$/, "");
@@ -1172,6 +1408,8 @@ export interface IJobFileClient {
     getNewJobFiles(): Observable<JobFileReadModel[]>;
     getAllJobFiles(): Observable<JobFileReadModel[]>;
     getJobFilesById(id: string | undefined): Observable<JobFileReadModel>;
+    getJobFilesByJobId(id: string | undefined): Observable<JobFileReadModel[]>;
+    getTransferredJobFiles(): Observable<JobFileReadModel[]>;
     createJobFile(command: CreateJobFileCommand): Observable<JobFileReadModel>;
     updateJobFile(command: UpdateJobFileCommand): Observable<JobFileReadModel>;
 }
@@ -1341,6 +1579,120 @@ export class JobFileClient implements IJobFileClient {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = JobFileReadModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getJobFilesByJobId(id: string | undefined): Observable<JobFileReadModel[]> {
+        let url_ = this.baseUrl + "/JobFile/GetJobFilesByJobId?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetJobFilesByJobId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetJobFilesByJobId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobFileReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobFileReadModel[]>;
+        }));
+    }
+
+    protected processGetJobFilesByJobId(response: HttpResponseBase): Observable<JobFileReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobFileReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getTransferredJobFiles(): Observable<JobFileReadModel[]> {
+        let url_ = this.baseUrl + "/JobFile/GetTransferredJobFiles";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetTransferredJobFiles(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetTransferredJobFiles(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobFileReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobFileReadModel[]>;
+        }));
+    }
+
+    protected processGetTransferredJobFiles(response: HttpResponseBase): Observable<JobFileReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobFileReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2523,6 +2875,9 @@ export class JobReadModel implements IJobReadModel {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
+    editor?: UserReadModel;
 
     constructor(data?: IJobReadModel) {
         if (data) {
@@ -2548,6 +2903,9 @@ export class JobReadModel implements IJobReadModel {
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
             this.status = _data["status"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
+            this.editor = _data["editor"] ? UserReadModel.fromJS(_data["editor"]) : <any>undefined;
         }
     }
 
@@ -2573,6 +2931,9 @@ export class JobReadModel implements IJobReadModel {
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
         data["status"] = this.status;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
+        data["editor"] = this.editor ? this.editor.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -2591,6 +2952,9 @@ export interface IJobReadModel {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
+    editor?: UserReadModel;
 }
 
 export enum OrderType {
@@ -2609,6 +2973,63 @@ export enum Status {
     ToDo = 0,
     InProgress = 1,
     Finished = 2,
+    Transferred2Partner = 3,
+}
+
+export class UserReadModel implements IUserReadModel {
+    id?: string;
+    createdAt?: Date;
+    userName?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+
+    constructor(data?: IUserReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.userName = _data["userName"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.email = _data["email"];
+        }
+    }
+
+    static fromJS(data: any): UserReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["userName"] = this.userName;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["email"] = this.email;
+        return data;
+    }
+}
+
+export interface IUserReadModel {
+    id?: string;
+    createdAt?: Date;
+    userName?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
 }
 
 export class User implements IUser {
@@ -2624,8 +3045,7 @@ export class User implements IUser {
     timeTrackingEditor?: TimeTracking[];
     jobsAsEditor?: Job[];
     jobsAsCreator?: Job[];
-    jobsAsCustomer?: Job[];
-    jobFiles?: UpdateJobFilesCommand[];
+    jobFiles?: JobFiles[];
     additionalFile?: AdditionalFile[];
 
     constructor(data?: IUser) {
@@ -2671,15 +3091,10 @@ export class User implements IUser {
                 for (let item of _data["jobsAsCreator"])
                     this.jobsAsCreator!.push(Job.fromJS(item));
             }
-            if (Array.isArray(_data["jobsAsCustomer"])) {
-                this.jobsAsCustomer = [] as any;
-                for (let item of _data["jobsAsCustomer"])
-                    this.jobsAsCustomer!.push(Job.fromJS(item));
-            }
             if (Array.isArray(_data["jobFiles"])) {
                 this.jobFiles = [] as any;
                 for (let item of _data["jobFiles"])
-                    this.jobFiles!.push(UpdateJobFilesCommand.fromJS(item));
+                    this.jobFiles!.push(JobFiles.fromJS(item));
             }
             if (Array.isArray(_data["additionalFile"])) {
                 this.additionalFile = [] as any;
@@ -2730,11 +3145,6 @@ export class User implements IUser {
             for (let item of this.jobsAsCreator)
                 data["jobsAsCreator"].push(item.toJSON());
         }
-        if (Array.isArray(this.jobsAsCustomer)) {
-            data["jobsAsCustomer"] = [];
-            for (let item of this.jobsAsCustomer)
-                data["jobsAsCustomer"].push(item.toJSON());
-        }
         if (Array.isArray(this.jobFiles)) {
             data["jobFiles"] = [];
             for (let item of this.jobFiles)
@@ -2762,8 +3172,7 @@ export interface IUser {
     timeTrackingEditor?: TimeTracking[];
     jobsAsEditor?: Job[];
     jobsAsCreator?: Job[];
-    jobsAsCustomer?: Job[];
-    jobFiles?: UpdateJobFilesCommand[];
+    jobFiles?: JobFiles[];
     additionalFile?: AdditionalFile[];
 }
 
@@ -2866,12 +3275,12 @@ export class Job implements IJob {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
-    jobFiles?: UpdateJobFilesCommand[];
+    numberOfFiles?: number;
+    customer?: string;
+    jobFiles?: JobFiles[];
     history?: History[];
     additionalFile?: AdditionalFile[];
     timeTracking?: TimeTracking[];
-    customerId?: string;
-    customer?: User | undefined;
     creatorId?: string;
     creator?: User | undefined;
     editorId?: string | undefined;
@@ -2904,10 +3313,12 @@ export class Job implements IJob {
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
             this.status = _data["status"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
             if (Array.isArray(_data["jobFiles"])) {
                 this.jobFiles = [] as any;
                 for (let item of _data["jobFiles"])
-                    this.jobFiles!.push(UpdateJobFilesCommand.fromJS(item));
+                    this.jobFiles!.push(JobFiles.fromJS(item));
             }
             if (Array.isArray(_data["history"])) {
                 this.history = [] as any;
@@ -2924,8 +3335,6 @@ export class Job implements IJob {
                 for (let item of _data["timeTracking"])
                     this.timeTracking!.push(TimeTracking.fromJS(item));
             }
-            this.customerId = _data["customerId"];
-            this.customer = _data["customer"] ? User.fromJS(_data["customer"]) : <any>undefined;
             this.creatorId = _data["creatorId"];
             this.creator = _data["creator"] ? User.fromJS(_data["creator"]) : <any>undefined;
             this.editorId = _data["editorId"];
@@ -2958,6 +3367,8 @@ export class Job implements IJob {
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
         data["status"] = this.status;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
         if (Array.isArray(this.jobFiles)) {
             data["jobFiles"] = [];
             for (let item of this.jobFiles)
@@ -2978,8 +3389,6 @@ export class Job implements IJob {
             for (let item of this.timeTracking)
                 data["timeTracking"].push(item.toJSON());
         }
-        data["customerId"] = this.customerId;
-        data["customer"] = this.customer ? this.customer.toJSON() : <any>undefined;
         data["creatorId"] = this.creatorId;
         data["creator"] = this.creator ? this.creator.toJSON() : <any>undefined;
         data["editorId"] = this.editorId;
@@ -3005,12 +3414,12 @@ export interface IJob {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
-    jobFiles?: UpdateJobFilesCommand[];
+    numberOfFiles?: number;
+    customer?: string;
+    jobFiles?: JobFiles[];
     history?: History[];
     additionalFile?: AdditionalFile[];
     timeTracking?: TimeTracking[];
-    customerId?: string;
-    customer?: User | undefined;
     creatorId?: string;
     creator?: User | undefined;
     editorId?: string | undefined;
@@ -3019,7 +3428,7 @@ export interface IJob {
     client?: Client | undefined;
 }
 
-export class UpdateJobFilesCommand implements IUpdateJobFilesCommand {
+export class JobFiles implements IJobFiles {
     id?: string;
     createdAt?: Date;
     deletedAt?: Date | undefined;
@@ -3041,7 +3450,7 @@ export class UpdateJobFilesCommand implements IUpdateJobFilesCommand {
     job?: Job | undefined;
     filePath?: FilePath | undefined;
 
-    constructor(data?: IUpdateJobFilesCommand) {
+    constructor(data?: IJobFiles) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -3075,9 +3484,9 @@ export class UpdateJobFilesCommand implements IUpdateJobFilesCommand {
         }
     }
 
-    static fromJS(data: any): UpdateJobFilesCommand {
+    static fromJS(data: any): JobFiles {
         data = typeof data === 'object' ? data : {};
-        let result = new UpdateJobFilesCommand();
+        let result = new JobFiles();
         result.init(data);
         return result;
     }
@@ -3108,7 +3517,7 @@ export class UpdateJobFilesCommand implements IUpdateJobFilesCommand {
     }
 }
 
-export interface IUpdateJobFilesCommand {
+export interface IJobFiles {
     id?: string;
     createdAt?: Date;
     deletedAt?: Date | undefined;
@@ -3139,7 +3548,7 @@ export class FilePath implements IFilePath {
     macPath?: string;
     ebvFileaction?: string;
     jobFileId?: string;
-    jobFiles?: UpdateJobFilesCommand;
+    jobFiles?: JobFiles;
     additionalFileId?: string;
     additionalFile?: AdditionalFile;
 
@@ -3161,7 +3570,7 @@ export class FilePath implements IFilePath {
             this.macPath = _data["macPath"];
             this.ebvFileaction = _data["ebvFileaction"];
             this.jobFileId = _data["jobFileId"];
-            this.jobFiles = _data["jobFiles"] ? UpdateJobFilesCommand.fromJS(_data["jobFiles"]) : <any>undefined;
+            this.jobFiles = _data["jobFiles"] ? JobFiles.fromJS(_data["jobFiles"]) : <any>undefined;
             this.additionalFileId = _data["additionalFileId"];
             this.additionalFile = _data["additionalFile"] ? AdditionalFile.fromJS(_data["additionalFile"]) : <any>undefined;
         }
@@ -3198,7 +3607,7 @@ export interface IFilePath {
     macPath?: string;
     ebvFileaction?: string;
     jobFileId?: string;
-    jobFiles?: UpdateJobFilesCommand;
+    jobFiles?: JobFiles;
     additionalFileId?: string;
     additionalFile?: AdditionalFile;
 }
@@ -3430,6 +3839,8 @@ export class CreateJobCommand implements ICreateJobCommand {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    numberOfFiles?: number;
+    customer?: string;
 
     constructor(data?: ICreateJobCommand) {
         if (data) {
@@ -3452,6 +3863,8 @@ export class CreateJobCommand implements ICreateJobCommand {
             this.project = _data["project"];
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
         }
     }
 
@@ -3474,6 +3887,8 @@ export class CreateJobCommand implements ICreateJobCommand {
         data["project"] = this.project;
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
         return data;
     }
 }
@@ -3489,6 +3904,8 @@ export interface ICreateJobCommand {
     project?: string;
     easyJob?: string;
     billingOption?: BillingOption;
+    numberOfFiles?: number;
+    customer?: string;
 }
 
 export class UpdateJobCommand implements IUpdateJobCommand {
@@ -3504,6 +3921,8 @@ export class UpdateJobCommand implements IUpdateJobCommand {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
 
     constructor(data?: IUpdateJobCommand) {
         if (data) {
@@ -3528,6 +3947,8 @@ export class UpdateJobCommand implements IUpdateJobCommand {
             this.easyJob = _data["easyJob"];
             this.billingOption = _data["billingOption"];
             this.status = _data["status"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
         }
     }
 
@@ -3552,6 +3973,8 @@ export class UpdateJobCommand implements IUpdateJobCommand {
         data["easyJob"] = this.easyJob;
         data["billingOption"] = this.billingOption;
         data["status"] = this.status;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
         return data;
     }
 }
@@ -3569,6 +3992,8 @@ export interface IUpdateJobCommand {
     easyJob?: string;
     billingOption?: BillingOption;
     status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
 }
 
 export class UpdateJobEditorCommand implements IUpdateJobEditorCommand {
@@ -3638,6 +4063,8 @@ export class JobFileReadModel implements IJobFileReadModel {
     source?: string;
     errorCode?: string;
     errorMessage?: string;
+    job?: JobReadModel;
+    filePath?: FilePathReadModel;
 
     constructor(data?: IJobFileReadModel) {
         if (data) {
@@ -3664,6 +4091,8 @@ export class JobFileReadModel implements IJobFileReadModel {
             this.source = _data["source"];
             this.errorCode = _data["errorCode"];
             this.errorMessage = _data["errorMessage"];
+            this.job = _data["job"] ? JobReadModel.fromJS(_data["job"]) : <any>undefined;
+            this.filePath = _data["filePath"] ? FilePathReadModel.fromJS(_data["filePath"]) : <any>undefined;
         }
     }
 
@@ -3690,6 +4119,8 @@ export class JobFileReadModel implements IJobFileReadModel {
         data["source"] = this.source;
         data["errorCode"] = this.errorCode;
         data["errorMessage"] = this.errorMessage;
+        data["job"] = this.job ? this.job.toJSON() : <any>undefined;
+        data["filePath"] = this.filePath ? this.filePath.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -3709,6 +4140,60 @@ export interface IJobFileReadModel {
     source?: string;
     errorCode?: string;
     errorMessage?: string;
+    job?: JobReadModel;
+    filePath?: FilePathReadModel;
+}
+
+export class FilePathReadModel implements IFilePathReadModel {
+    id?: string;
+    createdAt?: Date;
+    windowsPath?: string;
+    macPath?: string;
+    ebvFileaction?: string;
+
+    constructor(data?: IFilePathReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.windowsPath = _data["windowsPath"];
+            this.macPath = _data["macPath"];
+            this.ebvFileaction = _data["ebvFileaction"];
+        }
+    }
+
+    static fromJS(data: any): FilePathReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new FilePathReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["windowsPath"] = this.windowsPath;
+        data["macPath"] = this.macPath;
+        data["ebvFileaction"] = this.ebvFileaction;
+        return data;
+    }
+}
+
+export interface IFilePathReadModel {
+    id?: string;
+    createdAt?: Date;
+    windowsPath?: string;
+    macPath?: string;
+    ebvFileaction?: string;
 }
 
 export class CreateJobFileCommand implements ICreateJobFileCommand {
@@ -4005,62 +4490,6 @@ export interface IUpdateTimeTrackingCommand {
     id?: string;
     startedOn?: Date;
     workingDuration?: string;
-}
-
-export class UserReadModel implements IUserReadModel {
-    id?: string;
-    createdAt?: Date;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-
-    constructor(data?: IUserReadModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.userName = _data["userName"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
-            this.email = _data["email"];
-        }
-    }
-
-    static fromJS(data: any): UserReadModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserReadModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["userName"] = this.userName;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
-        data["email"] = this.email;
-        return data;
-    }
-}
-
-export interface IUserReadModel {
-    id?: string;
-    createdAt?: Date;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
 }
 
 export class CreateUserCommand implements ICreateUserCommand {

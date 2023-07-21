@@ -11,7 +11,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Mappings
 {
     public class FilePathMapping : Profile
     {
-        public FilePathMapping() {
+        public FilePathMapping()
+        {
             CreateMap<FilePathReadModel, FilePath>().ReverseMap();
         }
 

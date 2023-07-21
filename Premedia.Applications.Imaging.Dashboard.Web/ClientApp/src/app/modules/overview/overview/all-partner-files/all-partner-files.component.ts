@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
-import { AllPartnerFiles, OverviewService } from 'src/app/services/overview.service';
+import { JobFileReadModel } from 'src/app/core/NSwagDataClient';
+import { OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 
 @Component({
@@ -9,15 +11,28 @@ import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscripti
   styleUrls: ['./all-partner-files.component.scss']
 })
 export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
-  allPartnerFilesList : AllPartnerFiles[] = [];
+  partnerFilesList : JobFileReadModel[] = [];
   pageSettings: PageSettingsModel;
 
-  constructor(public overviewService : OverviewService) {
+  constructor(public overviewService : OverviewService, private router : Router) {
     super();
-    overviewService.allPartnerFiles.subscribe((allPartnerFiles) => {
-      this.allPartnerFilesList = allPartnerFiles
+    this.setNewSubscription = overviewService.partnerFiles.subscribe((partnerFiles) => {
+      this.partnerFilesList = partnerFiles
     })
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
-    overviewService.loadAllPartnerFiles();
+  }
+
+  navigateToJobDetails(event: any) {
+    const selectedJobNumber = parseInt(event.target.innerText, 10);
+    console.log('Selected Job Number:', selectedJobNumber);
+
+    const selectedJob = this.partnerFilesList.find(task => task.job?.consecutiveNumber === selectedJobNumber);
+
+    if (selectedJob) {
+      console.log('Selected Job:', selectedJob);
+      this.router.navigate(['/job-details', selectedJob.id]);
+    } else {
+      console.log('Selected Job not found');
+    }
   }
 }
