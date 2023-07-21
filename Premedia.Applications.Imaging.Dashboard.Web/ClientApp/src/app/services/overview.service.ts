@@ -29,6 +29,7 @@ export class OverviewService {
     }, error => console.error(error));
   }
 
+  // EditorID
   loadMyTasks(){
       this.jobDataClient.getJobsByEditorId('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
       this.myTasks.next(result);
@@ -36,29 +37,29 @@ export class OverviewService {
 
   }
 
+  // EditorID
   loadColleaguesTasks(){
       this.jobDataClient.getColleagueJobs('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
       this.colleaguesTasks.next(result);
     }, error => console.error(error));
   }
 
-  // TO-DO Endpoint Backend (sollte mit Niklas Pull Request da sein)
   loadAllPartnerFiles(){
       this.jobFileDataClient.getTransferredJobFiles().subscribe(result => {
       this.partnerFiles.next(result);
     }, error => console.error(error));
   }
 
-  // TO-DO Endpoint Backend (sollte mit Niklas Pull Request da sein)
+  // JobID
   loadJobFileDetails(){
-    this.jobFileDataClient.getJobFilesById('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
+    this.jobFileDataClient.getJobFilesByJobId('492189a3-e0a1-409e-b3dc-5f11687bb60f').subscribe(result => {
       this.jobdetailsFiles.next(result);
     }, error => console.error(error))
   }
 
-  // TO-DO Endpoint Backend (sollte mit Niklas Pull Request da sein)
+  // JobID
   loadHistoryFileDetails(){
-    this.historyDataClient.getHistoryById('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
+    this.historyDataClient.getHistoriesByJobId('492189a3-e0a1-409e-b3dc-5f11687bb60f').subscribe(result => {
       this.jobdetailsHistory.next(result);
     }, error => console.error(error))
   }

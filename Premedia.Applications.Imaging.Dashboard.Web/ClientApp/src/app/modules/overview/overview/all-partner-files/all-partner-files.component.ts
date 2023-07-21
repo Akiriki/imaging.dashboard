@@ -22,12 +22,11 @@ export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
   }
 
-  // TODO - Backend Consecutive Number nicht vorhanden
-  /*navigateToJobDetails(event: any) {
+  navigateToJobDetails(event: any) {
     const selectedJobNumber = parseInt(event.target.innerText, 10);
     console.log('Selected Job Number:', selectedJobNumber);
 
-    const selectedJob = this.partnerFilesList.find(task => task.consecutiveNumber === selectedJobNumber);
+    const selectedJob = this.partnerFilesList.find(task => task.job?.consecutiveNumber === selectedJobNumber);
 
     if (selectedJob) {
       console.log('Selected Job:', selectedJob);
@@ -35,5 +34,5 @@ export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
     } else {
       console.log('Selected Job not found');
     }
-  }*/
+  }
 }
