@@ -4,13 +4,13 @@
     <e-column field='id' headerText='ID' [visible]="false"></e-column>
     <e-column field="job.consecutiveNumber" headerText="Job-Nummer">
       <ng-template #template let-data>
-        <a (click)="navigateToJobDetails($event)">{{ data.consecutiveNumber }}</a>
+        <a (click)="navigateToJobDetails($event)">{{ data.job.consecutiveNumber }}</a>
       </ng-template>
     </e-column>
-    <e-column field='originalFilename' headerText='Filename'></e-column> <!-- TO DO -->
-    <e-column field='customer' headerText='Kunde'></e-column>
-    <e-column field='deliveryDate' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
-    <e-column field='editor' headerText='Bearbeiter'></e-column> <!-- TO DO -->
-    <e-column field='fileAction' headerText='File Action'></e-column> <!-- TO DO -->
+    <e-column field='originalFilename' headerText='Filename'></e-column>
+    <e-column field='job.customer' headerText='Kunde'></e-column>
+    <e-column field='job.deliveryDate' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
+    <e-column field='job.editor.userName' headerText='Bearbeiter'></e-column>
+    <e-column field='filePath.ebvFileaction' headerText='File Action'></e-column>
   </e-columns>
 </ejs-grid>
