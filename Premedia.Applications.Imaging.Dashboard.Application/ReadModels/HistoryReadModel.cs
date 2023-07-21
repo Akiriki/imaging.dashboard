@@ -14,5 +14,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
         public string OldValue { get; set; }
         public string? NewValue { get; set; }
         public DateTime ChangeTime { get; set; }
+        public JobReadModel Job { get; set; }
     }
 }
