@@ -15,3 +15,22 @@
 h3 {
   font-size: 30px;
 }
+
+.listbox {
+  padding: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+ejs-listbox {
+  overflow-y: auto; /* Enable vertical scrolling for the ListBox */
+  border: none;
+}
+
+input {
+  overflow-y: auto;
+  border: none;
+  padding: 0.5%;
+  width: 100%;
+  margin-top: 1%;
+}

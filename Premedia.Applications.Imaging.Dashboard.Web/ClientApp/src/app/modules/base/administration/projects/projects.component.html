@@ -4,16 +4,13 @@
 <br>
 
 <div class="container">
-    <div class="table-container">
-        <ejs-grid [dataSource]='projectDeclarationList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true" [width]="500">
-            <e-columns>
-                <e-column field='id' headerText='Nr.' [width]="100" [textAlign]="'center'"></e-column>
-                <e-column field='name' headerText='Projekt'></e-column>
-            </e-columns>
-        </ejs-grid>
+    <div class="listbox">
+        <ejs-listbox #listbox [dataSource]="data"></ejs-listbox>
+
+        <input type="text" [(ngModel)]="newInputValue" placeholder="Enter value" />
     </div>
 
-    <div class="button-container">
-        <button ejs-button>Anlegen</button>
+    <div class = "button-container">
+        <button (click) = "btnclick()" class="e-btn">Anlegen</button>
     </div>
 </div>
