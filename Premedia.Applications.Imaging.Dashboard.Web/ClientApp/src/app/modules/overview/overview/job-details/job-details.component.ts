@@ -1,7 +1,7 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GridComponent, PageSettingsModel, DetailDataBoundEventArgs, Grid } from '@syncfusion/ej2-angular-grids';
-import { HistoryReadModel, JobFileReadModel } from 'src/app/core/NSwagDataClient';
+import { PageSettingsModel, DetailDataBoundEventArgs, Grid } from '@syncfusion/ej2-angular-grids';
+import { HistoryReadModel, JobFileReadModel, JobReadModel } from 'src/app/core/NSwagDataClient';
 import { OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 
@@ -14,6 +14,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   // Objekte
   jobdetailsFilesList: JobFileReadModel[] = [];
   jobdetailsHistoryList: HistoryReadModel[] = [];
+  jobInfosList : JobReadModel[] = [];
   pageSettings: PageSettingsModel;
 
   // Variablen die man braucht
@@ -64,7 +65,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   }
   //#endregion
 
-  constructor(private route: ActivatedRoute, overviewService: OverviewService) {
+  constructor(private route: ActivatedRoute, private overviewService: OverviewService) {
     super();
 
     this.setNewSubscription = overviewService.jobdetailsFiles.subscribe((jobdetailsFiles) => {
@@ -75,13 +76,32 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
       this.jobdetailsHistoryList = jobdetailsHistory;
     });
 
+    this.setNewSubscription = overviewService.jobInfos.subscribe((jobInfos) => {
+      this.jobInfosList = jobInfos;
+    })
+
     this.pageSettings = { pageSize: overviewService.pageSettings.pageSize };
+
+    // Detailseite
+    this.route.queryParams.subscribe((params) => {
+      this.overviewService.loadJobInfos(params.id);
+      this.overviewService.loadJobFileDetails(params.id);
+      this.overviewService.loadHistoryFileDetails(params.id);
+    })
   }
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.jobID = params['id'];
-      console.log('Job ID:', this.jobID);
-    });
+  getStatusString(status: number): string {
+    switch (status) {
+      case 0:
+        return 'TO-DO';
+      case 1:
+        return 'In Progress';
+      case 2:
+        return 'Done';
+      case 3:
+        return 'TRANSFERRED2PARTNER';
+      default:
+        return 'Unbekannter Status';
+    }
   }
 }

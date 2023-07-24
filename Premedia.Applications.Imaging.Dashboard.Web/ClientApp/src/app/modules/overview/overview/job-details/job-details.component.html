@@ -5,12 +5,11 @@
     <div class="col-md-12 mt-4">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title headings">Bearbeiter</h5>
+          <h3 class="card-title headings">Infos</h3>
           <div class="d-flex justify-content-end">
             <button ejs-button (click)="saveChanges()" [disabled]="!unsavedChanges">Bearbeitung abschließen</button>
           </div>
           <br>
-          <!-- Hier kommen die Details des Bearbeiters -->
           <div class="container">
             <div class="row">
               <div class="col-md-6">
@@ -19,7 +18,7 @@
                     <h6 class="card-title">Typ:</h6>
                     <p class="card-text">Aufgabe</p>
                     <h6 class="card-title">Kunde:</h6>
-                    <p class="card-text">{{jobdetailsFilesList[0].status}}</p>
+                    <p class="card-text">sad</p>
                     <h6 class="card-title">Auftraggeber:</h6>
                     <p class="card-text">asd</p>
                     <h6 class="card-title">Projekt:</h6>
@@ -72,14 +71,34 @@
             <e-columns>
               <e-column field='id' headerText='ID' [visible]="false"></e-column>
               <!-- <e-column field='job.consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column> -->
-              <e-column field='error' headerText='Fehler'></e-column> <!-- TO-DO nachfragen -->
-              <e-column field='originalFileName' headerText='Orignialer Dateiname'></e-column>
-              <e-column field='editedFileName' headerText='editedFileName'></e-column>
-              <e-column field='filePath.ebvFileaction' headerText='Aktion'></e-column>
+              <e-column field='errorMessage' headerText='Fehler'> <!-- TO-DO nachfragen -->
+                <ng-template #template let-data>
+                  {{ data.errorMessage || 'N/A' }}
+                </ng-template>
+              </e-column>
+              <e-column field="originalFilename" headerText="Originaler Dateiname"></e-column>
+              <e-column field="editedFilename" headerText="Bearbeiteter Dateiname"></e-column>
+              <e-column field='filePath.ebvFileaction' headerText='Ablagepfad'>
+                <ng-template #template let-data>
+                  {{ data?.filePath?.ebvFileaction || 'N/A' }}
+                </ng-template>
+              </e-column>
               <e-column field='storageType' headerText='Ablageort'></e-column>
-              <e-column field='filePath.macPath' headerText='Ablagepfad'></e-column>
-              <e-column field='activity' headerText='Aktivität'></e-column>
-              <e-column field='status' headerText='Status'></e-column>
+              <e-column field='filePath.macPath' headerText='Ablagepfad'>
+                <ng-template #template let-data>
+                  {{ data?.filePath?.macPath || 'N/A' }}
+                </ng-template>
+              </e-column>
+              <e-column field='activity' headerText="Aktivität">
+                <ng-template #template let-data>
+                  {{ data.activity || 'N/A' }}
+                </ng-template>
+              </e-column>
+              <e-column field="status" headerText="Status">
+                <ng-template #template let-data>
+                  {{ getStatusString(data.status) }}
+                </ng-template>
+              </e-column>
             </e-columns>
 
           </ejs-grid>
@@ -100,7 +119,7 @@
               <e-column field="id" headerText="ID" [visible]="false"></e-column>
               <e-column field="createdAt" headerText="Datum und Uhrzeit" [format]="'dd.MM.yyyy hh:mm'"></e-column>
               <e-column field="action" headerText="Titel"></e-column>
-              <e-column field="editor" headerText="Bearbeiter" [width]="200"></e-column> <!-- TO-DO BACKEND -->
+              <e-column field="job.editor.userName" headerText="Bearbeiter" [width]="200"></e-column>
             </e-columns>
               <ng-template #detailTemplate let-data>
                 <div class = 'custom-grid'></div>

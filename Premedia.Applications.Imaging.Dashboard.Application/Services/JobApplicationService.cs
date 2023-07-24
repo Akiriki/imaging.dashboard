@@ -66,7 +66,13 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobReadModel>>> GetDoneJobs()
         {
-            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Done);
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Done, x => x.Include(y => y.Editor)
+
+
+
+
+
+);
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
 

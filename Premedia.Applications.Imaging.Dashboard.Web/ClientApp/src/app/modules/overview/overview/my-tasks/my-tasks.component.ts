@@ -33,7 +33,7 @@ export class MyTasksComponent extends DestroySubscriptionsComponent{
 
     if (selectedJob) {
       console.log('Selected Job:', selectedJob);
-      this.router.navigate(['/job-details', selectedJob.id]);
+      this.router.navigate(['/job-details'], {queryParams : {id : selectedJob.id}});
     } else {
       console.log('Selected Job not found');
     }
@@ -46,7 +46,7 @@ export class MyTasksComponent extends DestroySubscriptionsComponent{
       case 1:
         return 'In Progress';
       case 2:
-        return 'Finished';
+        return 'Done';
       case 3:
         return 'TRANSFERRED2PARTNER';
       default:

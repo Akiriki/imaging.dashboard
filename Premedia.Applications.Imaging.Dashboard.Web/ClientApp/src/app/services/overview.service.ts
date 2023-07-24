@@ -14,6 +14,7 @@ export class OverviewService {
   // Objekt für Jobdetailansicht (Tabelle Job-Files & History)
   jobdetailsFiles = new BehaviorSubject<DataClient.JobFileReadModel[]>([]);
   jobdetailsHistory = new BehaviorSubject<DataClient.HistoryReadModel[]>([]);
+  jobInfos = new BehaviorSubject<DataClient.JobReadModel[]>([]);
 
   // Property zum setzen: wie viele Datensätze in der Syncfusion Tabelle angezeigt werden sollten
   public pageSettings : PageSettingsModel = { pageSize : 5 };
@@ -51,15 +52,23 @@ export class OverviewService {
   }
 
   // JobID
-  loadJobFileDetails(){
-    this.jobFileDataClient.getJobFilesByJobId('492189a3-e0a1-409e-b3dc-5f11687bb60f').subscribe(result => {
+  loadJobInfos(id : string){
+    this.jobDataClient.getNewJobs().subscribe(result => {
+      this.openJobs.next(result);
+    }, error => console.error(error));
+  }
+
+
+  // JobID
+  loadJobFileDetails(id : string){
+    this.jobFileDataClient.getJobFilesByJobId(id).subscribe(result => {
       this.jobdetailsFiles.next(result);
     }, error => console.error(error))
   }
 
   // JobID
-  loadHistoryFileDetails(){
-    this.historyDataClient.getHistoriesByJobId('492189a3-e0a1-409e-b3dc-5f11687bb60f').subscribe(result => {
+  loadHistoryFileDetails(id : string){
+    this.historyDataClient.getHistoriesByJobId(id).subscribe(result => {
       this.jobdetailsHistory.next(result);
     }, error => console.error(error))
   }

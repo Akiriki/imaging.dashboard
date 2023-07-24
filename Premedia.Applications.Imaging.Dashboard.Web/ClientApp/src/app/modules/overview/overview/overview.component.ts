@@ -20,18 +20,14 @@ export class OverviewComponent extends DestroySubscriptionsComponent{
     this.loadData();
   }
 
+  ngOnDestroy() {
+    clearInterval(this.refreshInterval);
+  }
+
   // Methode zum Laden der Daten
   loadData(){
     // daten manuell laden
-    // Startseite
-    this.overviewService.loadOpenJobs();
-    this.overviewService.loadMyTasks();
-    this.overviewService.loadColleaguesTasks();
-    this.overviewService.loadAllPartnerFiles();
-
-    // Detailseite
-    this.overviewService.loadJobFileDetails();
-    this.overviewService.loadHistoryFileDetails();
+    this.refreshTables();
 
     this.refreshInterval = setInterval(() => {
       this.refreshTables();
@@ -44,10 +40,6 @@ export class OverviewComponent extends DestroySubscriptionsComponent{
     this.overviewService.loadMyTasks();
     this.overviewService.loadColleaguesTasks();
     this.overviewService.loadAllPartnerFiles();
-
-    // Detailseite
-    this.overviewService.loadJobFileDetails();
-    this.overviewService.loadHistoryFileDetails();
 
     console.log('refreshing...');
   }
