@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@syncfusion/ej2-base": "^22.1.38",
+    "@syncfusion/ej2-dropdowns": "^22.1.39"
+  }
+}
