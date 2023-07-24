@@ -10,7 +10,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Core.Enums
     {
         ToDo,
         InProgress,
-        Finished,
+        Done,
         Transferred2Partner
     }
 }
