@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@angular/common": "^16.1.6",
+    "@angular/core": "^16.1.6",
+    "@angular/forms": "^16.1.6",
+    "@syncfusion/ej2-angular-buttons": "^22.1.39",
+    "@syncfusion/ej2-angular-grids": "^22.1.39",
+    "@syncfusion/ej2-angular-splitbuttons": "^22.1.37",
+    "nswag": "^13.19.0"
+  }
+}
