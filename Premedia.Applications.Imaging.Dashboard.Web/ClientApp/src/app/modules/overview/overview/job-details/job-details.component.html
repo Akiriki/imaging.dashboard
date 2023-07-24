@@ -71,20 +71,15 @@
           <ejs-grid #grid [dataSource]='jobdetailsFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
             <e-columns>
               <e-column field='id' headerText='ID' [visible]="false"></e-column>
-              <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
-              <e-column field='error' headerText='Fehler'></e-column>
+              <!-- <e-column field='job.consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column> -->
+              <e-column field='error' headerText='Fehler'></e-column> <!-- TO-DO nachfragen -->
               <e-column field='originalFileName' headerText='Orignialer Dateiname'></e-column>
               <e-column field='editedFileName' headerText='editedFileName'></e-column>
-              <e-column field='action' headerText='Aktion'></e-column>
-              <e-column field='storageLocation' headerText='Ablageort'></e-column>
-              <e-column field='filingPath' headerText='Ablagepfad'></e-column>
+              <e-column field='filePath.ebvFileaction' headerText='Aktion'></e-column>
+              <e-column field='storageType' headerText='Ablageort'></e-column>
+              <e-column field='filePath.macPath' headerText='Ablagepfad'></e-column>
               <e-column field='activity' headerText='Aktivität'></e-column>
               <e-column field='status' headerText='Status'></e-column>
-              <e-column [textAlign]="'center'" [allowFiltering]="false" [allowSorting]="false">
-                <ng-template #template let-data>
-                  <button style="width: 30px; font-size: 10px;" ejs-button>v</button>
-                </ng-template>
-              </e-column>
             </e-columns>
 
           </ejs-grid>
@@ -103,9 +98,9 @@
           <ejs-grid [dataSource]="jobdetailsHistoryList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailDataBound($event)">
             <e-columns>
               <e-column field="id" headerText="ID" [visible]="false"></e-column>
-              <e-column field="deliveryDate" headerText="Datum und Uhrzeit" [format]="'dd.MM.yyyy hh:mm'"></e-column>
-              <e-column field="title" headerText="Titel"></e-column>
-              <e-column field="editor" headerText="Bearbeiter" [width]="200"></e-column>
+              <e-column field="createdAt" headerText="Datum und Uhrzeit" [format]="'dd.MM.yyyy hh:mm'"></e-column>
+              <e-column field="action" headerText="Titel"></e-column>
+              <e-column field="editor" headerText="Bearbeiter" [width]="200"></e-column> <!-- TO-DO BACKEND -->
             </e-columns>
               <ng-template #detailTemplate let-data>
                 <div class = 'custom-grid'></div>
