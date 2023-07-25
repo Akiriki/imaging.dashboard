@@ -1,16 +1,14 @@
-<br>
-<h3 class="headings">Projekte - Easy Job</h3>
 
-<br>
 
-<div class="container">
-    <div class="listbox">
-        <ejs-listbox #listbox [dataSource]="data"></ejs-listbox>
+<div class = "container">
+  <br>
+  <h3 class = "headings">Projekte - Easy Job</h3>
 
-        <input type="text" [(ngModel)]="newInputValue" placeholder="Enter value" />
-    </div>
-
-    <div class = "button-container">
-        <button (click) = "btnclick()" class="e-btn">Anlegen</button>
-    </div>
+  <br>
+  <div class="textarea">
+      <textarea [(ngModel)] = "newInputValue" placeholder = "Projekt anlegen"></textarea>
+  </div>
+  <div class = "button-container">
+      <button (click) = "btnclick()" class="e-btn">Anlegen</button>
+  </div>
 </div>

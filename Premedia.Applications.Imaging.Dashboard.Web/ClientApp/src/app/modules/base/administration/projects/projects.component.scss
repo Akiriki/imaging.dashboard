@@ -2,35 +2,23 @@
   position: relative;
 }
 
-.table-container {
-  display: inline-block;
-  margin-bottom: 20px;
-}
 
 .button-container {
+  margin-top: 0.5%;
   position: absolute;
-  bottom: -30px; /* Passe den Abstand nach Bedarf an */
 }
 
 h3 {
   font-size: 30px;
 }
 
-.listbox {
-  padding: 10px;
+
+textarea {
   border: 1px solid #ccc;
-  padding: 10px;
-}
-
-ejs-listbox {
-  overflow-y: auto; /* Enable vertical scrolling for the ListBox */
-  border: none;
-}
-
-input {
-  overflow-y: auto;
-  border: none;
   padding: 0.5%;
   width: 100%;
-  margin-top: 1%;
+  height: 60vh;
+  resize: none;
+  min-height : 50px;
+  overflow-y: hidden;
 }
