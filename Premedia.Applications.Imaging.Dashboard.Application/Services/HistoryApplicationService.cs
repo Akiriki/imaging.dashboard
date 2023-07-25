@@ -7,6 +7,7 @@ using AutoMapper;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
@@ -41,7 +42,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<HistoryReadModel>>> GetHistoriesByJobId(Guid id)
         {
-            var histories = await _unitOfWork.HistoryRepository.GetMultipleAsync(x => x.JobId == id);
+            var histories = await _unitOfWork.HistoryRepository.GetMultipleAsync(x => x.JobId == id,
+                x => x.Include(y => y.Job)
+                    .ThenInclude(y => y.Editor));
             return _mapper.Map<List<HistoryReadModel>>(histories);
         }
 

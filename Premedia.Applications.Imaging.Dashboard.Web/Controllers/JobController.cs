@@ -61,6 +61,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _jobApplicationService.GetTransferredJobs().ConfigureAwait(false);
         }
 
+        [HttpGet(nameof(GetDoneJobs))]
+        public async Task<ActionResult<List<JobReadModel>>> GetDoneJobs()
+        {
+            return await _jobApplicationService.GetDoneJobs().ConfigureAwait(false);
+        }
+
         [HttpPost]
         public async Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand command)
         {
