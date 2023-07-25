@@ -2822,6 +2822,7 @@ export class JobReadModel implements IJobReadModel {
     numberOfFiles?: number;
     customer?: string;
     editor?: UserReadModel;
+    client?: ClientReadModel;
 
     constructor(data?: IJobReadModel) {
         if (data) {
@@ -2850,6 +2851,7 @@ export class JobReadModel implements IJobReadModel {
             this.numberOfFiles = _data["numberOfFiles"];
             this.customer = _data["customer"];
             this.editor = _data["editor"] ? UserReadModel.fromJS(_data["editor"]) : <any>undefined;
+            this.client = _data["client"] ? ClientReadModel.fromJS(_data["client"]) : <any>undefined;
         }
     }
 
@@ -2878,6 +2880,7 @@ export class JobReadModel implements IJobReadModel {
         data["numberOfFiles"] = this.numberOfFiles;
         data["customer"] = this.customer;
         data["editor"] = this.editor ? this.editor.toJSON() : <any>undefined;
+        data["client"] = this.client ? this.client.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -2899,6 +2902,7 @@ export interface IJobReadModel {
     numberOfFiles?: number;
     customer?: string;
     editor?: UserReadModel;
+    client?: ClientReadModel;
 }
 
 export enum OrderType {

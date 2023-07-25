@@ -14,7 +14,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   // Objekte
   jobdetailsFilesList: JobFileReadModel[] = [];
   jobdetailsHistoryList: HistoryReadModel[] = [];
-  jobInfosList : JobReadModel[] = [];
+  selectedJobInfos : JobReadModel | undefined;
   pageSettings: PageSettingsModel;
 
   // Variablen die man braucht
@@ -22,17 +22,36 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   editingMode: boolean = false;
   unsavedChanges: boolean = false;
 
-  detailDataBound(e: DetailDataBoundEventArgs | any) {
+  //#region additional Row Table
+  detailHistoryDataBound(e: DetailDataBoundEventArgs | any) {
+    console.log(this.jobdetailsHistoryList)
+    const data = this.jobdetailsHistoryList.filter((item: HistoryReadModel) => item.id === e.data.id);
     let detail = new Grid({
-        dataSource: this.jobdetailsHistoryList.filter((item: Object) => (item as any)['id'] === e.data['id']),
+        dataSource: data,
         columns: [
-            { field: 'id', headerText: 'Test' },
-            { field: 'id', headerText: 'Test' },
-            { field: 'id', headerText: 'Test' }
+            { field: 'field', headerText: 'Feld' },
+            { field: 'oldValue', headerText: 'alter Wert' },
+            { field: 'newValue', headerText: 'neuer Wert'}
         ]
     });
-    detail.appendTo(e.detailElement.querySelector('.custom-grid'));
-}
+    detail.appendTo(e.detailElement.querySelector('.additionalRowForHistory-grid'));
+  }
+
+  detailFileDataBound(e : DetailDataBoundEventArgs | any){
+    console.log(this.jobdetailsFilesList)
+    const data = this.jobdetailsFilesList.filter((item: JobFileReadModel) => item.id === e.data.id);
+    let detail = new Grid({
+        dataSource: data,
+        columns: [
+            { field: 'fileProperties', headerText: 'Dateigröße'},
+            { field: 'errorCode', headerText: 'Fehler Code' },
+            { field: 'errorMessage', headerText: 'Fehlergrund'}
+        ]
+    });
+    detail.appendTo(e.detailElement.querySelector('.additionalRowForFiles-grid'));
+  }
+
+  //#endregion
 
   //#region Button toggle
   toggleEditingMode(value: boolean) {
@@ -45,7 +64,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   saveChanges() {
     // Code für speichern in DB über API (Befehle)
 
-    // Optional: Änderungen speichern =>
+    // Änderungen speichern =>
     // Daten in this.jobDetails aktualisieren oder eine separate Variable verwenden,
     // um die bearbeiteten Daten zu speichern.
 
@@ -76,8 +95,8 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
       this.jobdetailsHistoryList = jobdetailsHistory;
     });
 
-    this.setNewSubscription = overviewService.jobInfos.subscribe((jobInfos) => {
-      this.jobInfosList = jobInfos;
+    this.setNewSubscription = overviewService.selectedJob.subscribe((jobInfos) => {
+      this.selectedJobInfos = jobInfos;
     })
 
     this.pageSettings = { pageSize: overviewService.pageSettings.pageSize };
@@ -102,6 +121,32 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
         return 'TRANSFERRED2PARTNER';
       default:
         return 'Unbekannter Status';
+    }
+  }
+
+  getOrderType(status: number): string {
+    switch (status) {
+      case 0:
+        return 'Nicht Wichtig';
+      case 1:
+        return 'Wichtig';
+      default:
+        return 'Unbekannt';
+    }
+  }
+
+  getBillingOption(status: number): string {
+    switch (status) {
+      case 0:
+        return 'Cash';
+      case 1:
+        return 'CreditCard';
+      case 2:
+        return 'DebitCard';
+      case 3:
+        return 'Checks';
+      default:
+        return 'Unbekannte Zahlungsart';
     }
   }
 }

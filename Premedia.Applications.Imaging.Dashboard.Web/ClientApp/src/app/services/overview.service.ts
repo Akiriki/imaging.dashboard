@@ -12,9 +12,9 @@ export class OverviewService {
   partnerFiles = new BehaviorSubject<DataClient.JobFileReadModel[]>([]);
 
   // Objekt für Jobdetailansicht (Tabelle Job-Files & History)
+  selectedJob = new BehaviorSubject<DataClient.JobReadModel | undefined>(undefined);
   jobdetailsFiles = new BehaviorSubject<DataClient.JobFileReadModel[]>([]);
   jobdetailsHistory = new BehaviorSubject<DataClient.HistoryReadModel[]>([]);
-  jobInfos = new BehaviorSubject<DataClient.JobReadModel[]>([]);
 
   // Property zum setzen: wie viele Datensätze in der Syncfusion Tabelle angezeigt werden sollten
   public pageSettings : PageSettingsModel = { pageSize : 5 };
@@ -53,11 +53,10 @@ export class OverviewService {
 
   // JobID
   loadJobInfos(id : string){
-    this.jobDataClient.getNewJobs().subscribe(result => {
-      this.openJobs.next(result);
+    this.jobDataClient.getJobById(id).subscribe(result => {
+      this.selectedJob.next(result);
     }, error => console.error(error));
   }
-
 
   // JobID
   loadJobFileDetails(id : string){

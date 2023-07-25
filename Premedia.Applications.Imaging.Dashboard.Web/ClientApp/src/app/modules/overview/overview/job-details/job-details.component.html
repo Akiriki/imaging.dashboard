@@ -16,17 +16,17 @@
                 <div class="card h-100">
                   <div class="card-body">
                     <h6 class="card-title">Typ:</h6>
-                    <p class="card-text">Aufgabe</p>
+                    <p class="card-text">{{ getOrderType(selectedJobInfos?.orderType ?? 2) }} </p>
                     <h6 class="card-title">Kunde:</h6>
-                    <p class="card-text">sad</p>
+                    <p class="card-text">{{ selectedJobInfos?.customer }}</p>
                     <h6 class="card-title">Auftraggeber:</h6>
-                    <p class="card-text">asd</p>
+                    <p class="card-text">{{ selectedJobInfos?.client?.firstName}} {{ selectedJobInfos?.client?.lastName}}</p>
                     <h6 class="card-title">Projekt:</h6>
-                    <p class="card-text">Testprojekt</p>
+                    <p class="card-text">{{ selectedJobInfos?.project}}</p>
                     <h6 class="card-title">ERP-Nr.:</h6>
-                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">P092528</p>
+                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{ selectedJobInfos?.easyJob}}</p>
                     <h6 class="card-title">Verrechnungsoption:</h6>
-                    <p class="card-text">Auf Job buchen</p>
+                    <p class="card-text">{{ getBillingOption(selectedJobInfos?.billingOption ?? 3)}}</p>
                     <h6 class="card-title">Beschreibung:</h6>
                     <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">/</p>
                   </div>
@@ -36,13 +36,13 @@
                 <div class="card h-100">
                   <div class="card-body">
                     <h6 class="card-title">Bearbeiter:</h6>
-                    <p class="card-text">Katharina Rauch</p>
+                    <p class="card-text"> Peter Dietrich</p>
                     <h6 class="card-title">Erstellt am:</h6>
-                    <p class="card-text">20.04.2022 11:42</p>
+                    <p class="card-text">{{selectedJobInfos?.editor?.createdAt | date: 'dd.MM.yyyy hh:mm'}}</p>
                     <h6 class="card-title">Fällig bis:</h6>
-                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">21.04.2022</p>
+                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: 'dd.MM.yyyy' }}</p>
                     <h6 class="card-title">Status:</h6>
-                    <p class="card-text">In Bearbeitung</p>
+                    <p class="card-text"> {{getStatusString(selectedJobInfos?.status ?? 3) }} </p>
                     <br>
                     <br>
                     <div class="card-text text-center">
@@ -67,13 +67,13 @@
 
           <!-- TO-DO BACKEND -->
 
-          <ejs-grid #grid [dataSource]='jobdetailsFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+          <ejs-grid #grid [dataSource]='jobdetailsFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailFileDataBound($event)">
             <e-columns>
               <e-column field='id' headerText='ID' [visible]="false"></e-column>
               <!-- <e-column field='job.consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column> -->
               <e-column field='errorMessage' headerText='Fehler'> <!-- TO-DO nachfragen -->
                 <ng-template #template let-data>
-                  {{ data.errorMessage || 'N/A' }}
+                  {{ data.errorMessage || 'okay' }}
                 </ng-template>
               </e-column>
               <e-column field="originalFilename" headerText="Originaler Dateiname"></e-column>
@@ -100,7 +100,9 @@
                 </ng-template>
               </e-column>
             </e-columns>
-
+              <ng-template #detailTemplate let-data>
+                <div class = 'additionalRowForFiles-grid'></div>
+              </ng-template>
           </ejs-grid>
         </div>
       </div>
@@ -114,7 +116,7 @@
 
           <!-- TO-DO BACKEND -->
 
-          <ejs-grid [dataSource]="jobdetailsHistoryList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailDataBound($event)">
+          <ejs-grid [dataSource]="jobdetailsHistoryList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailHistoryDataBound($event)">
             <e-columns>
               <e-column field="id" headerText="ID" [visible]="false"></e-column>
               <e-column field="createdAt" headerText="Datum und Uhrzeit" [format]="'dd.MM.yyyy hh:mm'"></e-column>
@@ -122,8 +124,8 @@
               <e-column field="job.editor.userName" headerText="Bearbeiter" [width]="200"></e-column>
             </e-columns>
               <ng-template #detailTemplate let-data>
-                <div class = 'custom-grid'></div>
-            </ng-template>
+                <div class = 'additionalRowForHistory-grid'></div>
+              </ng-template>
           </ejs-grid>
 
         </div>
