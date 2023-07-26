@@ -11,8 +11,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
         Task<ActionResult<List<JobReadModel>>> GetAllJobs();
         Task<ActionResult<JobReadModel>> GetJobById(Guid id);
         Task<ActionResult<List<JobReadModel>>> GetJobsByEditor(User editor);
-        Task<ActionResult<List<JobReadModel>>> GetJobsByEditorId(Guid id);
-        Task<ActionResult<List<JobReadModel>>> GetColleagueJobs(Guid id);
+        Task<ActionResult<List<JobReadModel>>> GetOpenJobsByEditorId(Guid id);
+        Task<ActionResult<List<JobReadModel>>> GetOpenColleagueJobs(Guid id);
         Task<ActionResult<List<JobReadModel>>> GetTransferredJobs();
         Task<ActionResult<List<JobReadModel>>> GetDoneJobs();
         Task<ActionResult<JobReadModel>> CreateJob(CreateJobCommand jobEntity);
