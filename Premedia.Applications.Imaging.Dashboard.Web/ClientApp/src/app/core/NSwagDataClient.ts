@@ -832,8 +832,8 @@ export interface IJobClient {
     getAllJobs(): Observable<JobReadModel[]>;
     getJobById(id: string | undefined): Observable<JobReadModel>;
     getJobsByEditor(editor: User): Observable<JobReadModel[]>;
-    getJobsByEditorId(id: string | undefined): Observable<JobReadModel[]>;
-    getColleagueJobs(id: string | undefined): Observable<JobReadModel[]>;
+    getOpenJobsByEditorId(id: string | undefined): Observable<JobReadModel[]>;
+    getOpenColleagueJobs(id: string | undefined): Observable<JobReadModel[]>;
     getTransferredJobs(): Observable<JobReadModel[]>;
     getDoneJobs(): Observable<JobReadModel[]>;
     createJob(command: CreateJobCommand): Observable<JobReadModel>;
@@ -1075,8 +1075,8 @@ export class JobClient implements IJobClient {
         return _observableOf(null as any);
     }
 
-    getJobsByEditorId(id: string | undefined): Observable<JobReadModel[]> {
-        let url_ = this.baseUrl + "/Job/GetJobsByEditorId?";
+    getOpenJobsByEditorId(id: string | undefined): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetOpenJobsByEditorId?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -1092,11 +1092,11 @@ export class JobClient implements IJobClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetJobsByEditorId(response_);
+            return this.processGetOpenJobsByEditorId(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetJobsByEditorId(response_ as any);
+                    return this.processGetOpenJobsByEditorId(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<JobReadModel[]>;
                 }
@@ -1105,7 +1105,7 @@ export class JobClient implements IJobClient {
         }));
     }
 
-    protected processGetJobsByEditorId(response: HttpResponseBase): Observable<JobReadModel[]> {
+    protected processGetOpenJobsByEditorId(response: HttpResponseBase): Observable<JobReadModel[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1134,8 +1134,8 @@ export class JobClient implements IJobClient {
         return _observableOf(null as any);
     }
 
-    getColleagueJobs(id: string | undefined): Observable<JobReadModel[]> {
-        let url_ = this.baseUrl + "/Job/GetColleagueJobs?";
+    getOpenColleagueJobs(id: string | undefined): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetOpenColleagueJobs?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -1151,11 +1151,11 @@ export class JobClient implements IJobClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetColleagueJobs(response_);
+            return this.processGetOpenColleagueJobs(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetColleagueJobs(response_ as any);
+                    return this.processGetOpenColleagueJobs(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<JobReadModel[]>;
                 }
@@ -1164,7 +1164,7 @@ export class JobClient implements IJobClient {
         }));
     }
 
-    protected processGetColleagueJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
+    protected processGetOpenColleagueJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
