@@ -36,7 +36,9 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobReadModel>> GetJobById(Guid id)
         {
-            var job = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id, x =>x.Include(y => y.Client));
+            var job = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id,
+                x =>x.Include(y => y.Client)
+                .Include(y => y.Editor));
             return _mapper.Map<JobReadModel>(job);
         }
 
@@ -54,7 +56,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobReadModel>>> GetColleagueJobs(Guid id)
         {
-            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.EditorId != id && x.EditorId != null && x.Status != Core.Enums.Status.Done, x => x.Include(y => y.Editor));
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.EditorId != id && x.EditorId != null && x.Status != Core.Enums.Status.Done,
+                x => x.Include(y => y.Editor));
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
 
@@ -66,7 +69,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobReadModel>>> GetDoneJobs()
         {
-            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Done, x => x.Include(y => y.Editor));
+            var jobs = await _unitOfWork.JobRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Done,
+                x => x.Include(y => y.Editor));
             return _mapper.Map<List<JobReadModel>>(jobs);
         }
 
