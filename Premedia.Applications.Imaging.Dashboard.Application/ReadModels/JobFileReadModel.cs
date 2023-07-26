@@ -17,12 +17,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
         public Status Status { get; set; }
         public string FileProperties { get; set; }
         public string Thumbnail { get; set; }
-        public string Activity { get; set; }
         public string StorageType { get; set; }
         public string Source { get; set; }
         public string ErrorCode { get; set; }
         public string ErrorMessage { get; set; }
         public JobReadModel Job { get; set; }
         public FilePathReadModel FilePath { get; set; }
+        public ActivityReadModel? Activity { get; set; }
     }
 }

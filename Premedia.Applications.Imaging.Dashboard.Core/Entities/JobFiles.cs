@@ -11,7 +11,7 @@ public class JobFiles:EntityObject
     public Status Status { get; set; }
     public string FileProperties { get; set; }
     public string Thumbnail { get; set; }
-    public string Activity { get; set; }
+    //public string Activity { get; set; }
     public string StorageType { get; set; }
     public string Source { get; set; }
     public string ErrorCode { get; set; }
@@ -26,4 +26,7 @@ public class JobFiles:EntityObject
     public Job? Job { get; set; }
 
     public FilePath? FilePath { get; set; }
+
+    public Guid ActivityId { get; set; }
+    public Activity? Activity { get; set; }
 }

@@ -18,6 +18,10 @@ namespace Premedia.Applications.Imaging.Dashboard.Persistence.EntityConfiguratio
                 .WithOne(x => x.JobFiles)
                 .HasForeignKey<FilePath>(x  => x.JobFileId);
 
+            builder.HasOne(x => x.Activity)
+                .WithMany(x => x.JobFiles)
+                .HasForeignKey(x => x.ActivityId);
+
             builder.HasOne(x => x.Creator)
                 .WithMany(x => x.JobFiles)
                 .HasForeignKey(x => x.CreatorId).OnDelete(DeleteBehavior.NoAction);
