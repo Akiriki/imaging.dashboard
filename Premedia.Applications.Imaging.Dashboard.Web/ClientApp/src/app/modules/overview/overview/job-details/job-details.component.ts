@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PageSettingsModel, DetailDataBoundEventArgs, Grid } from '@syncfusion/ej2-angular-grids';
 import { HistoryReadModel, JobFileReadModel, JobReadModel } from 'src/app/core/NSwagDataClient';
 import { OverviewService } from 'src/app/services/overview.service';
+import { StatusService } from 'src/app/services/status.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 
 @Component({
@@ -98,7 +99,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   }
   //#endregion
 
-  constructor(private route: ActivatedRoute, private overviewService: OverviewService) {
+  constructor(private route: ActivatedRoute, private overviewService: OverviewService, public statusService : StatusService) {
     super();
 
     this.setNewSubscription = overviewService.jobdetailsFiles.subscribe((jobdetailsFiles) => {
@@ -121,21 +122,6 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
       this.overviewService.loadJobFileDetails(params.id);
       this.overviewService.loadHistoryFileDetails(params.id);
     })
-  }
-
-  getStatusString(status: number): string {
-    switch (status) {
-      case 0:
-        return 'TO-DO';
-      case 1:
-        return 'In Progress';
-      case 2:
-        return 'Done';
-      case 3:
-        return 'TRANSFERRED2PARTNER';
-      default:
-        return 'Unbekannter Status';
-    }
   }
 
   getOrderType(status: number): string {
