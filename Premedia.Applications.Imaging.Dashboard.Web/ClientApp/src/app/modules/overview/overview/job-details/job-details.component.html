@@ -7,7 +7,7 @@
         <div class="card-body">
           <h5 class="card-title headings">Bearbeiter</h5>
           <div class="d-flex justify-content-end">
-            <button ejs-button>Bearbeitung abschließen</button>
+            <button ejs-button (click)="saveChanges()" [disabled]="!unsavedChanges">Bearbeitung abschließen</button>
           </div>
           <br>
           <!-- Hier kommen die Details des Bearbeiters -->
@@ -19,17 +19,17 @@
                     <h6 class="card-title">Typ:</h6>
                     <p class="card-text">Aufgabe</p>
                     <h6 class="card-title">Kunde:</h6>
-                    <p class="card-text">Aufgabe Moebelix und Moemax</p>
+                    <p class="card-text">{{jobdetailsFilesList[0].status}}</p>
                     <h6 class="card-title">Auftraggeber:</h6>
                     <p class="card-text">asd</p>
                     <h6 class="card-title">Projekt:</h6>
                     <p class="card-text">Testprojekt</p>
                     <h6 class="card-title">ERP-Nr.:</h6>
-                    <p class="card-text"  contenteditable="true">P092528</p>
+                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">P092528</p>
                     <h6 class="card-title">Verrechnungsoption:</h6>
                     <p class="card-text">Auf Job buchen</p>
                     <h6 class="card-title">Beschreibung:</h6>
-                    <p class="card-text"  contenteditable="true">/</p>
+                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">/</p>
                   </div>
                 </div>
               </div>
@@ -41,21 +41,21 @@
                     <h6 class="card-title">Erstellt am:</h6>
                     <p class="card-text">20.04.2022 11:42</p>
                     <h6 class="card-title">Fällig bis:</h6>
-                    <p class="card-text" contenteditable="true">21.04.2022</p>
+                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">21.04.2022</p>
                     <h6 class="card-title">Status:</h6>
                     <p class="card-text">In Bearbeitung</p>
                     <br>
                     <br>
                     <div class="card-text text-center">
-                      <button ejs-button>Zeitbuchungen: 6m</button><br> <br>
-                      <button ejs-button>Retusche buchen</button>
+                      <button ejs-button [disabled]="editingMode">Zeitbuchungen: 6m</button><br> <br>
+                      <button ejs-button [disabled]="editingMode">Retusche buchen</button>
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -66,7 +66,9 @@
         <div class="card-body">
           <h5 class="card-title headings">Job-Files</h5>
 
-          <ejs-grid #grid [dataSource]='jobFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+          <!-- TO-DO BACKEND -->
+
+          <ejs-grid #grid [dataSource]='jobdetailsFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
             <e-columns>
               <e-column field='id' headerText='ID' [visible]="false"></e-column>
               <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
@@ -78,6 +80,11 @@
               <e-column field='filingPath' headerText='Ablagepfad'></e-column>
               <e-column field='activity' headerText='Aktivität'></e-column>
               <e-column field='status' headerText='Status'></e-column>
+              <e-column [textAlign]="'center'" [allowFiltering]="false" [allowSorting]="false">
+                <ng-template #template let-data>
+                  <button style="width: 30px; font-size: 10px;" ejs-button>v</button>
+                </ng-template>
+              </e-column>
             </e-columns>
 
           </ejs-grid>
@@ -91,15 +98,18 @@
         <div class="card-body">
           <h5 class="card-title headings">History</h5>
 
+          <!-- TO-DO BACKEND -->
 
-          <ejs-grid [dataSource]='historyList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+          <ejs-grid [dataSource]="jobdetailsHistoryList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailDataBound($event)">
             <e-columns>
-              <e-column field='id' headerText='ID' [visible]="false"></e-column>
-              <e-column field='consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column>
-              <e-column field='date' headerText='Datum und Uhrzeit' [format]="'dd.MM.yyyy hh:mm'"></e-column>
-              <e-column field='title' headerText='Titel'></e-column>
-              <e-column field='editor' headerText='Bearbeiter'></e-column>
+              <e-column field="id" headerText="ID" [visible]="false"></e-column>
+              <e-column field="deliveryDate" headerText="Datum und Uhrzeit" [format]="'dd.MM.yyyy hh:mm'"></e-column>
+              <e-column field="title" headerText="Titel"></e-column>
+              <e-column field="editor" headerText="Bearbeiter" [width]="200"></e-column>
             </e-columns>
+              <ng-template #detailTemplate let-data>
+                <div class = 'custom-grid'></div>
+            </ng-template>
           </ejs-grid>
 
         </div>
