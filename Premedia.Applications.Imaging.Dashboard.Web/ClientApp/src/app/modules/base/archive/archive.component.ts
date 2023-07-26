@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { JobReadModel } from 'src/app/core/NSwagDataClient';
 import { ArchiveService } from 'src/app/services/archive.service';
+import { StatusService } from 'src/app/services/status.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 
 @Component({
@@ -15,7 +16,7 @@ export class ArchiveComponent extends DestroySubscriptionsComponent {
   archiveList : JobReadModel[] = []
   pageSettings: PageSettingsModel;
 
-  constructor(public archiveService : ArchiveService, private router : Router) {
+  constructor(public archiveService : ArchiveService, private router : Router, public statusService : StatusService) {
     super();
     this.setNewSubscription = archiveService.archiveContent.subscribe((archiveContent) => {
       this.archiveList = archiveContent
@@ -35,21 +36,6 @@ export class ArchiveComponent extends DestroySubscriptionsComponent {
       this.router.navigate(['/job-details'], {queryParams : {id : selectedJob.id}});
     } else {
       console.log('Selected Job not found');
-    }
-  }
-
-  getStatusString(status: number): string {
-    switch (status) {
-      case 0:
-        return 'TO-DO';
-      case 1:
-        return 'In Progress';
-      case 2:
-        return 'Done';
-      case 3:
-        return 'TRANSFERRED2PARTNER';
-      default:
-        return 'Unbekannter Status';
     }
   }
 }

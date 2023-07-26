@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PageSettingsModel, DetailDataBoundEventArgs, Grid } from '@syncfusion/ej2-angular-grids';
 import { HistoryReadModel, JobFileReadModel, JobReadModel } from 'src/app/core/NSwagDataClient';
 import { OverviewService } from 'src/app/services/overview.service';
+import { StatusService } from 'src/app/services/status.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 
 @Component({
@@ -128,7 +129,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   }
   //#endregion
 
-  constructor(private route: ActivatedRoute, private overviewService: OverviewService, private http : HttpClient) {
+  constructor(private route: ActivatedRoute, private overviewService: OverviewService, private http : HttpClient, public statusService : StatusService) {
     super();
 
     this.setNewSubscription = overviewService.jobdetailsFiles.subscribe((jobdetailsFiles) => {

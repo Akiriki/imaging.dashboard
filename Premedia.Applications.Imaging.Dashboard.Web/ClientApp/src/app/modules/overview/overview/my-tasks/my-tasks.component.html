@@ -11,7 +11,7 @@
     <e-column field='deliveryDate' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
     <e-column field="status" headerText="Status">
       <ng-template #template let-data>
-        {{ getStatusString(data.status) }}
+        {{ statusService.getStatusString(data.status) }}
       </ng-template>
     </e-column>
   </e-columns>

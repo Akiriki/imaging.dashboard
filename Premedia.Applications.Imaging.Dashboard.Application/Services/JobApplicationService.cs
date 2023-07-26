@@ -8,7 +8,7 @@ using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
-
+ 
 namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 {
     public class JobApplicationService : BaseApplicationService, IJobApplicationService
@@ -16,7 +16,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
         private readonly ImagingDashboardDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public JobApplicationService(IUnitOfWork unitOfWork, ImagingDashboardDbContext dbContext, IMapper mapper):base(unitOfWork)
+        public JobApplicationService(IUnitOfWork unitOfWork, ImagingDashboardDbContext dbContext, IMapper mapper) : base(unitOfWork)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -37,7 +37,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
         public async Task<ActionResult<JobReadModel>> GetJobById(Guid id)
         {
             var job = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == id,
-                x =>x.Include(y => y.Client)
+                x => x.Include(y => y.Client)
                 .Include(y => y.Editor));
             return _mapper.Map<JobReadModel>(job);
         }

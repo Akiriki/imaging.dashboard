@@ -36,13 +36,13 @@
                 <div class="card h-100">
                   <div class="card-body">
                     <h6 class="card-title">Bearbeiter:</h6>
-                    <p class="card-text">{{ selectedJobInfos?.editor?.userName ? selectedJobInfos?.editor?.userName : 'Peter Dietrich' }}</p>
+                    <p class="card-text">{{ selectedJobInfos?.editor?.userName ? selectedJobInfos?.editor?.userName : "Kein Username vorhanden" }}</p>
                     <h6 class="card-title">Erstellt am:</h6>
-                    <p class="card-text">{{selectedJobInfos?.editor?.createdAt | date: 'dd.MM.yyyy hh:mm'}}</p>
+                    <p class="card-text">{{selectedJobInfos?.editor?.createdAt | date: "dd.MM.yyyy hh:mm"}}</p>
                     <h6 class="card-title">Fällig bis:</h6>
-                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: 'dd.MM.yyyy' }}</p>
+                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: "dd.MM.yyyy" }}</p>
                     <h6 class="card-title">Status:</h6>
-                    <p class="card-text"> {{getStatusString(selectedJobInfos?.status ?? 3) }} </p>
+                    <p class="card-text"> {{statusService.getStatusString(selectedJobInfos?.status ?? 3) }} </p>
                     <br>
                     <br>
                     <div class="card-text text-center">
@@ -67,41 +67,41 @@
 
           <!-- TO-DO BACKEND -->
 
-          <ejs-grid #grid [dataSource]='jobdetailsFilesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailFileDataBound($event)">
+          <ejs-grid #grid [dataSource]="jobdetailsFilesList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailFileDataBound($event)">
             <e-columns>
-              <e-column field='id' headerText='ID' [visible]="false"></e-column>
-              <!-- <e-column field='job.consecutiveNumber' headerText='Nr.' width="100" [textAlign]="'center'" [allowFiltering]="false"></e-column> -->
-              <e-column field='errorMessage' headerText='Fehler'> <!-- TO-DO nachfragen -->
+              <e-column field="id" headerText="ID" [visible]="false"></e-column>
+              <!-- <e-column field="job.consecutiveNumber" headerText="Nr." width="100" [textAlign]=""center"" [allowFiltering]="false"></e-column> -->
+              <e-column field="errorMessage" headerText="Fehler"> <!-- TO-DO nachfragen -->
                 <ng-template #template let-data>
-                  {{ data.errorMessage || 'okay' }}
+                  {{ data.errorMessage || "okay" }}
                 </ng-template>
               </e-column>
               <e-column field="originalFilename" headerText="Originaler Dateiname"></e-column>
               <e-column field="editedFilename" headerText="Bearbeiteter Dateiname"></e-column>
-              <e-column field='filePath.ebvFileaction' headerText='Ablagepfad'>
+              <e-column field="filePath.ebvFileaction" headerText="Ablagepfad">
                 <ng-template #template let-data>
-                  {{ data?.filePath?.ebvFileaction || 'N/A' }}
+                  {{ data?.filePath?.ebvFileaction || "N/A" }}
                 </ng-template>
               </e-column>
-              <e-column field='storageType' headerText='Ablageort'></e-column>
-              <e-column field='filePath.macPath' headerText='Ablagepfad'>
+              <e-column field="storageType" headerText="Ablageort"></e-column>
+              <e-column field="filePath.macPath" headerText="Ablagepfad">
                 <ng-template #template let-data>
-                  {{ data?.filePath?.macPath || 'N/A' }}
+                  {{ data?.filePath?.macPath || "N/A" }}
                 </ng-template>
               </e-column>
-              <e-column field='activity' headerText="Aktivität">
+              <e-column field="activity" headerText="Aktivität">
                 <ng-template #template let-data>
-                  {{ data.activity || 'N/A' }}
+                  {{ data.activity || "N/A" }}
                 </ng-template>
               </e-column>
               <e-column field="status" headerText="Status">
                 <ng-template #template let-data>
-                  {{ getStatusString(data.status) }}
+                  {{ statusService.getStatusString(data.status) }}
                 </ng-template>
               </e-column>
             </e-columns>
               <ng-template #detailTemplate let-data>
-                <div class = 'additionalRowForFiles-grid'></div>
+                <div class="additionalRowForFiles-grid"></div>
               </ng-template>
           </ejs-grid>
         </div>
@@ -124,7 +124,7 @@
               <e-column field="job.editor.userName" headerText="Bearbeiter" [width]="200"></e-column>
             </e-columns>
               <ng-template #detailTemplate let-data>
-                <div class = 'additionalRowForHistory-grid'></div>
+                <div class="additionalRowForHistory-grid"></div>
               </ng-template>
           </ejs-grid>
 
