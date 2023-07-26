@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageSettingsModel, DetailDataBoundEventArgs, Grid } from '@syncfusion/ej2-angular-grids';
@@ -82,6 +83,35 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
     // Daten in this.jobDetails aktualisieren oder eine separate Variable verwenden,
     // um die bearbeiteten Daten zu speichern.
 
+    const updateJobCommand = {
+      id: this.selectedJobInfos?.id,
+      consecutiveNumber: this.selectedJobInfos?.consecutiveNumber,
+      title: this.selectedJobInfos?.title,
+      deliveryDate: this.selectedJobInfos?.deliveryDate,
+      orderDate: this.selectedJobInfos?.orderDate,
+      switchJobId: this.selectedJobInfos?.switchJobId,
+      jobInfo: this.selectedJobInfos?.jobInfo,
+      orderType: this.selectedJobInfos?.orderType,
+      project: this.selectedJobInfos?.project,
+      easyJob: this.selectedJobInfos?.easyJob,
+      billingOption: this.selectedJobInfos?.billingOption,
+      status: this.selectedJobInfos?.status,
+      numberOfFiles: this.selectedJobInfos?.numberOfFiles,
+      customer: this.selectedJobInfos?.customer
+    };
+
+    this.http.put<JobReadModel>(`/api/jobs/${this.selectedJobInfos?.id}`, updateJobCommand)
+      .subscribe(
+        updatedJob => {
+          // Die Antwort vom Backend enthält die aktualisierten Daten
+          // Aktualisiere deine jobDetails oder eine separate Variable, um die neuen Daten zu speichern
+          this.selectedJobInfos = updatedJob;
+        },
+        error => {
+          console.error('Fehler beim Speichern der Daten: ', error);
+        }
+      );
+
     this.toggleEditingMode(false);
     this.unsavedChanges = false;
   }
@@ -98,7 +128,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   }
   //#endregion
 
-  constructor(private route: ActivatedRoute, private overviewService: OverviewService) {
+  constructor(private route: ActivatedRoute, private overviewService: OverviewService, private http : HttpClient) {
     super();
 
     this.setNewSubscription = overviewService.jobdetailsFiles.subscribe((jobdetailsFiles) => {
