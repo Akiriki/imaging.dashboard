@@ -36,7 +36,7 @@
                 <div class="card h-100">
                   <div class="card-body">
                     <h6 class="card-title">Bearbeiter:</h6>
-                    <p class="card-text"> Peter Dietrich</p>
+                    <p class="card-text">{{ selectedJobInfos?.editor?.userName ? selectedJobInfos?.editor?.userName : 'Peter Dietrich' }}</p>
                     <h6 class="card-title">Erstellt am:</h6>
                     <p class="card-text">{{selectedJobInfos?.editor?.createdAt | date: 'dd.MM.yyyy hh:mm'}}</p>
                     <h6 class="card-title">Fällig bis:</h6>

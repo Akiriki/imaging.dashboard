@@ -26,8 +26,15 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   detailHistoryDataBound(e: DetailDataBoundEventArgs | any) {
     console.log(this.jobdetailsHistoryList)
     const data = this.jobdetailsHistoryList.filter((item: HistoryReadModel) => item.id === e.data.id);
+
+    const transformedData = data.map(item => ({
+      field: item.field || 'N/A',
+      oldValue: item.oldValue || '-',
+      newValue: item.newValue || '-',
+    }));
+
     let detail = new Grid({
-        dataSource: data,
+        dataSource: transformedData,
         columns: [
             { field: 'field', headerText: 'Feld' },
             { field: 'oldValue', headerText: 'alter Wert' },
@@ -40,8 +47,15 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   detailFileDataBound(e : DetailDataBoundEventArgs | any){
     console.log(this.jobdetailsFilesList)
     const data = this.jobdetailsFilesList.filter((item: JobFileReadModel) => item.id === e.data.id);
+
+    const transformedData = data.map(item => ({
+      fileProperties: item.fileProperties || 'N/A',
+      errorCode: item.errorCode || '-',
+      errorMessage: item.errorMessage || '-',
+    }));
+
     let detail = new Grid({
-        dataSource: data,
+        dataSource: transformedData,
         columns: [
             { field: 'fileProperties', headerText: 'Dateigröße'},
             { field: 'errorCode', headerText: 'Fehler Code' },
