@@ -2,16 +2,23 @@
   position: relative;
 }
 
-.table-container {
-  display: inline-block;
-  margin-bottom: 20px;
-}
 
 .button-container {
+  margin-top: 0.5%;
   position: absolute;
-  bottom: -30px; /* Passe den Abstand nach Bedarf an */
 }
 
 h3 {
   font-size: 30px;
+}
+
+
+textarea {
+  border: 1px solid #ccc;
+  padding: 0.5%;
+  width: 100%;
+  height: 60vh;
+  resize: none;
+  min-height : 50px;
+  overflow-y: hidden;
 }
