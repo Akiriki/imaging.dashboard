@@ -48,7 +48,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobFileReadModel>>> GetTransferredJobFiles()
         {
-            var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Transferred2Partner,
+            var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.Status == Core.Enums.Status.Transferred2Partner && x.Status != Core.Enums.Status.Done,
                 x => x.Include(y => y.Job)
                     .ThenInclude(y => y.Editor)
                 .Include(z => z.FilePath));

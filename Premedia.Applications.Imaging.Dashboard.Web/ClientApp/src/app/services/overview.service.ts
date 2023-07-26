@@ -12,6 +12,7 @@ export class OverviewService {
   partnerFiles = new BehaviorSubject<DataClient.JobFileReadModel[]>([]);
 
   // Objekt für Jobdetailansicht (Tabelle Job-Files & History)
+  selectedJob = new BehaviorSubject<DataClient.JobReadModel | undefined>(undefined);
   jobdetailsFiles = new BehaviorSubject<DataClient.JobFileReadModel[]>([]);
   jobdetailsHistory = new BehaviorSubject<DataClient.HistoryReadModel[]>([]);
 
@@ -51,15 +52,22 @@ export class OverviewService {
   }
 
   // JobID
-  loadJobFileDetails(){
-    this.jobFileDataClient.getJobFilesByJobId('492189a3-e0a1-409e-b3dc-5f11687bb60f').subscribe(result => {
+  loadJobInfos(id : string){
+    this.jobDataClient.getJobById(id).subscribe(result => {
+      this.selectedJob.next(result);
+    }, error => console.error(error));
+  }
+
+  // JobID
+  loadJobFileDetails(id : string){
+    this.jobFileDataClient.getJobFilesByJobId(id).subscribe(result => {
       this.jobdetailsFiles.next(result);
     }, error => console.error(error))
   }
 
   // JobID
-  loadHistoryFileDetails(){
-    this.historyDataClient.getHistoriesByJobId('492189a3-e0a1-409e-b3dc-5f11687bb60f').subscribe(result => {
+  loadHistoryFileDetails(id : string){
+    this.historyDataClient.getHistoriesByJobId(id).subscribe(result => {
       this.jobdetailsHistory.next(result);
     }, error => console.error(error))
   }

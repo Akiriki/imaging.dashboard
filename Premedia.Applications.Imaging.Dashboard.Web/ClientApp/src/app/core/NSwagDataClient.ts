@@ -835,6 +835,7 @@ export interface IJobClient {
     getJobsByEditorId(id: string | undefined): Observable<JobReadModel[]>;
     getColleagueJobs(id: string | undefined): Observable<JobReadModel[]>;
     getTransferredJobs(): Observable<JobReadModel[]>;
+    getDoneJobs(): Observable<JobReadModel[]>;
     createJob(command: CreateJobCommand): Observable<JobReadModel>;
     updateJob(command: UpdateJobCommand): Observable<JobReadModel>;
     changeEditor(command: UpdateJobEditorCommand): Observable<JobReadModel>;
@@ -1219,6 +1220,61 @@ export class JobClient implements IJobClient {
     }
 
     protected processGetTransferredJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getDoneJobs(): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetDoneJobs";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDoneJobs(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDoneJobs(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobReadModel[]>;
+        }));
+    }
+
+    protected processGetDoneJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2690,6 +2746,7 @@ export class HistoryReadModel implements IHistoryReadModel {
     oldValue?: string;
     newValue?: string | undefined;
     changeTime?: Date;
+    job?: JobReadModel;
 
     constructor(data?: IHistoryReadModel) {
         if (data) {
@@ -2710,6 +2767,7 @@ export class HistoryReadModel implements IHistoryReadModel {
             this.oldValue = _data["oldValue"];
             this.newValue = _data["newValue"];
             this.changeTime = _data["changeTime"] ? new Date(_data["changeTime"].toString()) : <any>undefined;
+            this.job = _data["job"] ? JobReadModel.fromJS(_data["job"]) : <any>undefined;
         }
     }
 
@@ -2730,6 +2788,7 @@ export class HistoryReadModel implements IHistoryReadModel {
         data["oldValue"] = this.oldValue;
         data["newValue"] = this.newValue;
         data["changeTime"] = this.changeTime ? this.changeTime.toISOString() : <any>undefined;
+        data["job"] = this.job ? this.job.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -2743,6 +2802,182 @@ export interface IHistoryReadModel {
     oldValue?: string;
     newValue?: string | undefined;
     changeTime?: Date;
+    job?: JobReadModel;
+}
+
+export class JobReadModel implements IJobReadModel {
+    id?: string;
+    createdAt?: Date;
+    consecutiveNumber?: number;
+    title?: string;
+    deliveryDate?: Date;
+    orderDate?: Date;
+    switchJobId?: string;
+    jobInfo?: string;
+    orderType?: OrderType;
+    project?: string;
+    easyJob?: string;
+    billingOption?: BillingOption;
+    status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
+    editor?: UserReadModel;
+    client?: ClientReadModel;
+
+    constructor(data?: IJobReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.consecutiveNumber = _data["consecutiveNumber"];
+            this.title = _data["title"];
+            this.deliveryDate = _data["deliveryDate"] ? new Date(_data["deliveryDate"].toString()) : <any>undefined;
+            this.orderDate = _data["orderDate"] ? new Date(_data["orderDate"].toString()) : <any>undefined;
+            this.switchJobId = _data["switchJobId"];
+            this.jobInfo = _data["jobInfo"];
+            this.orderType = _data["orderType"];
+            this.project = _data["project"];
+            this.easyJob = _data["easyJob"];
+            this.billingOption = _data["billingOption"];
+            this.status = _data["status"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
+            this.editor = _data["editor"] ? UserReadModel.fromJS(_data["editor"]) : <any>undefined;
+            this.client = _data["client"] ? ClientReadModel.fromJS(_data["client"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): JobReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new JobReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["consecutiveNumber"] = this.consecutiveNumber;
+        data["title"] = this.title;
+        data["deliveryDate"] = this.deliveryDate ? this.deliveryDate.toISOString() : <any>undefined;
+        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>undefined;
+        data["switchJobId"] = this.switchJobId;
+        data["jobInfo"] = this.jobInfo;
+        data["orderType"] = this.orderType;
+        data["project"] = this.project;
+        data["easyJob"] = this.easyJob;
+        data["billingOption"] = this.billingOption;
+        data["status"] = this.status;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
+        data["editor"] = this.editor ? this.editor.toJSON() : <any>undefined;
+        data["client"] = this.client ? this.client.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IJobReadModel {
+    id?: string;
+    createdAt?: Date;
+    consecutiveNumber?: number;
+    title?: string;
+    deliveryDate?: Date;
+    orderDate?: Date;
+    switchJobId?: string;
+    jobInfo?: string;
+    orderType?: OrderType;
+    project?: string;
+    easyJob?: string;
+    billingOption?: BillingOption;
+    status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
+    editor?: UserReadModel;
+    client?: ClientReadModel;
+}
+
+export enum OrderType {
+    Important = 0,
+    NotImportant = 1,
+}
+
+export enum BillingOption {
+    Cash = 0,
+    CreditCard = 1,
+    DebitCard = 2,
+    Checks = 3,
+}
+
+export enum Status {
+    ToDo = 0,
+    InProgress = 1,
+    Done = 2,
+    Transferred2Partner = 3,
+}
+
+export class UserReadModel implements IUserReadModel {
+    id?: string;
+    createdAt?: Date;
+    userName?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+
+    constructor(data?: IUserReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.userName = _data["userName"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.email = _data["email"];
+        }
+    }
+
+    static fromJS(data: any): UserReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["userName"] = this.userName;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["email"] = this.email;
+        return data;
+    }
+}
+
+export interface IUserReadModel {
+    id?: string;
+    createdAt?: Date;
+    userName?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
 }
 
 export class CreateHistoryCommand implements ICreateHistoryCommand {
@@ -2859,177 +3094,6 @@ export interface IUpdateHistoryCommand {
     oldValue?: string;
     newValue?: string | undefined;
     changeTime?: Date;
-}
-
-export class JobReadModel implements IJobReadModel {
-    id?: string;
-    createdAt?: Date;
-    consecutiveNumber?: number;
-    title?: string;
-    deliveryDate?: Date;
-    orderDate?: Date;
-    switchJobId?: string;
-    jobInfo?: string;
-    orderType?: OrderType;
-    project?: string;
-    easyJob?: string;
-    billingOption?: BillingOption;
-    status?: Status;
-    numberOfFiles?: number;
-    customer?: string;
-    editor?: UserReadModel;
-
-    constructor(data?: IJobReadModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.consecutiveNumber = _data["consecutiveNumber"];
-            this.title = _data["title"];
-            this.deliveryDate = _data["deliveryDate"] ? new Date(_data["deliveryDate"].toString()) : <any>undefined;
-            this.orderDate = _data["orderDate"] ? new Date(_data["orderDate"].toString()) : <any>undefined;
-            this.switchJobId = _data["switchJobId"];
-            this.jobInfo = _data["jobInfo"];
-            this.orderType = _data["orderType"];
-            this.project = _data["project"];
-            this.easyJob = _data["easyJob"];
-            this.billingOption = _data["billingOption"];
-            this.status = _data["status"];
-            this.numberOfFiles = _data["numberOfFiles"];
-            this.customer = _data["customer"];
-            this.editor = _data["editor"] ? UserReadModel.fromJS(_data["editor"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): JobReadModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new JobReadModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["consecutiveNumber"] = this.consecutiveNumber;
-        data["title"] = this.title;
-        data["deliveryDate"] = this.deliveryDate ? this.deliveryDate.toISOString() : <any>undefined;
-        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>undefined;
-        data["switchJobId"] = this.switchJobId;
-        data["jobInfo"] = this.jobInfo;
-        data["orderType"] = this.orderType;
-        data["project"] = this.project;
-        data["easyJob"] = this.easyJob;
-        data["billingOption"] = this.billingOption;
-        data["status"] = this.status;
-        data["numberOfFiles"] = this.numberOfFiles;
-        data["customer"] = this.customer;
-        data["editor"] = this.editor ? this.editor.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface IJobReadModel {
-    id?: string;
-    createdAt?: Date;
-    consecutiveNumber?: number;
-    title?: string;
-    deliveryDate?: Date;
-    orderDate?: Date;
-    switchJobId?: string;
-    jobInfo?: string;
-    orderType?: OrderType;
-    project?: string;
-    easyJob?: string;
-    billingOption?: BillingOption;
-    status?: Status;
-    numberOfFiles?: number;
-    customer?: string;
-    editor?: UserReadModel;
-}
-
-export enum OrderType {
-    Important = 0,
-    NotImportant = 1,
-}
-
-export enum BillingOption {
-    Cash = 0,
-    CreditCard = 1,
-    DebitCard = 2,
-    Checks = 3,
-}
-
-export enum Status {
-    ToDo = 0,
-    InProgress = 1,
-    Finished = 2,
-    Transferred2Partner = 3,
-}
-
-export class UserReadModel implements IUserReadModel {
-    id?: string;
-    createdAt?: Date;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-
-    constructor(data?: IUserReadModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.userName = _data["userName"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
-            this.email = _data["email"];
-        }
-    }
-
-    static fromJS(data: any): UserReadModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserReadModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["userName"] = this.userName;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
-        data["email"] = this.email;
-        return data;
-    }
-}
-
-export interface IUserReadModel {
-    id?: string;
-    createdAt?: Date;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
 }
 
 export class User implements IUser {

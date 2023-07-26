@@ -4,6 +4,7 @@ import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 import { JobReadModel } from 'src/app/core/NSwagDataClient';
+import { StatusService } from 'src/app/services/status.service';
 
 @Component({
   selector: 'app-my-tasks',
@@ -15,7 +16,7 @@ export class MyTasksComponent extends DestroySubscriptionsComponent{
   myTasksList : JobReadModel[] = [];
   pageSettings: PageSettingsModel;
 
-  constructor(public overviewService : OverviewService, private router : Router) {
+  constructor(public overviewService : OverviewService, private router : Router, public statusService : StatusService) {
     super();
 
     this.setNewSubscription = overviewService.myTasks.subscribe((myTasks) => {
@@ -33,24 +34,9 @@ export class MyTasksComponent extends DestroySubscriptionsComponent{
 
     if (selectedJob) {
       console.log('Selected Job:', selectedJob);
-      this.router.navigate(['/job-details', selectedJob.id]);
+      this.router.navigate(['/job-details'], {queryParams : {id : selectedJob.id}});
     } else {
       console.log('Selected Job not found');
-    }
-  }
-
-   getStatusString(status: number): string {
-    switch (status) {
-      case 0:
-        return 'TO-DO';
-      case 1:
-        return 'In Progress';
-      case 2:
-        return 'Finished';
-      case 3:
-        return 'TRANSFERRED2PARTNER';
-      default:
-        return 'Unbekannter Status';
     }
   }
 }

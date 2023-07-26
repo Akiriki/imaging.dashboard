@@ -16,7 +16,7 @@
     </e-column>
     <e-column field="status" headerText="Status">
       <ng-template #template let-data>
-        {{ getStatusString(data.status) }}
+        {{ this.statusService.getStatusString(data.status) }}
       </ng-template>
     </e-column>
   </e-columns>

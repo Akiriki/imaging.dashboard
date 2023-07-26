@@ -24,5 +24,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
         public long NumberOfFiles { get; set; }
         public string Customer { get; set; }
         public UserReadModel Editor { get; set; }
+        public ClientReadModel Client { get; set; }
     }
 }
