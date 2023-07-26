@@ -14,7 +14,8 @@ import { ListBoxComponent } from '@syncfusion/ej2-angular-dropdowns';
 export class ProjectsComponent extends DestroySubscriptionsComponent{
   public data: { [key: string]: Object }[] = [];
   public newInputValue: string = '';
-  btnclick() {
+
+  addItems() {
     if (this.newInputValue.trim() !== '') {
       const newItems = this.newInputValue
         .split(/\r?\n/)
