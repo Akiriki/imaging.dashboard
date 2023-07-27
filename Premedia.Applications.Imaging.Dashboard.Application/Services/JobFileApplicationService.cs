@@ -42,7 +42,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<List<JobFileReadModel>>> GetJobFilesByJobId(Guid id)
         {
-            var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.JobId == id);
+            var jobFiles = await _unitOfWork.JobFileRepository.GetMultipleAsync(x => x.JobId == id,
+                x => x.Include(y => y.Activity));
             return _mapper.Map<List<JobFileReadModel>>(jobFiles);
         }
 

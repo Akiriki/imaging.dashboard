@@ -18,6 +18,7 @@ public static class ApplicationConfigurationServiceCollectionExtension
         services.AddTransient<IHistoryApplicationService, HistoryApplicationService>();
         services.AddTransient<ITimeTrackingApplicationService, TimeTrackingApplicationService>();
         services.AddTransient<IUserApplicationService, UserApplicationService>();
+        services.AddTransient<IActivityApplicationService, ActivityApplicationService>();
 
 
     }

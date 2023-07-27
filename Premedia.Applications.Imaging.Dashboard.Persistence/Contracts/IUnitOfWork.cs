@@ -14,4 +14,5 @@ public interface IUnitOfWork
     IRepository<History> HistoryRepository { get; set; }
     IRepository<User> UserRepository { get; set; }
     IRepository<TimeTracking> TimeTrackingRepository { get; set; }
+    IRepository<Activity> ActivityRepository { get; set; }
 }

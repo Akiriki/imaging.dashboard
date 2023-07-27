@@ -15,19 +15,20 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<History> HistoryRepository{ get; set; }
     public IRepository<User> UserRepository { get; set; }
     public IRepository<TimeTracking> TimeTrackingRepository { get; set; }
+    public IRepository<Activity> ActivityRepository { get; set; }
 
     public UnitOfWork(ImagingDashboardDbContext dbContext)
     {
         _dbContext = dbContext;
         JobRepository = new EntityObjectRepository<Job>(_dbContext);
-        JobFileRepository=new EntityObjectRepository<JobFiles>(_dbContext);
-        AdditionalFileRepository=new EntityObjectRepository<AdditionalFile>(_dbContext);
-        ClientRepository=new EntityObjectRepository<Client>(_dbContext);
-        FilePathRepository=new EntityObjectRepository<FilePath>(_dbContext);
-        HistoryRepository=new EntityObjectRepository<History>(_dbContext);
-        UserRepository=new EntityObjectRepository<User>(_dbContext);
-        TimeTrackingRepository=new EntityObjectRepository<TimeTracking>(_dbContext);
-
+        JobFileRepository = new EntityObjectRepository<JobFiles>(_dbContext);
+        AdditionalFileRepository = new EntityObjectRepository<AdditionalFile>(_dbContext);
+        ClientRepository = new EntityObjectRepository<Client>(_dbContext);
+        FilePathRepository = new EntityObjectRepository<FilePath>(_dbContext);
+        HistoryRepository = new EntityObjectRepository<History>(_dbContext);
+        UserRepository = new EntityObjectRepository<User>(_dbContext);
+        TimeTrackingRepository = new EntityObjectRepository<TimeTracking>(_dbContext);
+        ActivityRepository = new EntityObjectRepository<Activity>(_dbContext);
     }
 
     public async Task SaveChangesAsync()

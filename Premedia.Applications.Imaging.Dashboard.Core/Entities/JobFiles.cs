@@ -27,6 +27,6 @@ public class JobFiles:EntityObject
 
     public FilePath? FilePath { get; set; }
 
-    public Guid ActivityId { get; set; }
+    public Guid? ActivityId { get; set; }
     public Activity? Activity { get; set; }
 }
