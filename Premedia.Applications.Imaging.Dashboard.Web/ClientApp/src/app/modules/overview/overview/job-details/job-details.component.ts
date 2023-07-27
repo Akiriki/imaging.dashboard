@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageSettingsModel, DetailDataBoundEventArgs, Grid } from '@syncfusion/ej2-angular-grids';
-import { HistoryReadModel, JobFileReadModel, JobReadModel } from 'src/app/core/NSwagDataClient';
+import { HistoryReadModel, JobFileReadModel, JobReadModel, UpdateJobCommand } from 'src/app/core/NSwagDataClient';
 import { OverviewService } from 'src/app/services/overview.service';
 import { StatusService } from 'src/app/services/status.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
@@ -77,43 +77,37 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
     }
   }
 
+  updateJob() {
+    const updateJobCommand: UpdateJobCommand = new UpdateJobCommand();
+    updateJobCommand.id = this.selectedJobInfos?.id;
+    updateJobCommand.consecutiveNumber = this.selectedJobInfos?.consecutiveNumber;
+    updateJobCommand.title = this.selectedJobInfos?.title;
+    updateJobCommand.deliveryDate = this.selectedJobInfos?.deliveryDate;
+    updateJobCommand.orderDate = this.selectedJobInfos?.orderDate;
+    updateJobCommand.switchJobId = this.selectedJobInfos?.switchJobId;
+    updateJobCommand.jobInfo = this.selectedJobInfos?.jobInfo;
+    updateJobCommand.orderType = this.selectedJobInfos?.orderType;
+    updateJobCommand.project = this.selectedJobInfos?.project;
+    updateJobCommand.easyJob = '123';
+    updateJobCommand.billingOption = this.selectedJobInfos?.billingOption;
+    updateJobCommand.status = this.selectedJobInfos?.status;
+    updateJobCommand.numberOfFiles = this.selectedJobInfos?.numberOfFiles;
+    updateJobCommand.customer = this.selectedJobInfos?.customer;
+
+    this.overviewService.updateJob(updateJobCommand).subscribe(
+      updatedJob => {
+        this.selectedJobInfos = updatedJob;
+      },
+      error => {
+        console.error('Fehler beim Speichern der Daten: ', error);
+      }
+    );
+  }
+
+
   saveChanges() {
     // Code für speichern in DB über API (Befehle)
-
-    // Änderungen speichern =>
-    // Daten in this.jobDetails aktualisieren oder eine separate Variable verwenden,
-    // um die bearbeiteten Daten zu speichern.
-
-    const updateJobCommand = {
-      id: this.selectedJobInfos?.id,
-      consecutiveNumber: this.selectedJobInfos?.consecutiveNumber,
-      title: this.selectedJobInfos?.title,
-      deliveryDate: this.selectedJobInfos?.deliveryDate,
-      orderDate: this.selectedJobInfos?.orderDate,
-      switchJobId: this.selectedJobInfos?.switchJobId,
-      jobInfo: this.selectedJobInfos?.jobInfo,
-      orderType: this.selectedJobInfos?.orderType,
-      project: this.selectedJobInfos?.project,
-      easyJob: "123",
-      billingOption: this.selectedJobInfos?.billingOption,
-      status: this.selectedJobInfos?.status,
-      numberOfFiles: this.selectedJobInfos?.numberOfFiles,
-      customer: this.selectedJobInfos?.customer
-    };
-
-    console.log(updateJobCommand)
-
-    this.http.put<JobReadModel>("api/Job", updateJobCommand)
-      .subscribe(
-        updatedJob => {
-          // Die Antwort vom Backend enthält die aktualisierten Daten
-          // Aktualisiere deine jobDetails oder eine separate Variable, um die neuen Daten zu speichern
-          this.selectedJobInfos = updatedJob;
-        },
-        error => {
-          console.error('Fehler beim Speichern der Daten: ', error);
-        }
-      );
+    this.updateJob();
 
     this.toggleEditingMode(false);
     this.unsavedChanges = false;

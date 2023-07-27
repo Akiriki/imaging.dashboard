@@ -71,4 +71,9 @@ export class OverviewService {
       this.jobdetailsHistory.next(result);
     }, error => console.error(error))
   }
+
+  // schreiben in die Datenbank
+  updateJob(updateJobCommand: DataClient.UpdateJobCommand) {
+    return this.jobDataClient.updateJob(updateJobCommand);
+  }
 }

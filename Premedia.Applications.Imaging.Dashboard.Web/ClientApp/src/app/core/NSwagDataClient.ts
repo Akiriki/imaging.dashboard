@@ -1356,7 +1356,7 @@ export class JobClient implements IJobClient {
     }
 
     updateJob(command: UpdateJobCommand): Observable<JobReadModel> {
-        let url_ = this.baseUrl + "/Job";
+        let url_ = this.baseUrl + "/Job/UpdateJob";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);

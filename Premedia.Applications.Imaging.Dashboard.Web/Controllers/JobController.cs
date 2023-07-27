@@ -73,7 +73,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
             return await _jobApplicationService.CreateJob(command).ConfigureAwait(false);
         }
 
-        [HttpPut]
+        [HttpPut(nameof(UpdateJob))]
         public async Task<ActionResult<JobReadModel>> UpdateJob(UpdateJobCommand command)
         {
             return await _jobApplicationService.UpdateJob(command).ConfigureAwait(false);

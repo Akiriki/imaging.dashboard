@@ -7,7 +7,7 @@
     <e-column field="id" [visible]="false"></e-column>
     <e-column field="consecutiveNumber" headerText="Job-Nummer">
       <ng-template #template let-data>
-        <a (click)="navigateToJobDetails($event)">{{ data.consecutiveNumber }}</a>
+        <a class="link-cell" (click)="navigateToJobDetails($event)" onmouseenter="this.style.color='red'" onmouseleave="this.style.color=''">{{ data.consecutiveNumber }}</a>
       </ng-template>
     </e-column>
     <e-column field="title" headerText="Titel"></e-column>
