@@ -8,11 +8,12 @@ import { DropDownButtonAllModule, DropDownButtonModule } from "@syncfusion/ej2-a
 import { ButtonModule } from "@syncfusion/ej2-angular-buttons";
 import { BrowserModule } from '@angular/platform-browser';
 import { ListBoxModule } from '@syncfusion/ej2-angular-dropdowns';
+import { DialogModule } from '@syncfusion/ej2-angular-popups';
 
 @NgModule({
   declarations: [DestroySubscriptionsComponent],
-  imports: [AppRoutingModule, FormsModule, CommonModule, GridModule, DropDownButtonModule, DropDownButtonAllModule, BrowserModule, ListBoxModule ],
-  exports: [AppRoutingModule, FormsModule, CommonModule, GridModule, DropDownButtonModule, ButtonModule, BrowserModule, ListBoxModule ]
+  imports: [AppRoutingModule, FormsModule, CommonModule, GridModule, DropDownButtonModule, DropDownButtonAllModule, BrowserModule, ListBoxModule, DialogModule],
+  exports: [AppRoutingModule, FormsModule, CommonModule, GridModule, DropDownButtonModule, ButtonModule, BrowserModule, ListBoxModule, DialogModule]
 })
 
 export class SharedModule {}

@@ -2,6 +2,7 @@
   position: relative;
 }
 
+
 .table-container {
   display: inline-block;
   margin-bottom: 20px;
@@ -9,10 +10,28 @@
 
 .button-container {
   position: absolute;
-  top: -50px; /* Passe den Abstand nach Bedarf an */
-  right: 20px; /* Passe den Abstand nach Bedarf an */
+  top: -50px;
+  right: 20px;
 }
 
 h3{
   font-size: 30px;
 }
+
+#dialog{
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.dialog-container{
+  height:50vh;
+}
+
+@media (max-width: 700px) {
+  #dialog {
+    margin-left: 5%;
+    width: 90%;
+  }
+}
+
