@@ -1,14 +1,14 @@
 <h3>Neue Aufträge</h3>
-<ejs-grid [dataSource]="openJobList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true">
+<ejs-grid [dataSource]="openJobList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" [autoFit]="true">
 <e-columns>
   <e-column field="id" headerText="ID" [visible]="false"></e-column>
   <e-column field="title" width="300" headerText="Titel" width="auto"></e-column>
   <e-column field="customer" headerText="Kunde" width="300"></e-column>
   <e-column field='deliveryDate' headerText='Fälligkeitsdatum' width="150" [format]="'dd.MM.yyyy'"></e-column>
-  <e-column field='numberOfFiles' headerText='Files' width="110"></e-column>
-  <e-column [textAlign]="'center'" [allowFiltering]="false" [allowSorting]="false" width="200">
+  <e-column field='numberOfFiles' headerText='Files' width="90"></e-column>
+  <e-column [textAlign]="'center'" [allowFiltering]="false" [allowSorting]="false" width="140">
     <ng-template #template let-data>
-      <button ejs-button>übernehmen</button>
+      <button ejs-button>apply</button>
     </ng-template></e-column>
 </e-columns>
 </ejs-grid>

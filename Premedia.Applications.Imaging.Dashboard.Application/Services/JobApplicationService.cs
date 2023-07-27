@@ -86,7 +86,8 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
 
         public async Task<ActionResult<JobReadModel>> UpdateJob(UpdateJobCommand command)
         {
-            var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id);
+            var existingJob = await _unitOfWork.JobRepository.GetFirstOrDefaultAsync(x => x.Id == command.Id,
+                 x => x.Include(y => y.Editor).Include(y => y.Client));
             if (existingJob == null)
             {
                 throw HttpResponseException.NotFound("Job");

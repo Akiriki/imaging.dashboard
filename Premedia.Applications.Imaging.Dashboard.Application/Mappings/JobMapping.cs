@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Premedia.Applications.Imaging.Dashboard.Application.Commands;
 using Premedia.Applications.Imaging.Dashboard.Application.ReadModels;
 using Premedia.Applications.Imaging.Dashboard.Core.Entities;
 
@@ -9,6 +10,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Mappings
         public JobMapping()
         {
             CreateMap<JobReadModel, Job>().ReverseMap();
+            CreateMap<UpdateJobCommand, Job>().ReverseMap();
         }
         
     }

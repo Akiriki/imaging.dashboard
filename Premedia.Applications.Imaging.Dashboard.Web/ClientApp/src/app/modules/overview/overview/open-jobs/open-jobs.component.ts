@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PageSettingsModel, SortSettingsModel } from '@syncfusion/ej2-angular-grids';
+import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import { OverviewService } from 'src/app/services/overview.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 import { JobReadModel } from 'src/app/core/NSwagDataClient';

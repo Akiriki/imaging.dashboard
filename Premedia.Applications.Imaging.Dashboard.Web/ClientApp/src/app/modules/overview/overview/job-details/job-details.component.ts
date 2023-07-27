@@ -88,7 +88,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
     updateJobCommand.jobInfo = this.selectedJobInfos?.jobInfo;
     updateJobCommand.orderType = this.selectedJobInfos?.orderType;
     updateJobCommand.project = this.selectedJobInfos?.project;
-    updateJobCommand.easyJob = '123';
+    updateJobCommand.easyJob = ':(';
     updateJobCommand.billingOption = this.selectedJobInfos?.billingOption;
     updateJobCommand.status = this.selectedJobInfos?.status;
     updateJobCommand.numberOfFiles = this.selectedJobInfos?.numberOfFiles;
