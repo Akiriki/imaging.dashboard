@@ -94,14 +94,16 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
       jobInfo: this.selectedJobInfos?.jobInfo,
       orderType: this.selectedJobInfos?.orderType,
       project: this.selectedJobInfos?.project,
-      easyJob: this.selectedJobInfos?.easyJob,
+      easyJob: "123",
       billingOption: this.selectedJobInfos?.billingOption,
       status: this.selectedJobInfos?.status,
       numberOfFiles: this.selectedJobInfos?.numberOfFiles,
       customer: this.selectedJobInfos?.customer
     };
 
-    this.http.put<JobReadModel>(`/api/jobs/${this.selectedJobInfos?.id}`, updateJobCommand)
+    console.log(updateJobCommand)
+
+    this.http.put<JobReadModel>("api/Job", updateJobCommand)
       .subscribe(
         updatedJob => {
           // Die Antwort vom Backend enthält die aktualisierten Daten
