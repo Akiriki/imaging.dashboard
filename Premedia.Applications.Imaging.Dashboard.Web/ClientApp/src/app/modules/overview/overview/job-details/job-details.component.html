@@ -1,13 +1,14 @@
-<!--<h3 class="headings">Job Details - ID: {{ jobID }}</h3>-->
-
 <div class="container">
   <div class="row">
     <div class="col-md-12 mt-4">
+      <h1 class="headings" style="font-size: 30px;">Job: {{selectedJobInfos?.consecutiveNumber}} </h1>
+      <br>
       <div class="card">
         <div class="card-body">
           <h3 class="card-title headings">Infos</h3>
           <div class="d-flex justify-content-end">
             <button ejs-button (click)="saveChanges()" [disabled]="!unsavedChanges">Bearbeitung abschließen</button>
+            <button ejs-button style="margin-left: 30px; width: 150px;">abschicken</button>
           </div>
           <br>
           <div class="container">
@@ -15,16 +16,15 @@
               <div class="col-md-6">
                 <div class="card h-100">
                   <div class="card-body">
-                    <h6 class="card-title">Typ:</h6>
-                    <p class="card-text">{{ getOrderType(selectedJobInfos?.orderType ?? 2) }} </p>
+                    <h6 class="card-title">Typ: {{ getOrderType(selectedJobInfos?.orderType ?? 2) }} </h6>
                     <h6 class="card-title">Kunde:</h6>
                     <p class="card-text">{{ selectedJobInfos?.customer }}</p>
                     <h6 class="card-title">Auftraggeber:</h6>
                     <p class="card-text">{{ selectedJobInfos?.client?.firstName}} {{ selectedJobInfos?.client?.lastName}}</p>
                     <h6 class="card-title">Projekt:</h6>
                     <p class="card-text">{{ selectedJobInfos?.project}}</p>
-                    <h6 class="card-title">ERP-Nr.:</h6>
-                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{ selectedJobInfos?.easyJob}}</p>
+                    <h6 class="card-title">Easyjob-Nr.:</h6>
+                    <p #easyJobNumber class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{ selectedJobInfos?.easyJob}}</p>
                     <h6 class="card-title">Verrechnungsoption:</h6>
                     <p class="card-text">{{ getBillingOption(selectedJobInfos?.billingOption ?? 3)}}</p>
                     <h6 class="card-title">Beschreibung:</h6>
@@ -40,7 +40,7 @@
                     <h6 class="card-title">Erstellt am:</h6>
                     <p class="card-text">{{selectedJobInfos?.editor?.createdAt | date: "dd.MM.yyyy hh:mm"}}</p>
                     <h6 class="card-title">Fällig bis:</h6>
-                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: "dd.MM.yyyy" }}</p>
+                    <p #deliveryDate class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: "dd.MM.yyyy" }}</p>
                     <h6 class="card-title">Status:</h6>
                     <p class="card-text"> {{statusService.getStatusString(selectedJobInfos?.status ?? 3) }} </p>
                     <br>
@@ -78,7 +78,7 @@
               </e-column>
               <e-column field="originalFilename" headerText="Originaler Dateiname"></e-column>
               <e-column field="editedFilename" headerText="Bearbeiteter Dateiname"></e-column>
-              <e-column field="filePath.ebvFileaction" headerText="Ablagepfad">
+              <e-column field="filePath.action" headerText="Aktion">
                 <ng-template #template let-data>
                   {{ data?.filePath?.ebvFileaction || "N/A" }}
                 </ng-template>
