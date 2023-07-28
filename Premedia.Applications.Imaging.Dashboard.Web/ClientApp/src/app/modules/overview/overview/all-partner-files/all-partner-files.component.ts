@@ -30,7 +30,7 @@ export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
 
     if (selectedJob) {
       console.log('Selected Job:', selectedJob);
-      this.router.navigate(['/job-details', selectedJob.id]);
+      this.router.navigate(['/job-details'], {queryParams : {id : selectedJob.id}});
     } else {
       console.log('Selected Job not found');
     }

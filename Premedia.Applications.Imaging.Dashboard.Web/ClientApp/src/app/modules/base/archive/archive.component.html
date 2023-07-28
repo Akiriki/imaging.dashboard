@@ -2,15 +2,23 @@
 <h3 class="headings" style="font-size: 30px">Archiv<h3>
 <br/>
 
-<ejs-grid [dataSource]='archiveList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true" [style]="">
+<ejs-grid [dataSource]="archiveList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" [style]="">
   <e-columns>
-    <e-column field='id' headerText='Nr.' width="100" [textAlign]="'center'"></e-column>
-    <e-column field='jobNumber' headerText='Job-Nummer'></e-column>
-    <e-column field='title' headerText='Titel'></e-column>
-    <e-column field='customer' headerText='Kunde'></e-column>
-    <e-column field='date' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
-    <e-column field='editor' headerText='Bearbeiter'></e-column>
-    <e-column field='status' headerText='Status'></e-column>
+    <e-column field="id" [visible]="false"></e-column>
+    <e-column field="consecutiveNumber" headerText="Job-Nummer">
+      <ng-template #template let-data>
+        <a (click)="navigateToJobDetails($event)">{{ data.consecutiveNumber }}</a>
+      </ng-template>
+    </e-column>
+    <e-column field="title" headerText="Titel"></e-column>
+    <e-column field="customer" headerText="Kunde"></e-column>
+    <e-column field="deliveryDate" headerText="Fälligkeitsdatum" [format]="'dd.MM.yyyy'"></e-column>
+    <e-column field="editor.userName" headerText="Bearbeiter"></e-column>
+    <e-column field="status" headerText="Status">
+      <ng-template #template let-data>
+        {{ statusService.getStatusString(data.status) }}
+      </ng-template>
+    </e-column>
   </e-columns>
 </ejs-grid>
 
