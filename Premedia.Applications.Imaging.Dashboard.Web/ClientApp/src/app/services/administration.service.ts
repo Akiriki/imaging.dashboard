@@ -31,7 +31,7 @@ export type ProjectDeclaration = {
 export class AdministrationService{
 
   // how many records are displayed in the table
-  public pageSettings : PageSettingsModel = { pageSize : 5 };
+  public pageSettings : PageSettingsModel = { pageSize : 10 };
 
   activitiesContent = new BehaviorSubject<Activities[]>([]);
 
