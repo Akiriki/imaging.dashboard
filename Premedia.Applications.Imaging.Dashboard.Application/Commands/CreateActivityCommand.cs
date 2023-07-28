@@ -8,6 +8,7 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Commands
 {
     public class CreateActivityCommand
     {
+        public Guid Id { get; set; }
         public string Customer { get; set; }
         public string ServiceType { get; set; }
         public string Quality { get; set; }

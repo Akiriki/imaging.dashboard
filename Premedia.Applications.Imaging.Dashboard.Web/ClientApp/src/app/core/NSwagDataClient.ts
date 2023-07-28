@@ -15,6 +15,238 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
+export interface IActivityClient {
+    getActivityById(id: string | undefined): Observable<ActivityReadModel>;
+    getAllActivities(): Observable<ActivityReadModel[]>;
+    createActivity(command: CreateActivityCommand): Observable<ActivityReadModel>;
+    updateActivity(command: UpdateActivityCommand): Observable<ActivityReadModel>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ActivityClient implements IActivityClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:7113";
+    }
+
+    getActivityById(id: string | undefined): Observable<ActivityReadModel> {
+        let url_ = this.baseUrl + "/Activity/GetActivityById?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetActivityById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetActivityById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ActivityReadModel>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ActivityReadModel>;
+        }));
+    }
+
+    protected processGetActivityById(response: HttpResponseBase): Observable<ActivityReadModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ActivityReadModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getAllActivities(): Observable<ActivityReadModel[]> {
+        let url_ = this.baseUrl + "/Activity/GetAllActivities";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllActivities(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllActivities(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ActivityReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ActivityReadModel[]>;
+        }));
+    }
+
+    protected processGetAllActivities(response: HttpResponseBase): Observable<ActivityReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ActivityReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    createActivity(command: CreateActivityCommand): Observable<ActivityReadModel> {
+        let url_ = this.baseUrl + "/Activity";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateActivity(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateActivity(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ActivityReadModel>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ActivityReadModel>;
+        }));
+    }
+
+    protected processCreateActivity(response: HttpResponseBase): Observable<ActivityReadModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ActivityReadModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    updateActivity(command: UpdateActivityCommand): Observable<ActivityReadModel> {
+        let url_ = this.baseUrl + "/Activity";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateActivity(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateActivity(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ActivityReadModel>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ActivityReadModel>;
+        }));
+    }
+
+    protected processUpdateActivity(response: HttpResponseBase): Observable<ActivityReadModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ActivityReadModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
 export interface IApplicationFilesClient {
     getAdditionalFileById(id: string | undefined): Observable<AdditionalFileReadModel>;
     getAllAdditionalFiles(): Observable<AdditionalFileReadModel[]>;
@@ -835,6 +1067,7 @@ export interface IJobClient {
     getJobsByEditorId(id: string | undefined): Observable<JobReadModel[]>;
     getColleagueJobs(id: string | undefined): Observable<JobReadModel[]>;
     getTransferredJobs(): Observable<JobReadModel[]>;
+    getDoneJobs(): Observable<JobReadModel[]>;
     createJob(command: CreateJobCommand): Observable<JobReadModel>;
     updateJob(command: UpdateJobCommand): Observable<JobReadModel>;
     changeEditor(command: UpdateJobEditorCommand): Observable<JobReadModel>;
@@ -1219,6 +1452,61 @@ export class JobClient implements IJobClient {
     }
 
     protected processGetTransferredJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(JobReadModel.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    getDoneJobs(): Observable<JobReadModel[]> {
+        let url_ = this.baseUrl + "/Job/GetDoneJobs";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDoneJobs(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDoneJobs(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<JobReadModel[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<JobReadModel[]>;
+        }));
+    }
+
+    protected processGetDoneJobs(response: HttpResponseBase): Observable<JobReadModel[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2405,6 +2693,146 @@ export class WeatherForecastClient implements IWeatherForecastClient {
     }
 }
 
+export class ActivityReadModel implements IActivityReadModel {
+    customer?: string;
+    serviceType?: string;
+    quality?: string;
+
+    constructor(data?: IActivityReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.customer = _data["customer"];
+            this.serviceType = _data["serviceType"];
+            this.quality = _data["quality"];
+        }
+    }
+
+    static fromJS(data: any): ActivityReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new ActivityReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["customer"] = this.customer;
+        data["serviceType"] = this.serviceType;
+        data["quality"] = this.quality;
+        return data;
+    }
+}
+
+export interface IActivityReadModel {
+    customer?: string;
+    serviceType?: string;
+    quality?: string;
+}
+
+export class CreateActivityCommand implements ICreateActivityCommand {
+    id?: string;
+    customer?: string;
+    serviceType?: string;
+    quality?: string;
+
+    constructor(data?: ICreateActivityCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.customer = _data["customer"];
+            this.serviceType = _data["serviceType"];
+            this.quality = _data["quality"];
+        }
+    }
+
+    static fromJS(data: any): CreateActivityCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateActivityCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["customer"] = this.customer;
+        data["serviceType"] = this.serviceType;
+        data["quality"] = this.quality;
+        return data;
+    }
+}
+
+export interface ICreateActivityCommand {
+    id?: string;
+    customer?: string;
+    serviceType?: string;
+    quality?: string;
+}
+
+export class UpdateActivityCommand implements IUpdateActivityCommand {
+    id?: string;
+    customer?: string;
+    serviceType?: string;
+    quality?: string;
+
+    constructor(data?: IUpdateActivityCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.customer = _data["customer"];
+            this.serviceType = _data["serviceType"];
+            this.quality = _data["quality"];
+        }
+    }
+
+    static fromJS(data: any): UpdateActivityCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateActivityCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["customer"] = this.customer;
+        data["serviceType"] = this.serviceType;
+        data["quality"] = this.quality;
+        return data;
+    }
+}
+
+export interface IUpdateActivityCommand {
+    id?: string;
+    customer?: string;
+    serviceType?: string;
+    quality?: string;
+}
+
 export class AdditionalFileReadModel implements IAdditionalFileReadModel {
     id?: string;
     createdAt?: Date;
@@ -2690,6 +3118,7 @@ export class HistoryReadModel implements IHistoryReadModel {
     oldValue?: string;
     newValue?: string | undefined;
     changeTime?: Date;
+    job?: JobReadModel;
 
     constructor(data?: IHistoryReadModel) {
         if (data) {
@@ -2710,6 +3139,7 @@ export class HistoryReadModel implements IHistoryReadModel {
             this.oldValue = _data["oldValue"];
             this.newValue = _data["newValue"];
             this.changeTime = _data["changeTime"] ? new Date(_data["changeTime"].toString()) : <any>undefined;
+            this.job = _data["job"] ? JobReadModel.fromJS(_data["job"]) : <any>undefined;
         }
     }
 
@@ -2730,6 +3160,7 @@ export class HistoryReadModel implements IHistoryReadModel {
         data["oldValue"] = this.oldValue;
         data["newValue"] = this.newValue;
         data["changeTime"] = this.changeTime ? this.changeTime.toISOString() : <any>undefined;
+        data["job"] = this.job ? this.job.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -2743,6 +3174,178 @@ export interface IHistoryReadModel {
     oldValue?: string;
     newValue?: string | undefined;
     changeTime?: Date;
+    job?: JobReadModel;
+}
+
+export class JobReadModel implements IJobReadModel {
+    id?: string;
+    createdAt?: Date;
+    consecutiveNumber?: number;
+    title?: string;
+    deliveryDate?: Date;
+    orderDate?: Date;
+    switchJobId?: string;
+    jobInfo?: string;
+    orderType?: OrderType;
+    project?: string;
+    easyJob?: string;
+    billingOption?: BillingOption;
+    status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
+    editor?: UserReadModel;
+
+    constructor(data?: IJobReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.consecutiveNumber = _data["consecutiveNumber"];
+            this.title = _data["title"];
+            this.deliveryDate = _data["deliveryDate"] ? new Date(_data["deliveryDate"].toString()) : <any>undefined;
+            this.orderDate = _data["orderDate"] ? new Date(_data["orderDate"].toString()) : <any>undefined;
+            this.switchJobId = _data["switchJobId"];
+            this.jobInfo = _data["jobInfo"];
+            this.orderType = _data["orderType"];
+            this.project = _data["project"];
+            this.easyJob = _data["easyJob"];
+            this.billingOption = _data["billingOption"];
+            this.status = _data["status"];
+            this.numberOfFiles = _data["numberOfFiles"];
+            this.customer = _data["customer"];
+            this.editor = _data["editor"] ? UserReadModel.fromJS(_data["editor"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): JobReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new JobReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["consecutiveNumber"] = this.consecutiveNumber;
+        data["title"] = this.title;
+        data["deliveryDate"] = this.deliveryDate ? this.deliveryDate.toISOString() : <any>undefined;
+        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>undefined;
+        data["switchJobId"] = this.switchJobId;
+        data["jobInfo"] = this.jobInfo;
+        data["orderType"] = this.orderType;
+        data["project"] = this.project;
+        data["easyJob"] = this.easyJob;
+        data["billingOption"] = this.billingOption;
+        data["status"] = this.status;
+        data["numberOfFiles"] = this.numberOfFiles;
+        data["customer"] = this.customer;
+        data["editor"] = this.editor ? this.editor.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IJobReadModel {
+    id?: string;
+    createdAt?: Date;
+    consecutiveNumber?: number;
+    title?: string;
+    deliveryDate?: Date;
+    orderDate?: Date;
+    switchJobId?: string;
+    jobInfo?: string;
+    orderType?: OrderType;
+    project?: string;
+    easyJob?: string;
+    billingOption?: BillingOption;
+    status?: Status;
+    numberOfFiles?: number;
+    customer?: string;
+    editor?: UserReadModel;
+}
+
+export enum OrderType {
+    Important = 0,
+    NotImportant = 1,
+}
+
+export enum BillingOption {
+    Cash = 0,
+    CreditCard = 1,
+    DebitCard = 2,
+    Checks = 3,
+}
+
+export enum Status {
+    ToDo = 0,
+    InProgress = 1,
+    Done = 2,
+    Transferred2Partner = 3,
+}
+
+export class UserReadModel implements IUserReadModel {
+    id?: string;
+    createdAt?: Date;
+    userName?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+
+    constructor(data?: IUserReadModel) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.userName = _data["userName"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.email = _data["email"];
+        }
+    }
+
+    static fromJS(data: any): UserReadModel {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserReadModel();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["userName"] = this.userName;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["email"] = this.email;
+        return data;
+    }
+}
+
+export interface IUserReadModel {
+    id?: string;
+    createdAt?: Date;
+    userName?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
 }
 
 export class CreateHistoryCommand implements ICreateHistoryCommand {
@@ -2859,177 +3462,6 @@ export interface IUpdateHistoryCommand {
     oldValue?: string;
     newValue?: string | undefined;
     changeTime?: Date;
-}
-
-export class JobReadModel implements IJobReadModel {
-    id?: string;
-    createdAt?: Date;
-    consecutiveNumber?: number;
-    title?: string;
-    deliveryDate?: Date;
-    orderDate?: Date;
-    switchJobId?: string;
-    jobInfo?: string;
-    orderType?: OrderType;
-    project?: string;
-    easyJob?: string;
-    billingOption?: BillingOption;
-    status?: Status;
-    numberOfFiles?: number;
-    customer?: string;
-    editor?: UserReadModel;
-
-    constructor(data?: IJobReadModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.consecutiveNumber = _data["consecutiveNumber"];
-            this.title = _data["title"];
-            this.deliveryDate = _data["deliveryDate"] ? new Date(_data["deliveryDate"].toString()) : <any>undefined;
-            this.orderDate = _data["orderDate"] ? new Date(_data["orderDate"].toString()) : <any>undefined;
-            this.switchJobId = _data["switchJobId"];
-            this.jobInfo = _data["jobInfo"];
-            this.orderType = _data["orderType"];
-            this.project = _data["project"];
-            this.easyJob = _data["easyJob"];
-            this.billingOption = _data["billingOption"];
-            this.status = _data["status"];
-            this.numberOfFiles = _data["numberOfFiles"];
-            this.customer = _data["customer"];
-            this.editor = _data["editor"] ? UserReadModel.fromJS(_data["editor"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): JobReadModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new JobReadModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["consecutiveNumber"] = this.consecutiveNumber;
-        data["title"] = this.title;
-        data["deliveryDate"] = this.deliveryDate ? this.deliveryDate.toISOString() : <any>undefined;
-        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>undefined;
-        data["switchJobId"] = this.switchJobId;
-        data["jobInfo"] = this.jobInfo;
-        data["orderType"] = this.orderType;
-        data["project"] = this.project;
-        data["easyJob"] = this.easyJob;
-        data["billingOption"] = this.billingOption;
-        data["status"] = this.status;
-        data["numberOfFiles"] = this.numberOfFiles;
-        data["customer"] = this.customer;
-        data["editor"] = this.editor ? this.editor.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface IJobReadModel {
-    id?: string;
-    createdAt?: Date;
-    consecutiveNumber?: number;
-    title?: string;
-    deliveryDate?: Date;
-    orderDate?: Date;
-    switchJobId?: string;
-    jobInfo?: string;
-    orderType?: OrderType;
-    project?: string;
-    easyJob?: string;
-    billingOption?: BillingOption;
-    status?: Status;
-    numberOfFiles?: number;
-    customer?: string;
-    editor?: UserReadModel;
-}
-
-export enum OrderType {
-    Important = 0,
-    NotImportant = 1,
-}
-
-export enum BillingOption {
-    Cash = 0,
-    CreditCard = 1,
-    DebitCard = 2,
-    Checks = 3,
-}
-
-export enum Status {
-    ToDo = 0,
-    InProgress = 1,
-    Finished = 2,
-    Transferred2Partner = 3,
-}
-
-export class UserReadModel implements IUserReadModel {
-    id?: string;
-    createdAt?: Date;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-
-    constructor(data?: IUserReadModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
-            this.userName = _data["userName"];
-            this.firstName = _data["firstName"];
-            this.lastName = _data["lastName"];
-            this.email = _data["email"];
-        }
-    }
-
-    static fromJS(data: any): UserReadModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new UserReadModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
-        data["userName"] = this.userName;
-        data["firstName"] = this.firstName;
-        data["lastName"] = this.lastName;
-        data["email"] = this.email;
-        return data;
-    }
-}
-
-export interface IUserReadModel {
-    id?: string;
-    createdAt?: Date;
-    userName?: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
 }
 
 export class User implements IUser {
@@ -3439,7 +3871,6 @@ export class JobFiles implements IJobFiles {
     status?: Status;
     fileProperties?: string;
     thumbnail?: string;
-    activity?: string;
     storageType?: string;
     source?: string;
     errorCode?: string;
@@ -3449,6 +3880,8 @@ export class JobFiles implements IJobFiles {
     jobId?: string;
     job?: Job | undefined;
     filePath?: FilePath | undefined;
+    activityId?: string | undefined;
+    activity?: Activity | undefined;
 
     constructor(data?: IJobFiles) {
         if (data) {
@@ -3471,7 +3904,6 @@ export class JobFiles implements IJobFiles {
             this.status = _data["status"];
             this.fileProperties = _data["fileProperties"];
             this.thumbnail = _data["thumbnail"];
-            this.activity = _data["activity"];
             this.storageType = _data["storageType"];
             this.source = _data["source"];
             this.errorCode = _data["errorCode"];
@@ -3481,6 +3913,8 @@ export class JobFiles implements IJobFiles {
             this.jobId = _data["jobId"];
             this.job = _data["job"] ? Job.fromJS(_data["job"]) : <any>undefined;
             this.filePath = _data["filePath"] ? FilePath.fromJS(_data["filePath"]) : <any>undefined;
+            this.activityId = _data["activityId"];
+            this.activity = _data["activity"] ? Activity.fromJS(_data["activity"]) : <any>undefined;
         }
     }
 
@@ -3503,7 +3937,6 @@ export class JobFiles implements IJobFiles {
         data["status"] = this.status;
         data["fileProperties"] = this.fileProperties;
         data["thumbnail"] = this.thumbnail;
-        data["activity"] = this.activity;
         data["storageType"] = this.storageType;
         data["source"] = this.source;
         data["errorCode"] = this.errorCode;
@@ -3513,6 +3946,8 @@ export class JobFiles implements IJobFiles {
         data["jobId"] = this.jobId;
         data["job"] = this.job ? this.job.toJSON() : <any>undefined;
         data["filePath"] = this.filePath ? this.filePath.toJSON() : <any>undefined;
+        data["activityId"] = this.activityId;
+        data["activity"] = this.activity ? this.activity.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -3528,7 +3963,6 @@ export interface IJobFiles {
     status?: Status;
     fileProperties?: string;
     thumbnail?: string;
-    activity?: string;
     storageType?: string;
     source?: string;
     errorCode?: string;
@@ -3538,6 +3972,8 @@ export interface IJobFiles {
     jobId?: string;
     job?: Job | undefined;
     filePath?: FilePath | undefined;
+    activityId?: string | undefined;
+    activity?: Activity | undefined;
 }
 
 export class FilePath implements IFilePath {
@@ -3678,6 +4114,74 @@ export interface IAdditionalFile {
     jobId?: string;
     job?: Job | undefined;
     filePath?: FilePath | undefined;
+}
+
+export class Activity implements IActivity {
+    id?: string;
+    createdAt?: Date;
+    deletedAt?: Date | undefined;
+    customer?: string;
+    serviceType?: string;
+    quality?: string;
+    jobFiles?: JobFiles[];
+
+    constructor(data?: IActivity) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.deletedAt = _data["deletedAt"] ? new Date(_data["deletedAt"].toString()) : <any>undefined;
+            this.customer = _data["customer"];
+            this.serviceType = _data["serviceType"];
+            this.quality = _data["quality"];
+            if (Array.isArray(_data["jobFiles"])) {
+                this.jobFiles = [] as any;
+                for (let item of _data["jobFiles"])
+                    this.jobFiles!.push(JobFiles.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Activity {
+        data = typeof data === 'object' ? data : {};
+        let result = new Activity();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["deletedAt"] = this.deletedAt ? this.deletedAt.toISOString() : <any>undefined;
+        data["customer"] = this.customer;
+        data["serviceType"] = this.serviceType;
+        data["quality"] = this.quality;
+        if (Array.isArray(this.jobFiles)) {
+            data["jobFiles"] = [];
+            for (let item of this.jobFiles)
+                data["jobFiles"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IActivity {
+    id?: string;
+    createdAt?: Date;
+    deletedAt?: Date | undefined;
+    customer?: string;
+    serviceType?: string;
+    quality?: string;
+    jobFiles?: JobFiles[];
 }
 
 export class TimeTracking implements ITimeTracking {
@@ -4058,13 +4562,13 @@ export class JobFileReadModel implements IJobFileReadModel {
     status?: Status;
     fileProperties?: string;
     thumbnail?: string;
-    activity?: string;
     storageType?: string;
     source?: string;
     errorCode?: string;
     errorMessage?: string;
     job?: JobReadModel;
     filePath?: FilePathReadModel;
+    activity?: ActivityReadModel | undefined;
 
     constructor(data?: IJobFileReadModel) {
         if (data) {
@@ -4086,13 +4590,13 @@ export class JobFileReadModel implements IJobFileReadModel {
             this.status = _data["status"];
             this.fileProperties = _data["fileProperties"];
             this.thumbnail = _data["thumbnail"];
-            this.activity = _data["activity"];
             this.storageType = _data["storageType"];
             this.source = _data["source"];
             this.errorCode = _data["errorCode"];
             this.errorMessage = _data["errorMessage"];
             this.job = _data["job"] ? JobReadModel.fromJS(_data["job"]) : <any>undefined;
             this.filePath = _data["filePath"] ? FilePathReadModel.fromJS(_data["filePath"]) : <any>undefined;
+            this.activity = _data["activity"] ? ActivityReadModel.fromJS(_data["activity"]) : <any>undefined;
         }
     }
 
@@ -4114,13 +4618,13 @@ export class JobFileReadModel implements IJobFileReadModel {
         data["status"] = this.status;
         data["fileProperties"] = this.fileProperties;
         data["thumbnail"] = this.thumbnail;
-        data["activity"] = this.activity;
         data["storageType"] = this.storageType;
         data["source"] = this.source;
         data["errorCode"] = this.errorCode;
         data["errorMessage"] = this.errorMessage;
         data["job"] = this.job ? this.job.toJSON() : <any>undefined;
         data["filePath"] = this.filePath ? this.filePath.toJSON() : <any>undefined;
+        data["activity"] = this.activity ? this.activity.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -4135,13 +4639,13 @@ export interface IJobFileReadModel {
     status?: Status;
     fileProperties?: string;
     thumbnail?: string;
-    activity?: string;
     storageType?: string;
     source?: string;
     errorCode?: string;
     errorMessage?: string;
     job?: JobReadModel;
     filePath?: FilePathReadModel;
+    activity?: ActivityReadModel | undefined;
 }
 
 export class FilePathReadModel implements IFilePathReadModel {
@@ -4204,7 +4708,6 @@ export class CreateJobFileCommand implements ICreateJobFileCommand {
     status?: Status;
     fileProperties?: string;
     thumbnail?: string;
-    activity?: string;
     storageType?: string;
     source?: string;
     errorCode?: string;
@@ -4228,7 +4731,6 @@ export class CreateJobFileCommand implements ICreateJobFileCommand {
             this.status = _data["status"];
             this.fileProperties = _data["fileProperties"];
             this.thumbnail = _data["thumbnail"];
-            this.activity = _data["activity"];
             this.storageType = _data["storageType"];
             this.source = _data["source"];
             this.errorCode = _data["errorCode"];
@@ -4252,7 +4754,6 @@ export class CreateJobFileCommand implements ICreateJobFileCommand {
         data["status"] = this.status;
         data["fileProperties"] = this.fileProperties;
         data["thumbnail"] = this.thumbnail;
-        data["activity"] = this.activity;
         data["storageType"] = this.storageType;
         data["source"] = this.source;
         data["errorCode"] = this.errorCode;
@@ -4269,7 +4770,6 @@ export interface ICreateJobFileCommand {
     status?: Status;
     fileProperties?: string;
     thumbnail?: string;
-    activity?: string;
     storageType?: string;
     source?: string;
     errorCode?: string;
@@ -4285,7 +4785,6 @@ export class UpdateJobFileCommand implements IUpdateJobFileCommand {
     status?: Status;
     fileProperties?: string;
     thumbnail?: string;
-    activity?: string;
     storageType?: string;
     source?: string;
     errorCode?: string;
@@ -4310,7 +4809,6 @@ export class UpdateJobFileCommand implements IUpdateJobFileCommand {
             this.status = _data["status"];
             this.fileProperties = _data["fileProperties"];
             this.thumbnail = _data["thumbnail"];
-            this.activity = _data["activity"];
             this.storageType = _data["storageType"];
             this.source = _data["source"];
             this.errorCode = _data["errorCode"];
@@ -4335,7 +4833,6 @@ export class UpdateJobFileCommand implements IUpdateJobFileCommand {
         data["status"] = this.status;
         data["fileProperties"] = this.fileProperties;
         data["thumbnail"] = this.thumbnail;
-        data["activity"] = this.activity;
         data["storageType"] = this.storageType;
         data["source"] = this.source;
         data["errorCode"] = this.errorCode;
@@ -4353,7 +4850,6 @@ export interface IUpdateJobFileCommand {
     status?: Status;
     fileProperties?: string;
     thumbnail?: string;
-    activity?: string;
     storageType?: string;
     source?: string;
     errorCode?: string;
