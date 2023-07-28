@@ -20,7 +20,12 @@ export class ColleaguesTasksComponent extends DestroySubscriptionsComponent{
     super();
 
     this.setNewSubscription = overviewService.colleaguesTasks.subscribe((colleaguesTasks) => {
-      this.colleaguesTasksList = colleaguesTasks
+      this.colleaguesTasksList = colleaguesTasks.slice();
+      this.colleaguesTasksList.sort((a, b) => {
+        const titleA = a.title?.toUpperCase() || '';
+        const titleB = b.title?.toUpperCase() || '';
+        return titleA.localeCompare(titleB);
+      });
     })
 
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}

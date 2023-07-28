@@ -17,7 +17,7 @@ export class OverviewService {
   jobdetailsHistory = new BehaviorSubject<DataClient.HistoryReadModel[]>([]);
 
   // Property zum setzen: wie viele Datensätze in der Syncfusion Tabelle angezeigt werden sollten
-  public pageSettings : PageSettingsModel = { pageSize : 10 };
+  public pageSettings : PageSettingsModel = { pageSize : 20 };
 
   constructor(private jobDataClient: DataClient.JobClient, private jobFileDataClient : DataClient.JobFileClient, private historyDataClient : DataClient.HistoryClient) {
   }

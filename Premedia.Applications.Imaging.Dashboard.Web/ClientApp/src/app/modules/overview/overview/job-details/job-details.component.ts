@@ -10,7 +10,7 @@ import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscripti
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
-  styleUrls: ['./job-details.component.scss']
+  styleUrls: ['./job-details.component.scss'],
 })
 export class JobDetailsComponent extends DestroySubscriptionsComponent {
   // Objekte
@@ -34,6 +34,9 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   deliveryDateContent : string | undefined
   dateObject : Date | undefined
 
+  // für Zugriff auf den Wert im HTML (jobInfo)
+  @ViewChild('jobInfo', { static: false }) jobInfo!: ElementRef;
+  jobInfoContent : string | undefined
 
   //#region additional Row Table
   detailHistoryDataBound(e: DetailDataBoundEventArgs | any) {
@@ -96,7 +99,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
     updateJobCommand.deliveryDate = this.dateObject;
     updateJobCommand.orderDate = this.selectedJobInfos?.orderDate;
     updateJobCommand.switchJobId = this.selectedJobInfos?.switchJobId;
-    updateJobCommand.jobInfo = this.selectedJobInfos?.jobInfo;
+    updateJobCommand.jobInfo = this.jobInfoContent;
     updateJobCommand.orderType = this.selectedJobInfos?.orderType;
     updateJobCommand.project = this.selectedJobInfos?.project;
     updateJobCommand.easyJob = this.easyJobNumberContent;
@@ -133,11 +136,15 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
 
   onInput(event: Event) {
     this.unsavedChanges = true;
+    // Easy-Job Nummer
     this.easyJobNumberContent = this.easyJobNumber.nativeElement.innerText;
+    // Delivery Date parsen auf richtiges Format
     this.deliveryDateContent = this.deliveryDate.nativeElement.innerText;
     const parts = this.deliveryDateContent!.split(".");
     const isoDateString = `${parts[2]}-${parts[1]}-${parts[0]}T00:00:00`;
     this.dateObject = new Date(isoDateString);
+    // Beschreibung Job
+    this.jobInfoContent = this.jobInfo.nativeElement.innerText;
   }
   //#endregion
 

@@ -13,6 +13,7 @@ import { ActivitiesComponent } from './administration/activities/activities.comp
 import { CustomerMappingComponent } from './administration/customer-mapping/customer-mapping.component';
 import { ProjectsComponent } from './administration/projects/projects.component';
 import { AdministrationActionsComponent } from './buttons/administration-actions/administration-actions.component';
+import { AlphaChannelComponent } from './buttons/alpha-channel/alpha-channel.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AdministrationActionsComponent } from './buttons/administration-actions
     ActivitiesComponent,
     CustomerMappingComponent,
     ProjectsComponent,
-    AdministrationActionsComponent
+    AdministrationActionsComponent,
+    AlphaChannelComponent
   ],
   imports: [
     SharedModule

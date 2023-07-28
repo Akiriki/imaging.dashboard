@@ -7,7 +7,6 @@ import { OpenJobsComponent } from './overview/open-jobs/open-jobs.component';
 import { MyTasksComponent } from './overview/my-tasks/my-tasks.component';
 import { ColleaguesTasksComponent } from './overview/colleagues-tasks/colleagues-tasks.component';
 import { AllPartnerFilesComponent } from './overview/all-partner-files/all-partner-files.component';
-import { OverviewService } from "src/app/services/overview.service";
 import { JobDetailsComponent } from './overview/job-details/job-details.component';
 
 @NgModule({

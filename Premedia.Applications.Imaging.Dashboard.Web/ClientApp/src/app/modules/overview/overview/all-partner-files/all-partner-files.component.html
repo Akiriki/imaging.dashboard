@@ -7,10 +7,12 @@
         <a class="link-cell" (click)="navigateToJobDetails($event)" onmouseenter="this.style.color='red'" onmouseleave="this.style.color=''">{{ data.job.consecutiveNumber }}</a>
       </ng-template>
     </e-column>
+    <e-column field='job.title' headerText='Titel'></e-column>
     <e-column field="originalFilename" headerText="Filename"></e-column>
     <e-column field="job.customer" headerText="Kunde"></e-column>
     <e-column field="job.deliveryDate" headerText="Fälligkeitsdatum" [format]="'dd.MM.yyyy'"></e-column>
     <e-column field='job.editor.userName' headerText='Bearbeiter'></e-column>
+    <e-column field='job.numberOfFiles' headerText='Files'></e-column>
     <e-column field='filePath.ebvFileaction' headerText='File Action'></e-column>
   </e-columns>
 </ejs-grid>

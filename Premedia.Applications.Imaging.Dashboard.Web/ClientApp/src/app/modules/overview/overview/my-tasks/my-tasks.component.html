@@ -7,8 +7,10 @@
         <a class="link-cell" (click)="navigateToJobDetails($event)" onmouseenter="this.style.color='red'" onmouseleave="this.style.color=''">{{ data.consecutiveNumber }}</a>
       </ng-template>
     </e-column>
+    <e-column field='title' headerText='Titel'></e-column>
     <e-column field='customer' headerText='Kunde'></e-column>
     <e-column field='deliveryDate' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
+    <e-column field='numberOfFiles' headerText='Files'></e-column>
     <e-column field="status" headerText="Status">
       <ng-template #template let-data>
         {{ statusService.getStatusString(data.status) }}

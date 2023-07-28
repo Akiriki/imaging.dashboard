@@ -1,14 +1,15 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 mt-4">
-      <h1 class="headings" style="font-size: 30px;">Job: {{selectedJobInfos?.consecutiveNumber}} </h1>
       <br>
       <div class="card">
         <div class="card-body">
-          <h3 class="card-title headings">Infos</h3>
+          <h1 class="headings" style="font-size: 30px;">Job: {{selectedJobInfos?.consecutiveNumber}}   |   {{statusService.getStatusString(selectedJobInfos?.status ?? 3) }}</h1>
+          <br>
+          <br>
           <div class="d-flex justify-content-end">
             <button ejs-button (click)="saveChanges()" [disabled]="!unsavedChanges">Bearbeitung abschließen</button>
-            <button ejs-button style="margin-left: 30px; width: 150px;">abschicken</button>
+            <button ejs-button style="margin-left: 30px; width: 150px;" [disabled]="editingMode">abschicken</button>
           </div>
           <br>
           <div class="container">
@@ -16,38 +17,67 @@
               <div class="col-md-6">
                 <div class="card h-100">
                   <div class="card-body">
-                    <h6 class="card-title">Typ: {{ getOrderType(selectedJobInfos?.orderType ?? 2) }} </h6>
-                    <h6 class="card-title">Kunde:</h6>
-                    <p class="card-text">{{ selectedJobInfos?.customer }}</p>
-                    <h6 class="card-title">Auftraggeber:</h6>
-                    <p class="card-text">{{ selectedJobInfos?.client?.firstName}} {{ selectedJobInfos?.client?.lastName}}</p>
-                    <h6 class="card-title">Projekt:</h6>
-                    <p class="card-text">{{ selectedJobInfos?.project}}</p>
-                    <h6 class="card-title">Easyjob-Nr.:</h6>
-                    <p #easyJobNumber class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{ selectedJobInfos?.easyJob}}</p>
-                    <h6 class="card-title">Verrechnungsoption:</h6>
-                    <p class="card-text">{{ getBillingOption(selectedJobInfos?.billingOption ?? 3)}}</p>
-                    <h6 class="card-title">Beschreibung:</h6>
-                    <p class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">/</p>
+                    <table>
+                      <tr>
+                        <th><h6 class="card-title">Typ:</h6></th>
+                        <td><p class="card-text">{{ getOrderType(selectedJobInfos?.orderType ?? 2) }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Kunde:</h6></th>
+                        <td><p class="card-text">{{ selectedJobInfos?.customer }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Auftraggeber:</h6></th>
+                        <td><p class="card-text">{{ selectedJobInfos?.client?.firstName}} {{ selectedJobInfos?.client?.lastName}}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Projekt:</h6></th>
+                        <td><p class="card-text">{{ selectedJobInfos?.project }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Easyjob-Nr.:</h6></th>
+                        <td><p #easyJobNumber class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{ selectedJobInfos?.easyJob }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Verrechnungsoption:</h6></th>
+                        <td><p class="card-text">{{ getBillingOption(selectedJobInfos?.billingOption ?? 3) }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Beschreibung:</h6></th>
+                        <td><p #jobInfo class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)"> {{selectedJobInfos?.jobInfo}} </p></td>
+                      </tr>
+                    </table>
+
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="card h-100">
                   <div class="card-body">
-                    <h6 class="card-title">Bearbeiter:</h6>
-                    <p class="card-text">{{ selectedJobInfos?.editor?.userName ? selectedJobInfos?.editor?.userName : "Kein Username vorhanden" }}</p>
-                    <h6 class="card-title">Erstellt am:</h6>
-                    <p class="card-text">{{selectedJobInfos?.editor?.createdAt | date: "dd.MM.yyyy hh:mm"}}</p>
-                    <h6 class="card-title">Fällig bis:</h6>
-                    <p #deliveryDate class="card-text" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: "dd.MM.yyyy" }}</p>
-                    <h6 class="card-title">Status:</h6>
-                    <p class="card-text"> {{statusService.getStatusString(selectedJobInfos?.status ?? 3) }} </p>
+                    <table>
+                      <tr>
+                        <th><h6 class="card-title">Bearbeiter:</h6></th>
+                        <td><p class="card-text">{{ selectedJobInfos?.editor?.userName ? selectedJobInfos?.editor?.userName : "Kein Username vorhanden" }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Erstellt am:</h6></th>
+                        <td><p class="card-text">{{selectedJobInfos?.editor?.createdAt | date: "dd.MM.yyyy hh:mm"}}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Fällig bis:</h6></th>
+                        <td><p #deliveryDate class="card-text card-text-with-padding" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: "dd.MM.yyyy" }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Status:</h6></th>
+                        <td><p class="card-text">{{statusService.getStatusString(selectedJobInfos?.status ?? 3) }}</p></td>
+                      </tr>
+                    </table>
+
                     <br>
                     <br>
-                    <div class="card-text text-center">
-                      <button ejs-button [disabled]="editingMode">Zeitbuchungen: 6m</button><br> <br>
-                      <button ejs-button [disabled]="editingMode">Retusche buchen</button>
+                    <div class="text-center">
+                      <button ejs-button class="time-booking" [disabled]="editingMode">Zeitbuchungen</button>
+                      <button ejs-button class="book-retouch" [disabled]="editingMode">Buchen</button>
                     </div>
                   </div>
                 </div>
@@ -65,13 +95,16 @@
         <div class="card-body">
           <h5 class="card-title headings">Job-Files</h5>
 
-          <!-- TO-DO BACKEND -->
+          <app-alpha-channel></app-alpha-channel> <button style="padding-left: 20px;" ejs-button>Aktivität ändern</button>
+
+          <!-- TO-DO BACKEND: Pixeldichte, Auflösung-->
 
           <ejs-grid #grid [dataSource]="jobdetailsFilesList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailFileDataBound($event)">
             <e-columns>
               <e-column field="id" headerText="ID" [visible]="false"></e-column>
-              <!-- <e-column field="job.consecutiveNumber" headerText="Nr." width="100" [textAlign]=""center"" [allowFiltering]="false"></e-column> -->
-              <e-column field="errorMessage" headerText="Fehler"> <!-- TO-DO nachfragen -->
+              <e-column type="checkbox" [width]="70"></e-column>
+              <e-column field="job.consecutiveNumber" headerText="Nr." width="100" [allowFiltering]="false"></e-column>
+              <e-column field="errorMessage" headerText="Fehler">
                 <ng-template #template let-data>
                   {{ data.errorMessage || "okay" }}
                 </ng-template>
@@ -113,8 +146,6 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title headings">History</h5>
-
-          <!-- TO-DO BACKEND -->
 
           <ejs-grid [dataSource]="jobdetailsHistoryList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailHistoryDataBound($event)">
             <e-columns>

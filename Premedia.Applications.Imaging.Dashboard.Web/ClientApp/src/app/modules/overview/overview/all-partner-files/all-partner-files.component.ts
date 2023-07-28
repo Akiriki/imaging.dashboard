@@ -17,7 +17,12 @@ export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
   constructor(public overviewService : OverviewService, private router : Router) {
     super();
     this.setNewSubscription = overviewService.partnerFiles.subscribe((partnerFiles) => {
-      this.partnerFilesList = partnerFiles
+      this.partnerFilesList = partnerFiles.slice();
+      this.partnerFilesList.sort((a, b) => {
+        const titleA = a.job?.title?.toUpperCase() || '';
+        const titleB = b.job?.title?.toUpperCase() || '';
+        return titleA.localeCompare(titleB);
+      });
     })
     this.pageSettings = { pageSize : overviewService.pageSettings.pageSize}
   }

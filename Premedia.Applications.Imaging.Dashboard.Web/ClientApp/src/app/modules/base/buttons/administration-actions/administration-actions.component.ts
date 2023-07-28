@@ -17,7 +17,6 @@ export class AdministrationActionsComponent {
     )
     { sourceFiles.files = ['administration-actions.component.scss']; }
 
-  //DropDownButton items definition
     public items: ItemModel[] = [
     {
         text: 'Aktivitäten',
@@ -32,7 +31,6 @@ export class AdministrationActionsComponent {
         //iconCss: 'e-ddb-icons e-logout'
     }];
 
-    // To open dialog on selecting `Other Folder...` item.
     public select (args: MenuEventArgs) {
       if (args.item.text === 'Aktivitäten') {
         this.router.navigate(['/activities'])

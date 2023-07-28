@@ -8,7 +8,7 @@ export class ArchiveService{
 
   archiveContent = new BehaviorSubject<DataClient.JobReadModel[]>([]);
 
-  public pageSettings : PageSettingsModel = { pageSize : 10 };
+  public pageSettings : PageSettingsModel = { pageSize : 20 };
 
   constructor(private jobDataClient : DataClient.JobClient){ }
 
