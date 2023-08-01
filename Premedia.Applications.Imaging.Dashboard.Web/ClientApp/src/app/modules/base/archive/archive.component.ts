@@ -7,7 +7,6 @@ import { StatusService } from 'src/app/services/status.service';
 import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscriptions/destroy-subscriptions.component';
 
 @Component({
-  //template : '',
   selector: 'app-archive',
   templateUrl: './archive.component.html',
   styleUrls: ['./archive.component.scss']
@@ -34,6 +33,19 @@ export class ArchiveComponent extends DestroySubscriptionsComponent {
     if (selectedJob) {
       console.log('Selected Job:', selectedJob);
       this.router.navigate(['/job-details'], {queryParams : {id : selectedJob.id}});
+    } else {
+      console.log('Selected Job not found');
+    }
+  }
+
+  navigateToJobTitle(event : any){
+    const selectedJobTitle = event.target.innerText
+
+    const selectedJob = this.archiveList.find(task => task?.title === selectedJobTitle);
+
+    if (selectedJob) {
+      console.log('Selected Job:', selectedJob);
+      this.router.navigate(['/job-title'], {queryParams : {id : selectedJob.id}});
     } else {
       console.log('Selected Job not found');
     }

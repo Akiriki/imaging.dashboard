@@ -65,7 +65,7 @@
                       </tr>
                       <tr>
                         <th><h6 class="card-title">Fällig bis:</h6></th>
-                        <td><p #deliveryDate class="card-text card-text-with-padding" contenteditable="true" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: "dd.MM.yyyy" }}</p></td>
+                        <td><p #deliveryDate class="card-text card-text-with-padding" contenteditable="true" (blur)="toggleEditingMode(false)" (focus)="toggleEditingMode(true)" (input)="onInput($event)">{{selectedJobInfos?.deliveryDate | date: "dd.MM.yyyy" }}</p></td>
                       </tr>
                       <tr>
                         <th><h6 class="card-title">Status:</h6></th>
@@ -95,22 +95,28 @@
         <div class="card-body">
           <h5 class="card-title headings">Job-Files</h5>
 
+          <!-- Dropdown-Button im Button Ordner-->
           <!--<app-alpha-channel></app-alpha-channel> <button style="padding-left: 20px;" ejs-button>Aktivität ändern</button>-->
 
-          <!-- TO-DO BACKEND: Pixeldichte, Auflösung-->
+          <!-- TO-DO BACKEND: Pixeldichte, Auflösung | nur string im Backend für alles (Dateigröße, ...)-->
 
-          <ejs-grid #grid [dataSource]="jobdetailsFilesList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailFileDataBound($event)">
+          <ejs-grid #grid [dataSource]="jobdetailsFilesList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" (detailDataBound)="detailFileDataBound($event)" [allowTextWrap]="true">
             <e-columns>
               <e-column field="id" headerText="ID" [visible]="false"></e-column>
               <e-column type="checkbox" [width]="70"></e-column>
-              <e-column field="job.consecutiveNumber" headerText="Nr." width="100" [allowFiltering]="false"></e-column>
+              <e-column field="job.consecutiveNumber" headerText="Nr." width="100" [allowFiltering]="false">
+                <ng-template #template let-data>
+                  {{ consecutiveNumber }}
+                </ng-template>
+              </e-column>
+              <!-- Sollte im Status angezeigt werden TO-DO Backend
               <e-column field="errorMessage" headerText="Fehler">
                 <ng-template #template let-data>
                   {{ data.errorMessage || "okay" }}
                 </ng-template>
-              </e-column>
-              <e-column field="originalFilename" headerText="Originaler Dateiname"></e-column>
-              <e-column field="editedFilename" headerText="Bearbeiteter Dateiname"></e-column>
+              </e-column> -->
+              <e-column field="originalFilename" hieaderText="Originaler Dateiname" [width]="170"></e-column>
+              <e-column field="editedFilename" headerText="Bearbeiteter Dateiname"[width]="195"></e-column>
               <e-column field="filePath.action" headerText="Aktion">
                 <ng-template #template let-data>
                   {{ data?.filePath?.ebvFileaction || "N/A" }}

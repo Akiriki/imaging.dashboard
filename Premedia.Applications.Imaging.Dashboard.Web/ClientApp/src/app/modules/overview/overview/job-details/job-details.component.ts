@@ -13,7 +13,7 @@ import { DestroySubscriptionsComponent } from 'src/app/shared/destroy-subscripti
   styleUrls: ['./job-details.component.scss'],
 })
 export class JobDetailsComponent extends DestroySubscriptionsComponent {
-  // Objekte
+  // Listen für die Daten aus der DB
   jobdetailsFilesList: JobFileReadModel[] = [];
   jobdetailsHistoryList: HistoryReadModel[] = [];
   selectedJobInfos : JobReadModel | undefined;
@@ -37,6 +37,9 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
   // für Zugriff auf den Wert im HTML (jobInfo)
   @ViewChild('jobInfo', { static: false }) jobInfo!: ElementRef;
   jobInfoContent : string | undefined
+
+  // Variable für fortlaufende Nummer
+  consecutiveNumber : number = 1;
 
   //#region additional Row Table
   detailHistoryDataBound(e: DetailDataBoundEventArgs | any) {
@@ -83,7 +86,7 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
 
   //#endregion
 
-  //#region Button toggle
+  //#region Write Data in DB
   toggleEditingMode(value: boolean) {
     this.editingMode = value;
     if (value) {
@@ -120,7 +123,6 @@ export class JobDetailsComponent extends DestroySubscriptionsComponent {
 
 
   saveChanges() {
-    // Code für speichern in DB über API (Befehle)
     this.updateJob();
 
     this.toggleEditingMode(false);

@@ -8,6 +8,7 @@ import { MyTasksComponent } from './overview/my-tasks/my-tasks.component';
 import { ColleaguesTasksComponent } from './overview/colleagues-tasks/colleagues-tasks.component';
 import { AllPartnerFilesComponent } from './overview/all-partner-files/all-partner-files.component';
 import { JobDetailsComponent } from './overview/job-details/job-details.component';
+import { JobTitleComponent } from './overview/job-title/job-title.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { JobDetailsComponent } from './overview/job-details/job-details.componen
     MyTasksComponent,
     ColleaguesTasksComponent,
     AllPartnerFilesComponent,
-    JobDetailsComponent
+    JobDetailsComponent,
+    JobTitleComponent
   ],
   imports: [
     SharedModule

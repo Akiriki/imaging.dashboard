@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <br>
+      <div class="card">
+        <div class="card-body">
+          <h1 class="headings" style="font-size: 30px;">Job: {{selectedJobInfos?.consecutiveNumber}}</h1>
+          <br>
+          <div class="container">
+            <div class="row">
+
+              <div class="d-flex justify-content-end">
+                <button ejs-button>Auftrag übernehmen</button>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <table>
+                      <tr>
+                        <th><h6 class="card-title">Typ:</h6></th>
+                        <td><p class="card-text">{{ getOrderType(selectedJobInfos?.orderType ?? 2) }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Kunde:</h6></th>
+                        <td><p class="card-text">{{ selectedJobInfos?.customer }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Auftraggeber:</h6></th>
+                        <td><p class="card-text">{{ selectedJobInfos?.client?.firstName}} {{ selectedJobInfos?.client?.lastName}}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Erstellt am:</h6></th>
+                        <td><p class="card-text">{{selectedJobInfos?.editor?.createdAt | date: "dd.MM.yyyy hh:mm"}}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Fällig bis:</h6></th>
+                        <td><p #deliveryDate class="card-text card-text-with-padding" contenteditable="true">{{selectedJobInfos?.deliveryDate | date: "dd.MM.yyyy" }}</p></td>
+                      </tr>
+                      <tr>
+                        <th><h6 class="card-title">Files:</h6></th>
+                        <td><p class="card-text">{{ selectedJobInfos?.numberOfFiles }}</p></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title headings">Job-Files</h5>
+
+          <ejs-grid [dataSource]="jobFilesList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true">
+            <e-columns>
+              <e-column field="id" headerText="ID" [visible]="false"></e-column>
+              <!-- Funktioniert noch nicht muss noch umgesetzt werden ! index falsche var. -->
+              <ng-template #rowNumberTemplate let-data>
+                {{data.index + 1}}
+              </ng-template>
+              <e-column headerText="Nr." [template]="rowNumberTemplate"></e-column>
+              <e-column field="originalFilename" headerText="Dateiname"></e-column>
+            </e-columns>
+          </ejs-grid>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>

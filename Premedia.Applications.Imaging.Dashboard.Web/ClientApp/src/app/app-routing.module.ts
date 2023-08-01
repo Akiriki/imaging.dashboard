@@ -10,6 +10,7 @@ import { ActivitiesComponent } from "./modules/base/administration/activities/ac
 import { CustomerMappingComponent } from "./modules/base/administration/customer-mapping/customer-mapping.component";
 import { ProjectsComponent } from "./modules/base/administration/projects/projects.component";
 import { JobDetailsComponent } from "./modules/overview/overview/job-details/job-details.component";
+import { JobTitleComponent } from "./modules/overview/overview/job-title/job-title.component";
 
 export const routes: Routes = [
   { path: RoutingConstants.BASE.HOME, component: OverviewComponent, pathMatch: 'full' },
@@ -19,12 +20,8 @@ export const routes: Routes = [
   { path: RoutingConstants.BASE.ACTIVITIES, component: ActivitiesComponent },
   { path: RoutingConstants.BASE.CUSTOMER_MAPPING, component: CustomerMappingComponent} ,
   { path: RoutingConstants.BASE.PROJECTS, component: ProjectsComponent },
-  { path: RoutingConstants.BASE.JOB_DETAILS, component: JobDetailsComponent }
-   /*children:[
-      { path : RoutingConstants.BASE.ACTIVITIES, component: ActivitiesComponent },
-      { path : RoutingConstants.BASE.CUSTOMER_MAPPING, component : CustomerMappingComponent },
-      { path : RoutingConstants.BASE.PROJECTS, component : ProjectsComponent }
-    ]*/
+  { path: RoutingConstants.BASE.JOB_DETAILS, component: JobDetailsComponent },
+  { path: RoutingConstants.BASE.JOB_TITLE, component: JobTitleComponent}
 ]
 
 @NgModule({

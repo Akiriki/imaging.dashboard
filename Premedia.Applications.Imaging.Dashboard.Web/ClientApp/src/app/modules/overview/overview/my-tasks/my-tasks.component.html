@@ -1,17 +1,22 @@
 <h3>Meine Aufgaben</h3>
-<ejs-grid [dataSource]='myTasksList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+
+<ejs-grid [dataSource]='myTasksList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true" allowTextWrap="true">
   <e-columns>
     <e-column field='id' headerText='ID' [visible]="false"></e-column>
-    <e-column field="consecutiveNumber" headerText="Job-Nummer">
+    <e-column field="consecutiveNumber" [width]="130" headerText="Job-Nummer">
       <ng-template #template let-data>
         <a class="link-cell" (click)="navigateToJobDetails($event)" onmouseenter="this.style.color='red'" onmouseleave="this.style.color=''">{{ data.consecutiveNumber }}</a>
       </ng-template>
     </e-column>
-    <e-column field='title' headerText='Titel'></e-column>
-    <e-column field='customer' headerText='Kunde'></e-column>
-    <e-column field='deliveryDate' headerText='Fälligkeitsdatum' [format]="'dd.MM.yyyy'"></e-column>
-    <e-column field='numberOfFiles' headerText='Files'></e-column>
-    <e-column field="status" headerText="Status">
+    <e-column field='title' headerText='Titel'>
+      <ng-template #template let-data>
+        <a class="link-cell" (click)="navigateToJobTitle($event)" onmouseenter="this.style.color='red'" onmouseleave="this.style.color=''">{{ data.title }}</a>
+      </ng-template>
+    </e-column>
+    <e-column field='customer' headerText='Kunde' [width]="200"></e-column>
+    <e-column field='deliveryDate' headerText='Fälligkeitsdatum' [width]="150" [format]="'dd.MM.yyyy'"></e-column>
+    <e-column field='numberOfFiles' headerText='Files' [width]="100"></e-column>
+    <e-column field="status" headerText="Status" [width]="190">
       <ng-template #template let-data>
         {{ statusService.getStatusString(data.status) }}
       </ng-template>

@@ -40,4 +40,17 @@ export class AllPartnerFilesComponent extends DestroySubscriptionsComponent{
       console.log('Selected Job not found');
     }
   }
+
+  navigateToJobTitle(event : any){
+    const selectedJobTitle = event.target.innerText
+
+    const selectedJob = this.partnerFilesList.find(task => task?.job?.title === selectedJobTitle);
+
+    if (selectedJob) {
+      console.log('Selected Job:', selectedJob);
+      this.router.navigate(['/job-title'], {queryParams : {id : selectedJob.id}});
+    } else {
+      console.log('Selected Job not found');
+    }
+  }
 }

@@ -1,11 +1,16 @@
 <h3>Neue Aufträge</h3>
-<ejs-grid [dataSource]="openJobList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" [autoFit]="true">
+
+<ejs-grid [dataSource]="openJobList" [allowPaging]="true" [pageSettings]="pageSettings" [allowSorting]="true" [allowFiltering]="true" [autoFit]="true" allowTextWrap="true">
 <e-columns>
   <e-column field="id" headerText="ID" [visible]="false"></e-column>
-  <e-column field="title" width="300" headerText="Titel" width="auto"></e-column>
+  <e-column field='title' headerText='Titel'>
+    <ng-template #template let-data>
+      <a class="link-cell" (click)="navigateToJobTitle($event)" onmouseenter="this.style.color='red'" onmouseleave="this.style.color=''">{{ data.title }}</a>
+    </ng-template>
+  </e-column>
   <e-column field="customer" headerText="Kunde" width="300"></e-column>
   <e-column field='deliveryDate' headerText='Fälligkeitsdatum' width="150" [format]="'dd.MM.yyyy'"></e-column>
-  <e-column field='numberOfFiles' headerText='Files' width="90"></e-column>
+  <e-column field='numberOfFiles' headerText='Files' width="100"></e-column>
   <e-column [textAlign]="'center'" [allowFiltering]="false" [allowSorting]="false" width="140">
     <ng-template #template let-data>
       <button ejs-button>apply</button>
