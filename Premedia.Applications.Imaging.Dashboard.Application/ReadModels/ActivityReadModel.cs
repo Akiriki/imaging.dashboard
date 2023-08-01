@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Premedia.Applications.Imaging.Dashboard.Application.ReadModels
 {
-    public class ActivityReadModel
+    public class ActivityReadModel : BaseReadModel
     {
         public string Customer { get; set; }
         public string ServiceType { get; set; }

@@ -3,13 +3,6 @@ import {Injectable} from '@angular/core';
 import { PageSettingsModel } from '@syncfusion/ej2-angular-grids';
 import {BehaviorSubject} from 'rxjs';
 
-export type Activities =  {
-  id : string
-  customer: string
-  serviceType : string
-  quality : string
-}
-
 export type CustomerMapping = {
   id : string
   name : string
@@ -30,20 +23,11 @@ export type ProjectDeclaration = {
 @Injectable()
 export class AdministrationService{
 
+
   // how many records are displayed in the table
   public pageSettings : PageSettingsModel = { pageSize : 5 };
 
-  activitiesContent = new BehaviorSubject<Activities[]>([]);
-
-  private activitiesList : Activities[] = [
-    {id : '1', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
-    {id : '2', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
-    {id : '3', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'LQ'},
-    {id : '4', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'},
-    {id : '5', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'LQ'},
-    {id : '6', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'MQ'},
-    {id : '7', customer : 'XXLAT', serviceType : 'Bearbeitung HQ eciRGB v2', quality: 'HQ'}
-  ]
+  activitiesContent = new BehaviorSubject<DataClient.ActivityReadModel[]>([]);
 
   customerMappingContent = new BehaviorSubject<CustomerMapping[]>([]);
 
@@ -66,8 +50,14 @@ export class AdministrationService{
     {id : '4', name : 'VHU8-2-x'}
   ]
 
+  constructor(private activitiesDataClient: DataClient.ActivityClient){
+
+  }
+
   loadActivities(){
-    this.activitiesContent.next(this.activitiesList);
+    this.activitiesDataClient.getAllActivities().subscribe(result => {
+      this.activitiesContent.next(result);
+    }, error => console.error(error))
   }
 
   loadCustomerMappingList(){
@@ -76,5 +66,17 @@ export class AdministrationService{
 
   loadProjectDeclaration(){
     this.projectDeclarationContent.next(this.projectDeclarationList);
+  }
+
+  createActivity(createActivityCommand: DataClient.CreateActivityCommand) {
+    return this.activitiesDataClient.createActivity(createActivityCommand);
+  }
+
+  updateActivity(updateActivityCommand: DataClient.UpdateActivityCommand) {
+    return this.activitiesDataClient.updateActivity(updateActivityCommand);
+  }
+
+  deleteActivity(activityId: string) {
+    return this.activitiesDataClient.deleteActivity(activityId);
   }
 }

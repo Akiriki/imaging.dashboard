@@ -32,7 +32,7 @@ export class OverviewService {
 
   // EditorID
   loadMyTasks(){
-      this.jobDataClient.getJobsByEditorId('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
+      this.jobDataClient.getOpenJobsByEditorId('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
       this.myTasks.next(result);
     }, error => console.error(error));
 
@@ -40,7 +40,7 @@ export class OverviewService {
 
   // EditorID
   loadColleaguesTasks(){
-      this.jobDataClient.getColleagueJobs('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
+      this.jobDataClient.getOpenColleagueJobs('0296b2b2-94b4-4870-897a-c96311ac9df6').subscribe(result => {
       this.colleaguesTasks.next(result);
     }, error => console.error(error));
   }

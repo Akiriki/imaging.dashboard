@@ -1,5 +1,6 @@
 .container {
   position: relative;
+  height: 70vh;
 }
 
 
@@ -16,22 +17,5 @@
 
 h3{
   font-size: 30px;
-}
-
-#dialog{
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
-.dialog-container{
-  height:50vh;
-}
-
-@media (max-width: 700px) {
-  #dialog {
-    margin-left: 5%;
-    width: 90%;
-  }
 }
 

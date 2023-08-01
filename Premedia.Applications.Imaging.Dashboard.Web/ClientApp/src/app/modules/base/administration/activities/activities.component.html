@@ -11,25 +11,28 @@
   </div>
 
   <div class="table-container">
-    <ejs-grid [dataSource]='activitiesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true">
+    <ejs-grid #grid [dataSource]='activitiesList' [allowPaging]="true" [pageSettings]='pageSettings' [allowSorting]="true" [allowFiltering]="true" >
       <e-columns>
-        <e-column field='id' headerText='Nr.' [width]="100" [textAlign]="'center'"></e-column>
+        <e-column field='id' headerText='id' [width]="100" [textAlign]="'center'" [visible]="false"></e-column>
         <e-column field='customer' headerText='Kunde'></e-column>
         <e-column field='serviceType' headerText='Leistungsart'></e-column>
         <e-column field='quality' headerText='Qualität'></e-column>
         <e-column [textAlign]="'center'">
             <ng-template #template let-data>
-              <button ejs-button style="margin-right: 15px;" (click)="editActivities()">edit</button>
-              <button ejs-button class="e-control e-btn" id="targetButton" (click)="editActivities()">remove</button>
+              <button ejs-button style="margin-right: 15px;" (click)="editActivities(data)">edit</button>
+              <button ejs-button class="e-control e-btn" id="targetButton" (click)="removeActivity(data)">remove</button>
             </ng-template>
         </e-column>
       </e-columns>
       </ejs-grid>
 
+
   </div>
 
-  <div #container class="dialog-container">
-    <ejs-dialog id='dialog' #ejDialog [allowDragging]="true" header='Leistungsart erstellen/bearbeiten' [buttons]='buttons' showCloseIcon='true' >
+
+  <div #container class="dialog-container">.
+
+    <ejs-dialog id='dialog' #ejDialog [visible]='dialogVisible' [allowDragging]="true" [width]='dialogWidth' header='Leistungsart erstellen/bearbeiten' [buttons]='buttons' showCloseIcon='true' >
       <ng-template #content>
             <form>
                 <div class='form-group'><label for='customer'>Kunde:</label>
@@ -40,7 +43,7 @@
                   <input type='text' class='form-control' id='serviceType' [(ngModel)]='defaultServiceType' [ngModelOptions]='{standalone: true}'>
                 </div>
                 <div class='form-group'><label for='quality'>Qualität:</label>
-                  <input type='text' class='form-control' id='quality' [(ngModel)]='defaultServiceType' [ngModelOptions]='{standalone: true}'>
+                  <input type='text' class='form-control' id='quality' [(ngModel)]='defaultQuality' [ngModelOptions]='{standalone: true}'>
                 </div>
             </form>
       </ng-template>
@@ -48,6 +51,7 @@
   </div>
 
 </div>
+
 
 <br>
 <br>

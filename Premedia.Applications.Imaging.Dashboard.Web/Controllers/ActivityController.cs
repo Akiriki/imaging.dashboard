@@ -41,5 +41,12 @@ namespace Premedia.Applications.Imaging.Dashboard.Controllers
         {
             return await _activityApplicationService.UpdateActivity(command).ConfigureAwait(false);
         }
+
+        [HttpDelete]
+        public async Task<ActionResult<ActivityReadModel>> DeleteActivity(Guid id)
+        {
+            return await _activityApplicationService.DeleteActivity(id).ConfigureAwait(false);
+        }
+
     }
 }

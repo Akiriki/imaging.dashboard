@@ -21,5 +21,6 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Contracts
         Task<ActionResult<List<ActivityReadModel>>> GetAllActivities();
         Task<ActionResult<ActivityReadModel>> CreateActivity(CreateActivityCommand command);
         Task<ActionResult<ActivityReadModel>> UpdateActivity(UpdateActivityCommand command);
+        Task<ActionResult<ActivityReadModel>> DeleteActivity(Guid id);
     }
 }

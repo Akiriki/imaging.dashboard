@@ -62,5 +62,20 @@ namespace Premedia.Applications.Imaging.Dashboard.Application.Services
             var result = _mapper.Map<ActivityReadModel>(activity);
             return result;
         }
+
+        public async Task<ActionResult<ActivityReadModel>> DeleteActivity(Guid id)
+        {
+            var activity = await _unitOfWork.ActivityRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (activity == null)
+            {
+                throw HttpResponseException.NotFound("Activity");
+            }
+
+            _unitOfWork.ActivityRepository.Remove(activity);
+            await _unitOfWork.SaveChangesAsync();
+
+            var result = _mapper.Map<ActivityReadModel>(activity);
+            return result;
+        }
     }
 }
